@@ -1,0 +1,125 @@
+# For full documentation follow https://docs.gitlab.com/ee/ci/yaml/
+
+stages:
+  - lint
+  - test
+  - build
+
+# Contents of folders declared under the `cache` section get cached between Jobs execution.
+# You may want to place here stuff like Pods, Carthage, etc.
+# DO NOT REMOVE vendor/bundle unless you really know what you're doing.
+cache:
+  paths:
+    - vendor/bundle
+    - Pods
+    - Carthage
+
+variables:
+  LC_ALL: "en_US.UTF-8"
+  LANG: "en_US.UTF-8"
+  DANGER_GITLAB_HOST: gitlab.com
+  DANGER_GITLAB_API_BASE_URL: https://gitlab.com/api/v4
+  DANGER_GITLAB_API_TOKEN: $CI_BOT_API_TOKEN
+  CI_BOT_GIT_USER_EMAIL: empty
+  CI_BOT_GIT_USER_NAME: empty
+  GIT_SSH_HOST: git@gitlab.com
+
+# You may specify any additional scripts execution. Will be invoked before Job execution.
+before_script:
+  # Install Bundler dependencies from Gemfile
+  - bundle install --path vendor/bundle
+  # Set CI bot as a commiter
+  - 'git config --global user.email "${CI_BOT_GIT_USER_EMAIL}"'
+  - 'git config --global user.name "${CI_BOT_GIT_USER_NAME}"'
+  # Checkout back to a branch to allow push from a GitLab Runner
+  - git checkout -B "${CI_COMMIT_REF_NAME}" "${CI_COMMIT_SHA}"
+  - git remote set-url --push origin "${GIT_SSH_HOST}:${CI_PROJECT_PATH}.git"
+
+after_script:
+  - git commit --amend --reset-author
+
+# Job that gets executed for every merge request. You may want to extend linting by addition extra checks.
+danger:
+  stage: lint
+  # Actual work to be done
+  script:
+    - bundle exec danger --verbose
+  # At which event this should be triggered
+  only:
+    - merge_requests
+  # We do not run linting on the master branch (typically).
+  except:
+    - master
+  # Tag specifies which runner should be executed (i.e. the one with Xcode). Do not modify.
+  tags:
+    - ios-i9
+
+# Job's name. Feel free to rename it to anything you'd like. By convention this follows Environment name that use in Fastlane.
+development:
+  stage: build
+  environment:
+    name: development
+  # Actual work to be done
+  script:
+    - 'bundle exec fastlane ios deploy --env development skip_tests:true skip_tag:true --verbose'
+  # Manual means that we do not want this job to be executed by CI automatically by push/merge-request or similar
+  # since it'll lead to excessive CI load.
+  when: manual
+  # For which branch this job should be visible at all. i.e. This filter Job's visibility only for commits to `master` branch.
+  # You may want to extend this by adding more / setting different branches like `develop`, etc.
+  only:
+    - master
+    - develop
+    - /^codefreeze\/.*$/
+  # Tag specifies which runner should be executed (i.e. the one with Xcode). Do not modify.
+  tags:
+    - ios-i9
+
+    # Job's name. Feel free to rename it to anything you'd like. By convention this follows Environment name that use in Fastlane.
+qa:
+  stage: build
+  environment:
+    name: qa
+  # Actual work to be done
+  script:
+    - 'bundle exec fastlane ios deploy --env qa --verbose skip_tests:true skip_tag:true'
+  # Manual means that we do not want this job to be executed by CI automatically by push/merge-request or similar
+  # since it'll lead to excessive CI load.
+  when: manual
+  # For which branch this job should be visible at all. i.e. This filter Job's visibility only for commits to `master` branch.
+  # You may want to extend this by adding more / setting different branches like `develop`, etc.
+  only:
+    - master
+    - develop
+    - /^codefreeze\/.*$/
+  # Tag specifies which runner should be executed (i.e. the one with Xcode). Do not modify.
+  tags:
+    - ios-i9
+
+staging:
+  stage: build
+  environment:
+    name: staging
+  script:
+    - 'bundle exec fastlane ios deploy --env staging skip_tests:true skip_tag:true'
+  when: manual
+  only:
+    - develop
+    - master
+    - develop
+    - /^codefreeze\/.*$/
+  tags:
+    - ios-i9
+
+production:
+  stage: build
+  environment:
+    name: production
+  script:
+     production
+    - 'bundle exec fastlane ios deploy --env production skip_tests:true'
+  when: manual
+  only:
+    - master
+  tags:
+    - ios-i9

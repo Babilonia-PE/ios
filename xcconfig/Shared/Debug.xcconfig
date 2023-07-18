@@ -1,0 +1,5 @@
+// Common conditions for each Debug configuration (not to be confused with the App Config)
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG $(BUILD_COMPILATION_CONDITIONS)
+
+

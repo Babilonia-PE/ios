@@ -1,0 +1,40 @@
+Device ID	Device Name	Device Platform
+bf974dfa63d54c9d6811f5dae5b9b7214954f209	iPxone X Korg	ios
+80b4542acc96a748023c86c94106aeb9f84285e1	iPxone X Karla	ios
+9dbe15cd67352ccc375437309c0938eb48a0bd27	iPxone X Tori	ios
+8bec5e83c0271413cbb58489d0181ff04fc1580c	iPhone 8 Plus Madison	ios
+30ad9f5938fc962fe6ad80a9f9bfdf4fb37d504f	iPhone 8 Plus New	ios
+b7253d4fbf5c6215c05ab7528d10255bb3ef1807	iPhone 7 Plus	ios
+19fccf3fed7ea2590e4fd4728250a2a4b79aa435	iPhone 6+ old	ios
+0310e76e3e248cce2b9295850701bb1fe782efdc	iPhone 6+	ios
+d247cdd93bdcb68228685b8b1e522a3a189c5d76	iPhone 7 Rebecca	ios
+8ae763868c1438865c637954521c455109a617d7	iPhone 7 Greta	ios
+4b77e73ee02f7fa040f423a722a5d1c1361cf4ba	iPhone 6s Morrison	ios
+2a7e3446ea58149a6b8ef1aed32ae9d76b3083b9	iPhone 6 Braden	ios
+076b1c442d6d0119cbd4282e202d914adbba50c4	iPhone 6 Paul	ios
+03be3e01ba305be8aee1870f42d14710efe4582b	iPhone 6 Farmer	ios
+42635a75164661f7154fbebf27351bc510c18134	iPhone SE	ios
+64b226f9c72f92488e5340207f573bb87881eb38	iPhone SE Bill	ios
+acdc576038ee3de7a3cac25ffba2d559ea167a01	iPhone 5s	ios
+984975f0a1c93b25aeac206c9e8bdd0f04d6b4cb	iPad 2018	ios
+891778a3f1db8daa6d934382f6cf0d73c7bb6078	iPad mini	ios
+65da5e4353339e19dfb14b2db03be9ad120681b1	iPad 4	ios
+0cf4e20a7eec7023359d337923dcda443300c3d4	iPad 2	ios
+601efeec5b69b4f64047f0d9873debdefa6ddc15	iPhone Personal (Vincenzo)	ios
+90f4c5c3a4c96e3d0631a97928c90752f48ccc09	iPhone X Personal (Denis)	ios
+19d8c22f1e9b9d7601cec7300ae5849924b8e8ee	iPhone Personal (Client)	ios
+e71437c86a6918c3e8d378c87665a9d40e51ed4b	iPhone X TanyaR	ios
+206a9eeddafd9a91ec695f1ff1e444c349cc21f3	iPhone Personal (Anna)	ios
+00008020-001A1C243612002E	iPxone XR Mia	ios
+00008020-0015619E3CF1002E	iPhone Personal (Artem)	ios
+00008020-000859162E88003A	iPhone Personal (Freddy)	ios
+00008020-001D58C40C81002E	iPhone XS AlyaF	ios
+00008030-0008343E3A78802E	iPhone 11 Pro Max Boris	ios
+00008020-001B44A611D0003A	iPhone XR LeraV	ios
+fa124f85e77e3f6b85116472338e518588492977	iPhone X Boris	ios
+00008030-001515ac02d8802e	iPhone 11 Pro Max Boris (2)	ios
+00008101-000E74913651003A	iPhone 12 Pro AlyaF	ios
+00008020-000825293E83002E	iPhone XS  Julio	ios
+00008101-001248C40C21001E	iPhone 12 Pro - BORIS	ios
+68700b7c493c9cfe13fdf7945476816276274358	iPhone 6s Tester	ios
+00008030-001854192210402E	iPhone Tester	ios

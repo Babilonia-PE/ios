@@ -1,0 +1,383 @@
+/* 
+  Localizable.strings
+
+  Copyright © 2016 Yalantis. All rights reserved.
+*/
+
+// MARK: - Common
+
+"common.for.text" = "en %@";
+
+// MARK: - HUDs
+
+"hud.alert.error.title" = "Error";
+"hud.alert.success.title" = "Éxito";
+"hud.alert.info.title" = "Información";
+
+// MARK: - Errors
+
+"errors.something_went_wrong" = "¡Lo sentimos! Algo salió mal...";
+"errors.something_went_wrong.long" = "Algo salió mal. Por favor vuelva a intentarlo o comuníquese con nosotros si el problema persiste.";
+"errors.network.undefined" = "Apareció un error de red no definido. Por favor inténtelo más tarde.";
+"errors.network.unsatisfied_header" = "Apareció un error de encabezado de red insatisfecho.";
+"errors.network.canceled" = "Request was cancelled by the system.";
+"errors.network.connection" = "No se pueden cargar los datos. Por favor compruebe su conexión a internet y vuelva a intentarlo.";
+"errors.network.unauthorized" = "Apareció un error de red no autorizado.";
+"errors.network.internalServer" = "Error interno del servidor. Por favor inténtelo de nuevo más tarde.";
+"errors.payment.declined" = "Pago rechazado. Por favor verifique los detalles de su tarjeta o comuníquese con su banco para mayor asistencia.";
+
+// MARK: - Validation
+
+"validation.empty.error.text" = "El campo no debe estar vacío";
+"validation.large_error.text" = "El campo no debe superar los %d caracteres ";
+"validation.email.error.text" = " El formato de correo electrónico no es válido";
+"validation.numbers.not_a_number_error.text" = " Este campo debe estar en formato numérico";
+"validation.numbers.range_error.text" = "Este valor debe estar en el rango de %d a %d";
+
+// MARK: - Buttons
+
+"buttons.cancel.title" = "Cancelar";
+"buttons.done.title" = "Listo";
+"buttons.save.title" = "Guardar";
+"buttons.ok_button.title" = "OK";
+"buttons.settings.title" = "Configuración";
+
+// Popups
+
+"popups.sign_out.title" = "¿Desea cerrar sesión?";
+"popups.sign_out.text" = "No podrás buscar propiedades ni recibir notificaciones";
+"popups.sign_out.sign_out.title" = "Cerrar sesión";
+"popups.unpublish_listing.title" = "¿Desea despublicar el aviso?";
+"popups.unpublish_listing.text" = "Podrá volver a publicarlo más tarde en cualquier momento";
+"popups.publish_listing.text" = "¿Está seguro de que desea publicar el aviso?";
+"popups.delete_draft_listing.title" = "¿Desea eliminar el borrador?";
+"popups.delete_draft_listing.text" = "¿Está seguro que desea borrar esta información? La acción no se puede deshacer.";
+"popups.listing_deleted.text" = "Aviso eliminado con éxito";
+"popups.camera_access.text" = "Acceso a la cámara denegado. Por favor ingrese a Configuración -> Privacidad -> Cámara y active el acceso a Babilonia para utilizar esta función.";
+
+// Image picker
+
+"image_picker.camera.title" = "Cámara";
+"image_picker.gallery.title" = "Cargar desde la galería";
+
+// MARK: - Tab bar
+
+"tab_bar.search.title" = "Buscar";
+"tab_bar.favorites.title" = "Favoritos";
+"tab_bar.my_listings.title" = "Mis Avisos";
+"tab_bar.notifications.title" = "Inbox";
+"tab_bar.profile.title" = "Perfil";
+
+// MARK: - Start
+
+"start.button.title" = "¡COMENCEMOS!";
+
+// MARK: - Create listing
+
+"create_listing.title" = "Crear un nuevo aviso";
+"create_listing.steps.common.title" = "General";
+"create_listing.steps.general.title" = "General";
+"create_listing.steps.advanced.title" = "Adicionales";
+"create_listing.steps.details.title" = "Características";
+"create_listing.steps.facilities.title" = "Comodidades";
+"create_listing.steps.photos.title" = "Fotos";
+"create_listing.continue.title" = "CONTINUAR (%d/%d)";
+"create_listing.preview.title" = "VISTA PREVIA";
+"create_listing.listing_preview.title" = "Vista previa";
+"create_listing.listing_preview.subtitle" = "Ocultar aviso";
+"create_listing.listing_preview.publish.title" = "PUBLICAR";
+"create_listing.common.listing_type.title" = "TIPO DE OPERACION";
+"create_listing.common.listing_type.sale.title" = "Venta";
+"create_listing.common.listing_type.rent.title" = "Alquiler";
+"create_listing.common.property_type.title" = "Tipo de inmueble";
+"create_listing.common.property_type.apartment.title" = "Departamento";
+"create_listing.common.property_type.house.title" = "Casa";
+"create_listing.common.property_type.commercial.title" = "Local comercial";
+"create_listing.common.property_type.office.title" = "Oficina";
+"create_listing.common.property_type.land.title" = "Terreno";
+"create_listing.common.property_type.room.title" = "Cuarto";
+"create_listing.common.property_type.project.title" = "Proyecto";
+"create_listing.common.area.title" = "Área, m²";
+"create_listing.common.area.placeholder" = "Área del inmueble";
+"create_listing.common.address.title" = "Dirección";
+"create_listing.common.address.placeholder" = "Ingrese una dirección";
+"create_listing.common.description.title" = "Descripción (%d/%d)";
+"create_listing.common.description.edit.title" = "Descripción";
+"create_listing.common.description.placeholder" = "Sobre su inmueble";
+"create_listing.common.description.empty_error_text" = "La descripción no debe estar vacía";
+"create_listing.common.description.large_error_text" = "La descripción no debe superar los %d caracteres";
+"create_listing.common.address.unknow_location.text" = "Ubicación indeterminada";
+"create_listing.details.bathrooms.title" = "Baños";
+"create_listing.details.bathrooms.title.singular" = "Baño";
+"create_listing.details.bedrooms.title" = "Dormitorios";
+"create_listing.details.bedrooms.title.singular" = "Dormitorio";
+"create_listing.details.parking_slots.title" = "Estacionamientos";
+"create_listing.details.parking_for_visitors" = "Estacionamiento para visitas";
+"create_listing.details.year_of_construction.title" = "Año de construcción";
+"create_listing.details.pet_friendly.title" = "Pet-friendly";
+"create_listing.details.price.sale.title" = "Precio, USD";
+"create_listing.details.empty_facilities.title" = "%@ no tiene comodidades, así que saltémonos este paso";
+"create_listing.details.empty_details.title" = "%@ no tiene detalles generales, así que saltémonos este paso";
+"create_listing.details.empty_advanced.title" = "%@ no tiene características adicionales, así que saltémonos este paso";
+"create_listing.details.price.rent.title" = "Precio por mes, USD";
+"create_listing.facilities.title" = "COMODIDADES";
+"create_listing.photos.empty_state.text" = "Elija las fotos que mejor representen su propiedad";
+"create_listing.photos.empty_state.button.title" = "CARGAR FOTOS";
+"create_listing.photos.upload_view.title" = "Cargar mas fotos (%d/%d)";
+"create_listing.photos.photo_cell.main_image.text" = "Foto principal";
+"create_listing.photos.options.set_as_main.title" = "Establecer como foto principal";
+"create_listing.photos.options.delete.title" = "Eliminar foto";
+"create_listing.finish.button.title" = "Salir";
+"create_listing.finish.popup.title" = "¿Terminaste tu aviso?";
+"create_listing.finish.popup.text" = "Puedes salir de la creación y guardaremos tu progreso para que puedas continuar más tarde.";
+"create_listing.finish.popup.dont_save_and_exit.title" = "No guardar y salir";
+"create_listing.finish.popup.save_and_exit.title" = "Guardar y salir";
+"create_listing.finish.popup.continue.title" = "Continuar creando";
+"create_listing.finish.edit_popup.title" = "¿Terminaste de editar?";
+"create_listing.finish.edit_popup.text" = " Puede salir, pero se perderá el progreso de la edición";
+"create_listing.finish.edit_popup.continue.title" = "Continuar editando";
+"create_listing.created.alert" = "Aviso actualizado con éxito";
+
+// MARK: - Edit listing
+
+"edit_listing.title" = "Editar aviso";
+
+// MARK: - Sign up
+
+"sign_up.title" = "Crear cuenta";
+
+// MARK: - Profile
+
+"profile.email.title" = "Correo electrónico";
+"profile.phone.title" = "Teléfono";
+"profile.currency.title" = "Moneda";
+"profile.account.title" = "Cuenta";
+"profile.about.text" = "Sobre nosotros";
+"profile.about.terms.title" = "Términos y condiciones";
+"profile.about.privacy.title" = "Política de privacidad";
+"profile.account.sign_out.title" = "Cerrar sesión";
+
+// MARK: - Edit profile
+
+"edit_profile.title" = "Editar Perfil";
+"edit_profile.buttons.change_photo.title" = "CAMBIAR FOTO";
+"edit_profile.buttons.save.title" = "GUARDAR";
+"edit_profile.first_name.title" = "Nombre";
+"edit_profile.last_name.title" = "Apellido";
+"edit_profile.change_email.title" = "Cambiar correo electrónico";
+"edit_profile.update_user.popup.success.text" = "Perfil actualizado con éxito";
+"edit_profile.update_email.popup.success.text" = "Correo actualizado con éxito";
+"edit_profile.update_avatar.popup.success.text" = "Foto cargada correctamente";
+"edit_profile.exit_alert.title" = "¿Desea guardar los cambios?";
+"edit_profile.exit_alert.message" = "Usted tiene cambios sin guardar. Si sale, se perderán.";
+"edit_profile.avatar_formats" = "La imagen debe estar en formato .png, .jpg o .jpeg";
+
+// MARK: - Currency
+
+"currency.usd.title" = "Dólar estadounidense (USD)";
+"currency.sol.title" = "Nuevo sol (PEN)";
+"currency.sol.symbol" = "S/";
+"currency.usd.symbol" = "$";
+"currency.sol.code" = "S/";
+"currency.usd.code" = "USD";
+
+// MARK: - My listings
+
+"my_listings.title" = "Mis Avisos";
+"my_listings.segment.published" = "Publicado";
+"my_listings.segment.not_published" = "No publicado";
+"my_listings.empty_state.title" = "Aún no has agregado ningún aviso.";
+"my_listings.empty_state_published.title" = "No tienes\n avisos publicados.";
+"my_listings.empty_state_not_published.title" = "Todos tus avisos\n están publicados.";
+"my_listings.empty_state_published.subtitle" = "Puedes publicar avisos desde el borrador\n o agregar uno nuevo";
+"my_listings.empty_state.button.text" = "Publicar un aviso";
+"my_listings.add_button.text" = "PUBLICAR";
+"my_listings.bedrooms.abbreviation" = "%d dor";
+"my_listings.bathrooms.abbreviation" = "%d bñ";
+"my_listings.parking_slots.abbreviation" = "%d estac";
+"my_listings.area.abbreviation" = "%@ m²";
+"my_listings.property_type.apartments.title" = "Departamento";
+"my_listings.property_type.house.title" = "Casa";
+"my_listings.property_type.commercial.title" = "Comercial";
+"my_listings.property_type.office.title" = "Oficina";
+"my_listings.property_type.land.title" = "Terreno";
+"my_listings.listing_type.sale.title" = "Venta";
+"my_listings.listing_type.rent.title" = "Alquiler";
+"my_listings.status.visible.title" = "Publicado";
+"my_listings.status.hidden.title" = "Borrador completo";
+"my_listings.status.unpublished.title" = "Despublicado";
+"my_listings.status.draft.title" = "Borrador";
+"my_listings.options.open.title" = "Open";
+"my_listings.options.edit.title" = "Editar detalles";
+"my_listings.options.publish.title" = "Publicar";
+"my_listings.options.unpublish.title" = "Despublicar";
+"my_listings.options.delete.title" = "Eliminar";
+"my_listings.statistics.views" = "Vistas";
+"my_listings.statistics.favorites" = "Favoritos";
+"my_listings.statistics.contacts" = "Interesados";
+"my_listings.days_left" = "Le quedan %i días";
+
+// MARK: - Listing preview
+
+"listing_preview.show_details.title" = "VER INMUEBLE";
+"listing_preview.navigate.title" = "NAVEGAR";
+
+// MARK: - Augmented reality
+
+"ar.main.title" = "Vista AR";
+"ar.main.subtitle" = "Propiedades en venta";
+"ar.mapView.title" = "Ver mapa";
+"ar.meters_counter.many.title" = "metros";
+"ar.meters_counter.single.title" = "metro";
+"ar.destination_reached.title" = "Llegaste a tu destino.";
+
+// MARK: - Listing Details
+
+"listing_details.price_per_square_meter.text" = "%@%d/m²";
+"listing_details.price_per_month.text" = "al mes";
+"listing_details.pet_friendly.text" = "Pet-friendly";
+"listing_details.bedrooms.text" = "%d dormitorios";
+"listing_details.bathrooms.text" = "%d baños";
+"listing_details.parking_slots.text" = "%d estacionamientos";
+"listing_details.bedrooms.text.singular" = "%d dormitorio";
+"listing_details.bathrooms.text.singular" = "%d baño";
+"listing_details.parking_slots.text.singular" = "%d estacionamiento";
+"listing_details.parking_for_visitors.text" = "estac para visitas";
+"listing_details.total_area.text" = "Área total:";
+"listing_details.built_area.text" = "Área de construcción:";
+"listing_details.covered_area.text" = "Área techada:";
+"listing_details.total_floors_count.text" = "%i pisos totales";
+"listing_details.floor_number.text" = "Piso #%i";
+"listing_details.about.title" = "Sobre este inmueble";
+"listing_details.about.year.text" = "Construido en %@";
+"listing_details.about.show_more.title" = "Mostrar más";
+"listing_details.facilities.title" = "Comodidades";
+"listing_details.advanced.title" = "Características adicionales";
+"listing_details.contact_button.title" = "Contactar";
+"listing_details.contact_button.description" = "Esta llamada puede incurrir costos adicionales";
+"listing_details.action.more" = "Más";
+"listing_details.action.report" = "Reportar";
+"listing_details.map.actions.title" = "Elija el proveedor de mapas";
+"listing_details.map.actions.apple_maps" = "Usar Apple Maps ";
+"listing_details.map.actions.google_maps" = "Usar Google Map";
+"listing_details.map.actions.waze" = "Usar Waze";
+"listing_details.call.actions_title" = "Llamar";
+"listing_details.status.published" = "Aviso publicado";
+"listing_details.status.unpublished" = "Aviso despublicado";
+"listing_details.status.not_published" = "Aviso no publicado";
+"listing_details.status.expired" = "Aviso expirado";
+
+// MARK: - Listing Search
+
+"listing_search.empty_result.title" = "¡Lo sentimos! No encontramos inmuebles como el que busca...";
+"listing_search.empty_result.text" = "Intente cambiar el criterio de búsqueda.";
+"search.bar.listings_found.text" = "Encontramos: %d Inmuebles";
+"search.bar.filters_tip.text" = "Toque el filtro para eliminarlo";
+"listing.list.sort_by" = "Ordenar por:";
+"listing.list.sorting" = "Ordenando";
+"listing.sort_option.price_low_to_high" = "Precio: Bajo a alto";
+"listing.sort_option.price_high_to_low" = "Precio: Alto a bajo";
+"listing.sort_option.newest_to_oldest" = "Más nuevos";
+"listing.sort_option.oldest_to_newest" = "Más antiguos";
+"listing.sort_option.closest_to_farthest" = "Más cercanos";
+"listing.sort_option.farthest_to_closest" = "Más lejanos";
+"listing.sort_option.area_highest_to_lowest" = "Área: Más amplios";
+"listing.sort_option.area_lowest_to_highest" = "Área: Más pequeños";
+"listing.sort_option.m2_price_highest_to_lowest" = "Precio por m2: Alto a bajo";
+"listing.sort_option.m2_price_lowest_to_highest" = "Precio por m2: Bajo a alto";
+"listing.sort_option.most_relevant" = "Relevancia";
+"listing_search.location_popup.title" = "Porque preguntamos por tu ubicación";
+"listing_search.location_popup.text" = "Para mostrarle inmuebles cerca a usted y ordenarlos por distancia cuando lo desee. Además, podrá ver su ubicación en la vista de mapa...";
+"listing_search.ar_popup.title" = "Busca propiedades\n con Realidad Aumentada";
+"listing_search.ar_popup.text" = "¿Te gusta la zona en donde estas? Explórala con nuestro AR y descubre que inmuebles están en venta o alquiler. Haga click en navegar y lo llevaremos por la ruta mas corta...";
+"listing_search.location_popup.done.title" = "ENTENDIDO";
+"listing_search.location_popup.cancel.title" = "Ahora no";
+"listing_search.search_bar.placeholder" = "Urbanización, distrito o ciudad";
+"listing_search.top_listings_title" = "Inmuebles Top";
+
+// MARK: - Search by location
+
+"search_by_location.permission_popUp.title" = "Active los servicios de ubicación";
+"search_by_location.permission_popUp.message" = "Para permitir que Babilonia encuentre inmuebles cerca a usted, vaya a Configuración> Privacidad> Localización. Luego habilite la ubicación para la aplicación Babilonia.";
+"search_by_location.current_location" = "Ubicación actual";
+"search_by_location.location_not_found" = "Ubicación no encontrada";
+"search_by_location.recent_searches" = "Búsquedas recientes";
+
+// MARK: - Favorites
+
+"favorites_listings.title" = "Favoritos";
+"favorites_listings.empty.title" = "Tu lista de favoritos está vacía";
+"favorites_listings.empty.description.first" = "Para agregar inmuebles a tu lista, presiona el icono ";
+"favorites_listings.empty.description.second" = " que se ecuentra en los avisos. ¡Ánimo! Empieza a guardar los inmuebles que más te gustan y no los pierdas de vista";
+
+// MARK: - Filters
+
+"filters.title" = "Filtros";
+"filters.for_sale" = "En venta";
+"filters.for_rent" = "En alquiler";
+"filters.reset" = "Restablecer";
+"filters.price_range" = "Rango de precio:";
+"filters.total_area" = "Área total, m²";
+"filters.built_area" = "Área de construcción, m²";
+"filters.covered_area" = "Área techada, m²";
+"filters.range.min" = "Mín";
+"filters.range.max" = "Máx";
+"filters.range.from" = "Desde";
+"filters.range.to" = "Hasta";
+"filters.property_facilities" = "Comodidades";
+"filters.apply_filters" = "APLICAR FILTROS";
+"filters.listings_found" = "%i inmuebles encontrados";
+"filters.all_facilities" = "Todas las comodidades";
+"filters.property_type.any" = "Todos";
+"filters.total_floors" = "Pisos totales";
+"filters.floor_number" = "Piso de la unidad";
+"filters.parking" = "Estacionamiento";
+"filters.warehouse" = "Almacén";
+"filters.applied.totalArea.type" = "Total: ";
+"filters.applied.builtArea.type" = "Construcción: ";
+"filters.applied.coveredArea.type" = "Techada: ";
+"filters.applied.area_range" = "%i - %i m²";
+"filters.applied.floors" = "pisos";
+"filters.applied.floors.singular" = "piso";
+"filters.parking_slots" = "%i estac";
+"filters.parking_slots.singular" = "%i estac";
+
+// MARK: - Payments
+
+"payments.flow.title" = "Publica tu inmueble";
+"payments.profile_selection.description" = "¿Cómo desea publicar?";
+"payments.plan_selection.description" = "Compare y seleccione el tipo de aviso que más le convenga.";
+"payments.period_selection.description" = "Seleccione el periodo de publicación.";
+"payments.profile_selection.button" = "SELECCIONAR PERFIL";
+"payments.plan_selection.button" = "SELECCIONAR PLAN";
+"payments.period_selection.button" = "COMPRAR";
+"payments.profile.owner" = "Dueño";
+"payments.profile.realtor" = "Agente o Inmobiliaria";
+"payments.profile.company" = "Constructor o Desarrollador";
+"payments.profile.description" = "Para publicar como agente o constructora, por favor visite nuestra web babilonia.io";
+"payments.profile.description_link" = "babilonia.io";
+"payments.price.from" = "desde S/ %@";
+"payments.period.days" = "%i días";
+"payments.checkout.title" = "Comprar";
+"payments.checkout.pay" = "Pagar %@";
+"payments.checkout.cvc" = "cvc";
+"payments.checkout.card_name" = "Nombre en la tarjeta";
+"payments.checkout.experation_date_placeholder" = "MM / AA";
+"payments.listing_plan.standard" = "Aviso Estándar";
+"payments.listing_plan.plus" = "Aviso Plus";
+"payments.listing_plan.premium" = "Aviso Premium";
+"payments.plan_title.standard" = "Plan Estándar";
+"payments.plan_title.plus" = "Plan Plus";
+"payments.plan_title.premium" = "Plan Premium";
+"payments.alert.listing_published_success" = "Aviso publicado con éxito";
+"payments.plan.expired.status" = "Expirado";
+
+
+// MARK: - Photo gallery
+
+"photo_gallery.title" = "Galería de fotos";
+"photo_gallery.photos_count" = "%i fotos";
+
+// MARK: - Inbox
+
+"inbox.comming_soon" = "Próximamente...";

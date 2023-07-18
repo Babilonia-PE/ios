@@ -1,0 +1,9 @@
+// Shared environment values for Development, Staging and Production configs of the app
+
+BUILD_ENV =
+
+// Values used in SWIFT_ACTIVE_COMPILATION_CONDITIONS
+BUILD_COMPILATION_CONDITIONS = BUILD_ENV_$(BUILD_ENV)
+
+// Config.plist name based on the BUILD_ENV lowercase. Thefefore DEVELOPMENT -> Config.development.plist
+ENV_FILE = Environment.${BUILD_ENV:lower}.plist

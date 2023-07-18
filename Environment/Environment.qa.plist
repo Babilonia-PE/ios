@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>qa</string>
+	<key>hostURL</key>
+	<dict>
+		<key>relative</key>
+		<string>https://qa.babilonia.io/api/</string>
+	</dict>
+	<key>stripePublishableKey</key>
+	<string>pk_test_51HrWElClCN3bUtFD6El0FXkaZa2TLsmQXFNKZ7LJW720vViwW8HfmyU1i1BARpvMctZJhJZ118CfSPGmcnyn2Hd400ef2nm5aL</string>
+	<key>deeplinkHost</key>
+	<string>qa.babilonia.io</string>
+	<key>webSiteURL</key>
+	<string>https://web-qa.babilonia.io/</string>
+</dict>
+</plist>

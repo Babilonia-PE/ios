@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DefaultCompletionName</key>
+	<string>DBClient Extension</string>
+	<key>Description</key>
+	<string>Generate extension for mapping between NSManagedObject and Stored types</string>
+	<key>Kind</key>
+	<string>Xcode.IDEKit.TextSubstitutionFileTemplateKind</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_moduleName___</string>
+			<key>Identifier</key>
+			<string>productName</string>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>Source</string>
+			<key>Identifier</key>
+			<string>DirectoryPlaceholder</string>
+			<key>Type</key>
+			<string>class</string>
+		</dict>
+		<dict>
+			<key>Description</key>
+			<string>The name of the model that require an extension</string>
+			<key>Identifier</key>
+			<string>moduleName</string>
+			<key>Name</key>
+			<string>Model Name:</string>
+			<key>NotPersisted</key>
+			<true/>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>text</string>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>WithManagedModel</string>
+			<key>Name</key>
+			<string>Include managed object model</string>
+			<key>Description</key>
+			<string>Whether to create a ManagedObjectModel file</string>
+			<key>Type</key>
+			<string>checkbox</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_moduleName___+CoreData</string>
+			<key>Description</key>
+			<string>Extension name</string>
+			<key>Identifier</key>
+			<string>extensionName</string>
+			<key>Name</key>
+			<string>Extension Name:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+	</array>
+	<key>Platforms</key>
+	<array>
+		<string>com.apple.platform.iphoneos</string>
+	</array>
+	<key>Summary</key>
+	<string>This generates a new extension for mapping between NSManagedObject and Stored types</string>
+</dict>
+</plist>

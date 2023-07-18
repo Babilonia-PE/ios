@@ -1,0 +1,383 @@
+/* 
+  Localizable.strings
+
+  Copyright © 2016 Yalantis. All rights reserved.
+*/
+
+// MARK: - Common
+
+"common.for.text" = "for %@";
+
+// MARK: - HUDs
+
+"hud.alert.error.title" = "Error";
+"hud.alert.success.title" = "Success";
+"hud.alert.info.title" = "Information";
+
+// MARK: - Errors
+
+"errors.something_went_wrong" = "Something went wrong.";
+"errors.something_went_wrong.long" = "Something went wrong. Please try again or contact us if the issue will still remain";
+"errors.network.undefined" = "Undefined network error appeared. Please try again a little bit later.";
+"errors.network.unsatisfied_header" = "Unsatisfied header network error appeared.";
+"errors.network.canceled" = "Request was cancelled by the system.";
+"errors.network.connection" = "Can't load the data. Please check your internet connection and try again.";
+"errors.network.unauthorized" = "Unauthorized network error appeared.";
+"errors.network.internalServer" = "Internal server error appeared. Please try again a little bit later.";
+"errors.payment.declined" = "Payment declined. Please check your credit card details or contact your bank for support.";
+
+// MARK: - Validation
+
+"validation.empty.error.text" = "The field shouldn't be empty";
+"validation.large_error.text" = "Field shouldn't exceed %d symbols";
+"validation.email.error.text" = "Email format is invalid";
+"validation.numbers.not_a_number_error.text" = "This field should be in a numeric format";
+"validation.numbers.range_error.text" = "This value should be in range between %d and %d";
+
+// MARK: - Buttons
+
+"buttons.cancel.title" = "Cancel";
+"buttons.done.title" = "Done";
+"buttons.save.title" = "Save";
+"buttons.ok_button.title" = "OK";
+"buttons.settings.title" = "Settings";
+
+// Popups
+
+"popups.sign_out.title" = "Sign out?";
+"popups.sign_out.text" = "You will not be able to search properties and receive any notifications";
+"popups.sign_out.sign_out.title" = "Sign out";
+"popups.unpublish_listing.title" = "Unpublish listing?";
+"popups.unpublish_listing.text" = "You can publish it again later at any time";
+"popups.publish_listing.text" = "Are you sure you want to publish the listing?";
+"popups.delete_draft_listing.title" = "Delete listing?";
+"popups.delete_draft_listing.text" = "Are you sure you want to delete this information? The action can not be undone.";
+"popups.listing_deleted.text" = "Listing has been successfully deleted";
+"popups.camera_access.text" = "Access to the camera is denied. Open Settings -> Privacy -> Camera and enable Babilonia access to use this feature";
+
+// Image picker
+
+"image_picker.camera.title" = "Camera";
+"image_picker.gallery.title" = "Upload from gallery";
+
+// MARK: - Tab bar
+
+"tab_bar.search.title" = "Search";
+"tab_bar.favorites.title" = "Favorites";
+"tab_bar.my_listings.title" = "My Listings";
+"tab_bar.notifications.title" = "Inbox";
+"tab_bar.profile.title" = "Profile";
+
+// MARK: - Start
+
+"start.button.title" = "LET'S START";
+
+// MARK: - Create listing
+
+"create_listing.title" = "Create new listing";
+"create_listing.steps.general.title" = "General";
+"create_listing.steps.advanced.title" = "Advanced";
+"create_listing.steps.common.title" = "Common";
+"create_listing.steps.details.title" = "Details";
+"create_listing.steps.facilities.title" = "Facilities";
+"create_listing.steps.photos.title" = "Photos";
+"create_listing.continue.title" = "CONTINUE (%d/%d)";
+"create_listing.preview.title" = "PREVIEW";
+"create_listing.listing_preview.title" = "Preview";
+"create_listing.listing_preview.subtitle" = "Unpublished listing";
+"create_listing.listing_preview.publish.title" = "PUBLISH";
+"create_listing.common.listing_type.title" = "LISTING TYPE";
+"create_listing.common.listing_type.sale.title" = "Sale";
+"create_listing.common.listing_type.rent.title" = "Rent";
+"create_listing.common.property_type.title" = "Property type";
+"create_listing.common.property_type.apartment.title" = "Apartment";
+"create_listing.common.property_type.house.title" = "House";
+"create_listing.common.property_type.commercial.title" = "Commercial";
+"create_listing.common.property_type.office.title" = "Office";
+"create_listing.common.property_type.land.title" = "Land";
+"create_listing.common.property_type.room.title" = "Room";
+"create_listing.common.property_type.project.title" = "Project";
+"create_listing.common.area.title" = "Area, m²";
+"create_listing.common.area.placeholder" = "Property area";
+"create_listing.common.address.title" = "Address";
+"create_listing.common.address.placeholder" = "Provide your address";
+"create_listing.common.description.title" = "Description (%d/%d)";
+"create_listing.common.description.edit.title" = "Description";
+"create_listing.common.description.placeholder" = "About your property";
+"create_listing.common.description.empty_error_text" = "Description shouldn't be empty";
+"create_listing.common.description.large_error_text" = "Description shouldn't exceed %d symbols";
+"create_listing.common.address.unknow_location.text" = "Undetermined location";
+"create_listing.details.bathrooms.title" = "Bathrooms";
+"create_listing.details.bathrooms.title.singular" = "Bathroom";
+"create_listing.details.bedrooms.title" = "Bedrooms";
+"create_listing.details.bedrooms.title.singular" = "Bedroom";
+"create_listing.details.parking_slots.title" = "Parking slots";
+"create_listing.details.parking_for_visitors" = "Parking for visitors";
+"create_listing.details.year_of_construction.title" = "Year of construction";
+"create_listing.details.pet_friendly.title" = "Pet Friendly";
+"create_listing.details.price.sale.title" = "Price, USD";
+"create_listing.details.empty_facilities.title" = "%@ has no facilities, so let’s skip this step";
+"create_listing.details.empty_details.title" = "%@ has no general details, so let’s skip this step";
+"create_listing.details.empty_advanced.title" = "%@ has no advanced details, so let’s skip this step";
+"create_listing.details.price.rent.title" = "Price per month, USD";
+"create_listing.facilities.title" = "FACILITIES";
+"create_listing.photos.empty_state.text" = "Choose photos that best represent your property";
+"create_listing.photos.empty_state.button.title" = "UPLOAD PHOTOS";
+"create_listing.photos.upload_view.title" = "Upload more photos (%d/%d)";
+"create_listing.photos.photo_cell.main_image.text" = "Main picture";
+"create_listing.photos.options.set_as_main.title" = "Set as main picture";
+"create_listing.photos.options.delete.title" = "Delete picture";
+"create_listing.finish.button.title" = "Exit";
+"create_listing.finish.popup.title" = "Finish creating?";
+"create_listing.finish.popup.text" = "You can exit creating and we will save your progress so you can continue later";
+"create_listing.finish.popup.dont_save_and_exit.title" = "Don’t save & exit";
+"create_listing.finish.popup.save_and_exit.title" = "Save & exit";
+"create_listing.finish.popup.continue.title" = "Continue creating";
+"create_listing.finish.edit_popup.title" = "Finish editing?";
+"create_listing.finish.edit_popup.text" = "You can exit but editing progress will be lost";
+"create_listing.finish.edit_popup.continue.title" = "Continue editing";
+"create_listing.created.alert" = "Listing has been successfully updated";
+
+// MARK: - Edit listing
+
+"edit_listing.title" = "Edit Listing";
+
+// MARK: - Sign up
+
+"sign_up.title" = "Create profile";
+
+// MARK: - Profile
+
+"profile.email.title" = "Email";
+"profile.phone.title" = "Your phone number";
+"profile.currency.title" = "Currency";
+"profile.account.title" = "Account";
+"profile.about.text" = "ABOUT";
+"profile.about.terms.title" = "Terms and Conditions";
+"profile.about.privacy.title" = "Privacy Policy";
+"profile.account.sign_out.title" = "Sign out";
+
+// MARK: - Edit profile
+
+"edit_profile.title" = "Edit profile";
+"edit_profile.buttons.change_photo.title" = "CHANGE PHOTO";
+"edit_profile.buttons.save.title" = "SAVE";
+"edit_profile.first_name.title" = "First name";
+"edit_profile.last_name.title" = "Last name";
+"edit_profile.change_email.title" = "Change email";
+"edit_profile.update_user.popup.success.text" = "User updated";
+"edit_profile.update_email.popup.success.text" = "Email changed";
+"edit_profile.update_avatar.popup.success.text" = "Photo successfully uploaded";
+"edit_profile.exit_alert.title" = "Save changes?";
+"edit_profile.exit_alert.message" = "You have unsaved changes. If you exit they will be lost.";
+"edit_profile.avatar_formats" = "The picture must be in png, jpg or jpeg format";
+
+// MARK: - Currency
+
+"currency.usd.title" = "United States dollar (USD)";
+"currency.sol.title" = "Peruvian Sol (S/)";
+"currency.sol.symbol" = "S/";
+"currency.usd.symbol" = "$";
+"currency.sol.code" = "S/";
+"currency.usd.code" = "USD";
+
+// MARK: - My listings
+
+"my_listings.title" = "My listings";
+"my_listings.segment.published" = "Published";
+"my_listings.segment.not_published" = "Not published";
+"my_listings.empty_state.title" = "You have not added any listings yet.";
+"my_listings.empty_state_published.title" = "You have no\npublished listings.";
+"my_listings.empty_state_not_published.title" = "All your listings\nare published.";
+"my_listings.empty_state_published.subtitle" = "You can publish listings from draft\nor add a new one";
+"my_listings.empty_state.button.text" = "ADD NEW LISTING";
+"my_listings.add_button.text" = "ADD LISTING";
+"my_listings.bedrooms.abbreviation" = "%d bd";
+"my_listings.bathrooms.abbreviation" = "%d ba";
+"my_listings.parking_slots.abbreviation" = "%d ps";
+"my_listings.area.abbreviation" = "%@ m²";
+"my_listings.property_type.apartments.title" = "Apartment";
+"my_listings.property_type.house.title" = "House";
+"my_listings.property_type.commercial.title" = "Commercial";
+"my_listings.property_type.office.title" = "Office";
+"my_listings.property_type.land.title" = "Land";
+"my_listings.listing_type.sale.title" = "Sale";
+"my_listings.listing_type.rent.title" = "Rent";
+"my_listings.status.visible.title" = "Published";
+"my_listings.status.hidden.title" = "Not Published";
+"my_listings.status.unpublished.title" = "Unpublished";
+"my_listings.status.draft.title" = "in Draft";
+"my_listings.options.open.title" = "Open";
+"my_listings.options.edit.title" = "Edit details";
+"my_listings.options.publish.title" = "Publish";
+"my_listings.options.unpublish.title" = "Unpublish";
+"my_listings.options.delete.title" = "Delete";
+"my_listings.statistics.views" = "Views";
+"my_listings.statistics.favorites" = "Favorites";
+"my_listings.statistics.contacts" = "Contacts";
+"my_listings.days_left" = "%i days left";
+
+// MARK: - Listing preview
+
+"listing_preview.show_details.title" = "SHOW DETAILS";
+"listing_preview.navigate.title" = "NAVIGATE";
+
+// MARK: - Augmented reality
+
+"ar.main.title" = "AR View";
+"ar.main.subtitle" = "Listings for Sale";
+"ar.mapView.title" = "Map view";
+"ar.meters_counter.many.title" = "meters";
+"ar.meters_counter.single.title" = "meter";
+"ar.destination_reached.title" = "Your destination is reached.";
+
+// MARK: - Listing Details
+
+"listing_details.price_per_square_meter.text" = "%@%d/m²";
+"listing_details.price_per_month.text" = "per month";
+"listing_details.pet_friendly.text" = "Pet-friendly";
+"listing_details.bedrooms.text" = "%d beds";
+"listing_details.bathrooms.text" = "%d baths";
+"listing_details.parking_slots.text" = "%d prk slots";
+"listing_details.bedrooms.text.singular" = "%d bed";
+"listing_details.bathrooms.text.singular" = "%d bath";
+"listing_details.parking_slots.text.singular" = "%d prk slot";
+"listing_details.parking_for_visitors.text" = "prk for visitors";
+"listing_details.total_area.text" = "Total area:";
+"listing_details.built_area.text" = "Built area:";
+"listing_details.covered_area.text" = "Covered area:";
+"listing_details.total_floors_count.text" = "%i total floors";
+"listing_details.floor_number.text" = "Floor #%i";
+"listing_details.about.title" = "About this place";
+"listing_details.about.year.text" = "Built in %@";
+"listing_details.about.show_more.title" = "Show more";
+"listing_details.facilities.title" = "Available facilites";
+"listing_details.advanced.title" = "Advanced details";
+"listing_details.contact_button.title" = "Contact";
+"listing_details.contact_button.description" = "This call may incur additional costs";
+"listing_details.action.more" = "More";
+"listing_details.action.report" = "Report";
+"listing_details.map.actions.title" = "Choose Map Provider";
+"listing_details.map.actions.apple_maps" = "Use Apple Maps ";
+"listing_details.map.actions.google_maps" = "Use Google Map";
+"listing_details.map.actions.waze" = "Use Waze Map";
+"listing_details.call.actions_title" = "Call";
+"listing_details.status.published" = "Published listing";
+"listing_details.status.unpublished" = "Unpublished listing";
+"listing_details.status.not_published" = "Not published listing";
+"listing_details.status.expired" = "Expired listing";
+
+// MARK: - Listing Search
+
+"listing_search.empty_result.title" = "No matching results...";
+"listing_search.empty_result.text" = "Try change your search criteria.";
+"search.bar.listings_found.text" = "Found: %d Listings";
+"search.bar.filters_tip.text" = "Tap on filter to remove";
+"listing.list.sort_by" = "Sort by:";
+"listing.list.sorting" = "Sorting";
+"listing.sort_option.price_low_to_high" = "Price: Lowest to Highest";
+"listing.sort_option.price_high_to_low" = "Price: Highest to Lowest";
+"listing.sort_option.newest_to_oldest" = "Newest to oldest";
+"listing.sort_option.oldest_to_newest" = "Oldest to newest";
+"listing.sort_option.closest_to_farthest" = "Closest to farthest";
+"listing.sort_option.farthest_to_closest" = "Farthest to closest";
+"listing.sort_option.area_highest_to_lowest" = "Area: Highest to Lowest";
+"listing.sort_option.area_lowest_to_highest" = "Area: Lowest to Highest";
+"listing.sort_option.m2_price_highest_to_lowest" = "m2 Price: Highest to Lowest";
+"listing.sort_option.m2_price_lowest_to_highest" = "m2 Price: Lowest to Highest";
+"listing.sort_option.most_relevant" = "Most relevant";
+"listing_search.location_popup.title" = "Why we ask your location";
+"listing_search.location_popup.text" = "Your current location will be displayed on the map and used for nearby search results.";
+"listing_search.ar_popup.title" = "Search for Properties using AR";
+"listing_search.ar_popup.text" = "Are you interested in the area where you are? Explore it with our AR and discover which properties are for sale or rent. Click on navigate and we will take you by the shortest route ...";
+"listing_search.location_popup.done.title" = "GOT IT";
+"listing_search.location_popup.cancel.title" = "Not now";
+"listing_search.search_bar.placeholder" = "Address, city, etc.";
+"listing_search.top_listings_title" = "Top Listings";
+
+// MARK: - Search by location
+
+"search_by_location.permission_popUp.title" = "Turn on Location Services";
+"search_by_location.permission_popUp.message" = "To use Babilonia to find homes near you, go to Settings > Privacy > Location Services. Then enable location for the Babilonia app.";
+"search_by_location.current_location" = "Current location";
+"search_by_location.location_not_found" = "Location not found";
+"search_by_location.recent_searches" = "Recent searches";
+
+// MARK: - Favorites
+
+"favorites_listings.title" = "Favorites";
+"favorites_listings.empty.title" = "Your favorite list is empty";
+"favorites_listings.empty.description.first" = "For adding listing to list press ";
+"favorites_listings.empty.description.second" = " icon on preview. You also will receive updates about new photos and price changing";
+
+// MARK: - Filters
+
+"filters.title" = "Filters";
+"filters.for_sale" = "For Sale";
+"filters.for_rent" = "For Rent";
+"filters.reset" = "Reset";
+"filters.price_range" = "Price range:";
+"filters.total_area" = "Total Area, m²";
+"filters.built_area" = "Built Area, m²";
+"filters.covered_area" = "Covered Area, m²";
+"filters.range.min" = "Min";
+"filters.range.max" = "Max";
+"filters.range.from" = "From";
+"filters.range.to" = "To";
+"filters.property_facilities" = "Property Facilities";
+"filters.apply_filters" = "Apply filters";
+"filters.listings_found" = "%i listings found";
+"filters.reset" = "Reset";
+"filters.all_facilities" = "All Facilities";
+"filters.property_type.any" = "Any";
+"filters.total_floors" = "Total Floors";
+"filters.floor_number" = "Floor number";
+"filters.parking" = "Parking";
+"filters.warehouse" = "Warehouse";
+"filters.applied.totalArea.type" = "Total: ";
+"filters.applied.builtArea.type" = "Built: ";
+"filters.applied.coveredArea.type" = "Covered: ";
+"filters.applied.area_range" = "%i - %i m²";
+"filters.applied.floors" = "floors";
+"filters.applied.floors.singular" = "floor";
+"filters.parking_slots" = "%i prk slots";
+"filters.parking_slots.singular" = "%i prk slot";
+
+// MARK: - Payments
+
+"payments.flow.title" = "Publish your listing";
+"payments.profile_selection.description" = "Select a profile";
+"payments.plan_selection.description" = "Compare and select the type of ad that suits you the most.";
+"payments.period_selection.description" = "Select the period of publising listing.";
+"payments.profile_selection.button" = "Select profile";
+"payments.plan_selection.button" = "Select plan";
+"payments.period_selection.button" = "Check out";
+"payments.profile.owner" = "Owner";
+"payments.profile.realtor" = "Realtor";
+"payments.profile.company" = "Construction Company";
+"payments.profile.description" = "Realtor and Construction company functionality is available on the website. Please visit babilonia.io";
+"payments.profile.description_link" = "babilonia.io";
+"payments.price.from" = "from S/ %@";
+"payments.period.days" = "%i days";
+"payments.checkout.title" = "Checkout";
+"payments.checkout.pay" = "Pay %@";
+"payments.checkout.cvc" = "cvc";
+"payments.checkout.card_name" = "Name on card";
+"payments.checkout.experation_date_placeholder" = "MM / YY";
+"payments.listing_plan.standard" = "Standard Listing";
+"payments.listing_plan.plus" = "Plus Listing";
+"payments.listing_plan.premium" = "Premium Listing";
+"payments.plan_title.standard" = "Standard plan";
+"payments.plan_title.plus" = "Plus plan";
+"payments.plan_title.premium" = "Premium plan";
+"payments.alert.listing_published_success" = "Listing published successfully";
+"payments.plan.expired.status" = "Expired";
+
+// MARK: - Photo gallery
+
+"photo_gallery.title" = "Photo Gallery";
+"photo_gallery.photos_count" = "%i photos";
+
+// MARK: - Inbox
+
+"inbox.comming_soon" = "Coming soon…";

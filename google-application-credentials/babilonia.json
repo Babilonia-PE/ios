@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "babilonia",
+  "private_key_id": "13d1e7a5e1a31eee29bc3c33ca99f7a68ae21319",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDQeVluI9gA6Isb\nHz4M16TZ4qyaxUAeQMY7NpC+ldYwPbwbDY85bDVxPzn7q/0xIp+L6Iu3Xdnl/bQL\nnSDdOlgGhtwP6pkhFWsTKYfKgoDrWvFEOC+u0/0XI5vCzhEl10sXiQ0xZsR8VDJh\nbrna11h8tcQgvrYEFh82phPZlHemRoN9bXCF3aemEn2H/nSagPCS+VWFqEhE3JPd\nMJt666uHX++nriGkC0t9LnAQC4/86nKFA4BpfF09nP+kXFGHGNhePhL9eBAtsHsB\nox7+laqzos6HRVitUXYgLBSBe2OsQDcVLj2g9LQimQLMyGe6waSJrTA8pWSMEtbX\nZC3JT19JAgMBAAECggEAXK7+n/VmlGzOX3YB37LFsyrQIxT73xdcKjolmt3BtnvT\n09Ew8k4V6m26KRY7QCuM9CYka5bZh6NF9v3Z/RDxzqEJWDgr8SX1DzVhDhr8Fua9\nKd+y706HEFD/8FkuDX1MgL+pMmPmigHizidskIs552PmOMqg4Gs3YFPwskSL90tH\np/6yM66AOR8RiGktg5X+SNNcslhYmM/6pY5zBLdnp1Ha8zR+4VxaAqDy4AGJNjOS\nEvdbb2tAescPMGwrRVihS+kp8ynC4KkquI74H+Osapkin3ZdhMRkMw9jJOzl7Cef\ntH36sZcso5drX4XUIP70yptQAozscTUm2A89qqGliwKBgQDugtBWT4RvmGybAlDk\n5sPIGUUcwKeYkBbTAaomH7ILQgPZje5vMP7DFO10w+UzxjLEXJUiyj7X9QkWRrCE\n7BmKlniM7oMcOQhuMvF6SyRudVvxxAYaOE58XTUMS6P04dPoXlQyFFFno8+uNjtl\ncbNx+7ja/YpZJOuizWqasqvCNwKBgQDfwrMMdWIvpxDxlzsjkDGzJmsDwqkojzFu\n8FSGju7IHVD+6Kbe7lOWlYDXBP7OnN49myLOFDbScIUHK0CnYwjFDZZaA7sHhNet\nRLIaYEzM79m3xZRz9+xAFkVWae9J6hjW6tn240+Rg14yIiYpDmA5I6T/J+ScCUw8\nneqs7ysqfwKBgCq7qVQtfw73gk3rhk7cwasyS92w7tY4yr4XiEK4XxABTetGsLef\nUaXmM/09s+0oz6O66sWG8ueCcZRaKfpGyvS3rPWjLj56QXZtDjLZD7fysvyIIIfG\nGtnRYVXIn6GabHsvm2o1lbg581XFRbMRQhNkBGTIFGeQY9+Rak45QOjVAoGAIpHE\n8b7M3YnVD04K//KOCxx7Wghf8/kzbO1KUcORVm9ZDRjKdxSg61nLnuyRpUANAb2P\nAgGTeq2Rj8r54SJmv3La8Ks04POAEq/TSEnqc5r2qvKmfcgmwrvuGGyjYGr/TWzZ\nIdB6gYOnMN2fwaYL7af5HMaABi9VjOPk1rTYmWcCgYAyN+oFbudF9rD8bj87+PIM\nmx3aLSK1S1c1hKqkDErCPEvmDbA4deMLQFZKHvIYG7gGBfLF3rlr31BpHBDiMmch\npsS2LBJ/TxmjRnlxCtacG8/h1KTO7bD4m5CgLO3XimA8q4aq2FUMSD0kLK7mUhTV\nb8Kw388QgwVQvmEzkBSbxw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "app-distribution@babilonia.iam.gserviceaccount.com",
+  "client_id": "109414579035260598700",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/app-distribution%40babilonia.iam.gserviceaccount.com"
+}

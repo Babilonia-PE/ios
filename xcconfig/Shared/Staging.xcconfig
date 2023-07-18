@@ -1,0 +1,5 @@
+// Specialization for the Staging
+
+#include "Base.xcconfig"
+
+BUILD_ENV = STAGING
