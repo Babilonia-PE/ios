@@ -1,0 +1,29 @@
+strings:
+  - inputs: Babilonia/Resources/en.lproj/Localizable.strings
+    outputs:
+    - templateName: structured-swift4
+      output: Babilonia/Common/Extensions/SwiftGen/Localization+SwiftGen.swift
+
+  - inputs: Babilonia/Resources/es.lproj/Localizable.strings
+    outputs:
+    - templateName: structured-swift4
+      output: Babilonia/Common/Extensions/SwiftGen/Localization+SwiftGen.swift
+
+xcassets:
+  inputs: Babilonia/Resources/Assets.xcassets
+  outputs:
+    templateName: swift5
+    output: Babilonia/Common/Extensions/SwiftGen/Assets+SwiftGen.swift
+
+fonts:
+  inputs: Babilonia/Resources/Fonts
+  outputs:
+    templateName: swift5
+    output: Babilonia/Common/Extensions/SwiftGen/Fonts+SwiftGen.swift
+
+coredata:
+  inputs: Core/Source/Database/BabiloniaCoreDataModel.xcdatamodeld
+  outputs:
+    templateName: swift5
+    output: Core/Source/Database/Extensions/SwiftGen/NSManagedObject+SwiftGen.swift
+
