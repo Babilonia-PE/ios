@@ -23,10 +23,16 @@ public final class DecodableParser<T: Decodable>: KeyPathParser, ResponseParser 
     public func parse(_ object: AnyObject) -> Result<T> {
         do {
             let value = try valueForKeyPath(in: object)
-            let data = try JSONSerialization.data(withJSONObject: value)
+            let data = try JSONSerialization.data(withJSONObject: value, options: [])
             let decoded = try decoder.decode(T.self, from: data)
+#if DEBUG
+            print("DecodableParser = \(value)")
+#endif
             return .success(decoded)
         } catch let error {
+#if DEBUG
+            print("DecodableParser error=", error)
+#endif
             return .failure(error)
         }
     }

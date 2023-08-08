@@ -42,10 +42,20 @@ final class PaymentsPlanModel: EventNode {
                 self?.plans.accept(plans)
 
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
-                self?.plans.accept([])
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                    self?.plans.accept([])
+                }
             }
         }
     }
 
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }

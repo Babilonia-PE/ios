@@ -76,6 +76,9 @@ final class ProfileFlowCoordinator: EventNode, FlowCoordinator {
         case .editEmail:
             createEditProfileFlow(screenType: .editEmail)
             
+        case .editPhoneNumber:
+            createEditProfileFlow(screenType: .editPhoneNumber)
+            
         case .open(let link, let title):
             showTermsAndPrivacy(link, with: title)
             
@@ -113,7 +116,6 @@ final class ProfileFlowCoordinator: EventNode, FlowCoordinator {
         switch event {
         case .logout:
             raise(event: ProfileFlowEvent.logout)
-            
         case .close: // TODO: uncomment after resolving Tabbar hiding
 //            navigationController?.popViewController(animated: true)
             containerViewController?.dismiss(animated: true, completion: nil)

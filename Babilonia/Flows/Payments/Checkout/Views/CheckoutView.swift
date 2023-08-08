@@ -7,14 +7,15 @@
 //
 
 import UIKit
-import Stripe
+//import Stripe
 import RxSwift
 import RxCocoa
 
 final class CheckoutView: NiblessView {
 
     let checkoutButton: ConfirmationButton = .init()
-    let paymentField: STPPaymentCardNumberTextField = .init()
+    let termsConditionsLabel: UILabel = .init()
+    private var paymentField: InputFieldView!
     private let productImageView: UIImageView = .init()
     private let productLabel: UILabel = .init()
     private let daysLabel: UILabel = .init()
@@ -28,6 +29,7 @@ final class CheckoutView: NiblessView {
     private var cvcViewModel: InputFieldViewModel!
     private var expirationViewModel: InputFieldViewModel!
     private var cardNameViewModel: InputFieldViewModel!
+    private var cardValueViewModel: InputFieldViewModel!
 
     private let disposeBag = DisposeBag()
 
@@ -42,18 +44,27 @@ final class CheckoutView: NiblessView {
         productLabel.textColor = model.color
         priceLabel.text = model.price
         daysLabel.text = model.days
+        termsConditionsLabel.attributedText = L10n.Payments.Checkout.termsConditions.toAttributed(
+            with: FontFamily.AvenirLTStd._65Medium.font(size: 12.0),
+            lineSpacing: 5.0,
+            alignment: .center,
+            color: Asset.Colors.bluishGrey.color,
+            kern: 0.0
+        )
         productImageView.image = model.icon
-
         checkoutButton.setTitle(L10n.Payments.Checkout.pay(model.price).uppercased(), for: .normal)
     }
 
-    func setupInputsFields(cvcViewModel: InputFieldViewModel,
+    func setupInputsFields(cardValueViewModel: InputFieldViewModel,
+                           cvcViewModel: InputFieldViewModel,
                            expirationViewModel: InputFieldViewModel,
                            cardNameViewModel: InputFieldViewModel) {
         self.cvcViewModel = cvcViewModel
         self.expirationViewModel = expirationViewModel
         self.cardNameViewModel = cardNameViewModel
-
+        self.cardValueViewModel = cardValueViewModel
+        
+        paymentField = InputFieldView(viewModel: cardValueViewModel)
         cvcInputFieldView = InputFieldView(viewModel: cvcViewModel)
         expirationInputFieldView = InputFieldView(viewModel: expirationViewModel)
         cardNameInputFieldView = InputFieldView(viewModel: cardNameViewModel)
@@ -67,25 +78,34 @@ final class CheckoutView: NiblessView {
 extension CheckoutView {
 
     private func setupFieldsLayout() {
-        addSubviews(cvcInputFieldView, expirationInputFieldView, cardNameInputFieldView)
+        addSubviews(paymentField, cvcInputFieldView, expirationInputFieldView, cardNameInputFieldView)
 
-        cvcInputFieldView.layout {
+        //    setupPaymentField()
+        addSubview(paymentField)
+        paymentField.layout {
+            $0.top.equal(to: priceStackView.bottomAnchor, offsetBy: 32)
+            $0.leading.equal(to: leadingAnchor, offsetBy: 16)
+            $0.trailing.equal(to: trailingAnchor, offsetBy: -16)
+            $0.height.equal(to: 56)
+        }
+        
+        expirationInputFieldView.layout {
             $0.leading.equal(to: leadingAnchor, offsetBy: 16)
             $0.top.equal(to: paymentField.bottomAnchor, offsetBy: 16)
             $0.height.equal(to: 56)
         }
 
-        expirationInputFieldView.layout {
-            $0.leading.equal(to: cvcInputFieldView.trailingAnchor, offsetBy: 7)
+        cvcInputFieldView.layout {
+            $0.leading.equal(to: expirationInputFieldView.trailingAnchor, offsetBy: 7)
             $0.trailing.equal(to: trailingAnchor, offsetBy: -16)
             $0.top.equal(to: paymentField.bottomAnchor, offsetBy: 16)
             $0.height.equal(to: 56)
-            $0.width.equal(to: cvcInputFieldView.widthAnchor)
+            $0.width.equal(to: expirationInputFieldView.widthAnchor)
         }
 
         cardNameInputFieldView.layout {
             $0.leading.equal(to: leadingAnchor, offsetBy: 16)
-            $0.top.equal(to: cvcInputFieldView.bottomAnchor, offsetBy: 16)
+            $0.top.equal(to: expirationInputFieldView.bottomAnchor, offsetBy: 16)
             $0.trailing.equal(to: trailingAnchor, offsetBy: -16)
             $0.height.equal(to: 56)
         }
@@ -93,11 +113,9 @@ extension CheckoutView {
 
     private func setupView() {
         backgroundColor = .white
-
         planStackView.axis = .horizontal
         planStackView.spacing = 7
         planStackView.alignment = .center
-
         addSubviews(planStackView)
         planStackView.layout {
             $0.top.equal(to: safeAreaLayoutGuide.topAnchor, offsetBy: 24)
@@ -130,17 +148,17 @@ extension CheckoutView {
         daysLabel.textColor = Asset.Colors.bluishGrey.color
         priceStackView.addArrangedSubview(daysLabel)
         daysLabel.layout { $0.height.equal(to: 24) }
-
-        setupPaymentField()
-
-        addSubview(paymentField)
-        paymentField.layout {
-            $0.top.equal(to: priceStackView.bottomAnchor, offsetBy: 32)
-            $0.leading.equal(to: leadingAnchor, offsetBy: 16)
-            $0.trailing.equal(to: trailingAnchor, offsetBy: -16)
-            $0.height.equal(to: 56)
+        
+        addSubview(termsConditionsLabel)
+        termsConditionsLabel.layout {
+            $0.leading.equal(to: leadingAnchor, offsetBy: 30)
+            $0.trailing.equal(to: trailingAnchor, offsetBy: -30)
+            $0.bottom.equal(to: safeAreaLayoutGuide.bottomAnchor, offsetBy: -24)
         }
-
+        termsConditionsLabel.textAlignment = .left
+        termsConditionsLabel.isUserInteractionEnabled = true
+        termsConditionsLabel.numberOfLines = 0
+        
         checkoutButton.setTitleColor(.white, for: .normal)
         checkoutButton.titleLabel?.font = FontFamily.SamsungSharpSans.bold.font(size: 16)
         checkoutButton.isEnabled = false
@@ -149,24 +167,15 @@ extension CheckoutView {
         checkoutButton.layout {
             $0.leading.equal(to: leadingAnchor, offsetBy: 16)
             $0.trailing.equal(to: trailingAnchor, offsetBy: -16)
-            $0.bottom.equal(to: safeAreaLayoutGuide.bottomAnchor, offsetBy: -24)
+            $0.bottom.equal(to: termsConditionsLabel.topAnchor, offsetBy: -15)
             $0.height.equal(to: 56)
         }
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFields))
         addGestureRecognizer(tap)
-    }
-
-    private func setupPaymentField() {
-        paymentField.delegate = self
-        paymentField.postalCodeEntryEnabled = false
-        paymentField.font = FontFamily.AvenirLTStd._65Medium.font(size: 16)
-        paymentField.borderColor = Asset.Colors.cloudyBlue.color
-        paymentField.cornerRadius = 6
-        paymentField.textColor = Asset.Colors.almostBlack.color
-        paymentField.cursorColor = Asset.Colors.hippieBlue.color
-
-        paymentField.removeFields()
+        
+        let termsTap = UITapGestureRecognizer(target: self, action: #selector(openLink))
+        termsConditionsLabel.addGestureRecognizer(termsTap)
     }
 
     @objc
@@ -174,8 +183,29 @@ extension CheckoutView {
         paymentField.resignFirstResponder()
         endEditing(true)
     }
+    
+    @objc
+    private func openLink() {
+        UIApplication.shared.open(URL(string: "https://babilonia.io/information/terms_and_conditions")!,
+                                  options: [:], completionHandler: nil)
+    }
 
     private func setupBindings() {
+        
+        cardValueViewModel.shouldChangeTextHandler = { count in count <= 24 }
+        cardValueViewModel.textChanged
+            .subscribe(onNext: { [weak self] text in
+                var formattedText = ""
+                if self?.cardValueViewModel.textCount ?? 0 <= text.count {
+                    formattedText = text.cardRaiseFormatted()
+                } else {
+                    formattedText = text.cardReduceFormatted()
+                }
+                self?.cardValueViewModel.updateText(formattedText)
+            })
+            .disposed(by: disposeBag)
+        cardValueViewModel.editingDidEnd.bind(onNext: checkFieldsValidation ).disposed(by: disposeBag)
+
         cvcViewModel.shouldChangeTextHandler = { count in count <= 3 }
         cvcViewModel.editingDidEnd.bind(onNext: checkFieldsValidation ).disposed(by: disposeBag)
 
@@ -204,25 +234,12 @@ extension CheckoutView {
 
     private func checkFieldsValidation() {
         switch (cvcViewModel.validate(), expirationViewModel.validate(),
-                cardNameViewModel.validate(), paymentField.isValid) {
-        case (.success, .success, .success, true):
+                cardNameViewModel.validate(), cardValueViewModel.validate()) {
+        case (.success, .success, .success, .success):
             checkoutButton.isEnabled = true
         default:
             checkoutButton.isEnabled = false
         }
-    }
-
-}
-
-extension CheckoutView: STPPaymentCardTextFieldDelegate {
-
-    func paymentCardTextFieldDidBeginEditingNumber(_ textField: STPPaymentCardTextField) {
-        paymentField.borderColor = Asset.Colors.hippieBlue.color
-    }
-
-    func paymentCardTextFieldDidEndEditingNumber(_ textField: STPPaymentCardTextField) {
-        paymentField.borderColor = Asset.Colors.cloudyBlue.color
-        checkFieldsValidation()
     }
 
 }

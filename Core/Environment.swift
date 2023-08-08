@@ -4,6 +4,7 @@ public struct Environment: Codable {
     
     public var name: String = "undefined"
     public var hostURL: URL = URL(string: "localhost")!
+    public var paymentURL: URL = URL(string: "localhost")!
     public var stripePublishableKey: String!
     public var deeplinkHost: String!
     public var webSiteURL: String!

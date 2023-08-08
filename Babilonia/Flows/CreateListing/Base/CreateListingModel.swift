@@ -39,10 +39,11 @@ final class CreateListingModel: EventNode {
     private let facilitiesService: FacilitiesService
     private let listingsService: ListingsService
     private let imagesService: ImagesService
-    
+    private let geoService: GeoService
     private let currentIndex = BehaviorRelay(value: 0)
     private var stepModelsMap = [String: AnyObject]()
     private var draftUpdatesAvailable = true
+    private let userSession: UserSession
     
     private let disposeBag = DisposeBag()
     
@@ -55,7 +56,9 @@ final class CreateListingModel: EventNode {
         facilitiesService: FacilitiesService,
         listingsService: ListingsService,
         imagesService: ImagesService,
-        mode: ListingFillMode
+        geoService: GeoService,
+        mode: ListingFillMode,
+        userSession: UserSession
     ) {
         self.steps = steps
         self.stepWrappers = steps.map { StepWrapper(step: $0) }
@@ -64,6 +67,8 @@ final class CreateListingModel: EventNode {
         self.facilitiesService = facilitiesService
         self.listingsService = listingsService
         self.imagesService = imagesService
+        self.geoService = geoService
+        self.userSession = userSession
         self.mode = mode
         super.init(parent: parent)
         
@@ -113,6 +118,16 @@ final class CreateListingModel: EventNode {
     
     func enableDraftUpdates() {
         draftUpdatesAvailable = true
+        let contact = draftListing?.contact
+        if contact == nil || contact?.contactName == nil ||
+            contact?.contactPhone == nil || contact?.contactEmail == nil {
+//            draftListing?.contact = Contact(contactEmail: userSession.user.email,
+//                                            contactName: "\(userSession.user.firstName ?? "") \(userSession.user.lastName ?? "")",
+//                                            contactPhone: userSession.user.phoneNumber)
+            draftListing?.contact = Contact(contactEmail: userSession.user.email,
+                                            contactName: userSession.user.fullName ?? "",
+                                            contactPhone: userSession.user.phoneNumber)
+        }
     }
     
     // MARK: - private
@@ -129,7 +144,9 @@ final class CreateListingModel: EventNode {
             var model: AnyObject
             switch step {
             case .common:
-                model = CreateListingCommonModel(parent: self, mode: mode, updateListingCallback: updateListingCallback)
+                model = CreateListingCommonModel(parent: self, mode: mode,
+                                                 geoService: geoService,
+                                                 updateListingCallback: updateListingCallback)
             case .details:
                 model = CreateListingDetailsModel(parent: self, updateListingCallback: updateListingCallback)
             case .facilities:

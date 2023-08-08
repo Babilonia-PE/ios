@@ -32,6 +32,9 @@ final class InputFieldViewModel {
     var isEditingUpdated: Signal<Bool> { return isEditing.asSignal() }
     
     var shouldValidateOnStart: Bool { return !text.value.isEmpty }
+    
+    var textCount: Int { return text.value.count }
+    
     /// making caret static here to prevent glitches after formatting
     var caretShouldBeStatic: Bool { return textFormatter != nil }
     
@@ -45,7 +48,6 @@ final class InputFieldViewModel {
             } ?? true
         }
     }
-
     var editingDidEnd = PublishSubject<Void>()
     var editingDidBegin = PublishSubject<Void>()
     var textChanged = PublishSubject<String>()
@@ -64,6 +66,8 @@ final class InputFieldViewModel {
     let isFieldEnabled: Bool
     let isDefaultOnDismiss: Bool
     let isAttributedText: Bool
+    let isSecureText: Bool
+    var isHidden: Bool
     private let title: BehaviorRelay<String>
     private let text: BehaviorRelay<String>
     private let validator: Validator?
@@ -86,7 +90,9 @@ final class InputFieldViewModel {
         autocorrectionType: UITextAutocorrectionType = .default,
         isFieldEnabled: Bool = true,
         isDefaultOnDismiss: Bool = false,
-        isAttributedText: Bool = false
+        isAttributedText: Bool = false,
+        isSecureText: Bool = false,
+        isHidden: Bool = false
     ) {
         self.title = title
         self.text = text
@@ -102,6 +108,8 @@ final class InputFieldViewModel {
         self.isFieldEnabled = isFieldEnabled
         self.isDefaultOnDismiss = isDefaultOnDismiss
         self.isAttributedText = isAttributedText
+        self.isSecureText = isSecureText
+        self.isHidden = isHidden
     }
     
     func validate() -> ValidationCheckResult {
@@ -151,4 +159,7 @@ final class InputFieldViewModel {
         return shouldChangeCount && shouldChangeRange
     }
     
+    func getTitle() -> String {
+        return self.title.value
+    }
 }

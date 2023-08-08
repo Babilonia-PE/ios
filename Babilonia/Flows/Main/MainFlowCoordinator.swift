@@ -11,19 +11,20 @@ import ESTabBarController_swift
 
 enum MainFlowEvent: Event {
     case logout
+    case logoutAndLogin
 }
 
 final class MainFlowCoordinator: EventNode, FlowCoordinator {
     
     weak var containerViewController: UIViewController?
-    
+    private let userSession: UserSession
     private let container: Container
     
-    init(container: Container, parent: EventNode) {
+    init(container: Container, userSession: UserSession, parent: EventNode) {
         self.container = Container(parent: container) { (container: Container) in
             MainFlowAssembly().assemble(container: container)
         }
-        
+        self.userSession = userSession
         super.init(parent: parent)
         
         addHandlers()
@@ -32,6 +33,7 @@ final class MainFlowCoordinator: EventNode, FlowCoordinator {
     
     func createFlow() -> UIViewController {
         let controller: MainMenuViewController = container.autoresolve(argument: self)
+        controller.menuDelegate = self
         controller.viewControllers = createViewControllers()
 
         return controller
@@ -136,4 +138,35 @@ final class MainFlowCoordinator: EventNode, FlowCoordinator {
         configsService.getCurrencyRate()
     }
     
+}
+
+extension MainFlowCoordinator: MainMenuViewControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
+        guard let navigationController = viewController as? UINavigationController,
+              let firstController = navigationController.viewControllers.first else { return true }
+        if userSession.user.id == .guest {
+            if firstController is FavoritesViewController ||
+                firstController is MyListingsViewController ||
+                firstController is NotificationsViewController {
+                
+                guard let window = UIApplication.shared.delegate?.window,
+                      let presentingView = window else { return false }
+                let popupView = GuestPopupView(popupViewType: .guest)
+
+                let doneAction = { [weak self, unowned popupView] in
+                    popupView.hide()
+                    self?.raise(event: MainFlowEvent.logoutAndLogin)
+                }
+                let cancelAction = { [unowned popupView] in
+                    popupView.hide()
+                }
+                popupView.setup(with: doneAction, cancelAction: cancelAction)
+                popupView.show(in: presentingView)
+                
+                return false
+            }
+        }
+        return true
+    }
 }

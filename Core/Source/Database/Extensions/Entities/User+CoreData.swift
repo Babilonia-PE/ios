@@ -51,9 +51,9 @@ extension User: CoreDataModelConvertible {
     private func map(_ object: ManagedUser) {
         object.id = Int64(id)
         object.email = email
-        object.firstName = firstName
-        object.lastName = lastName
-        object.phoneNumber = phoneNumber
+        object.fullName = fullName
+        //object.lastName = lastName
+        object.phoneNumber = phoneNumber ?? ""
         
         guard let context = object.managedObjectContext else { return }
         
@@ -64,8 +64,8 @@ extension User: CoreDataModelConvertible {
         return User(
             id: UserId(object.id),
             email: object.email,
-            firstName: object.firstName,
-            lastName: object.lastName,
+            fullName: object.fullName,
+            //lastName: object.lastName,
             phoneNumber: object.phoneNumber,
             avatar: object.avatar.flatMap(RemoteImage.instantiate)
         )

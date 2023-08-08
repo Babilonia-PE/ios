@@ -9,7 +9,7 @@
 import Foundation
 import Swinject
 import Core
-import FirebaseUI
+import FirebasePhoneAuthUI
 
 enum AuthFlowEvent: Event {
     case signIn(UserSession)
@@ -18,6 +18,8 @@ enum AuthFlowEvent: Event {
 final class AuthFlowCoordinator: EventNode, FlowCoordinator {
     
     weak var containerViewController: UIViewController?
+    weak var signUpNavigationController: UINavigationController?
+    weak var logInNavigationController: UINavigationController?
     
     private let container: Container
     private var authViewController: AuthViewController!
@@ -39,6 +41,26 @@ final class AuthFlowCoordinator: EventNode, FlowCoordinator {
         return authViewController
     }
     
+    private func showSignUpFlow() {
+        let controller: AuthSignUpViewController = container.autoresolve(argument: self)
+        
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
+        signUpNavigationController = navigationController
+        
+        containerViewController?.present(signUpNavigationController!, animated: true, completion: nil)
+    }
+    
+    private func showLogInFlow() {
+        let controller: AuthLogInViewController = container.autoresolve(argument: self)
+        
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
+        logInNavigationController = navigationController
+        
+        containerViewController?.present(logInNavigationController!, animated: true, completion: nil)
+    }
+    
     // MARK: - private
     
     private func addHandlers() {
@@ -51,6 +73,14 @@ final class AuthFlowCoordinator: EventNode, FlowCoordinator {
         switch event {
         case .signIn(let userSession):
             raise(event: AuthFlowEvent.signIn(userSession))
+        case .signUp:
+            showSignUpFlow()
+        case .logIn:
+            showLogInFlow()
+        case .cancelSignUp:
+            containerViewController?.dismiss(animated: true, completion: nil)
+        case .cancelLogIn:
+            containerViewController?.dismiss(animated: true, completion: nil)
         }
     }
     

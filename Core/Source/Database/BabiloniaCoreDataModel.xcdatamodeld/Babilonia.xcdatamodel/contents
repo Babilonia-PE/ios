@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AppConfig" representedClassName=".ManagedAppConfig" syncable="YES">
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="privacyURLString" attributeType="String"/>
@@ -43,6 +43,7 @@
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="primaryImageId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="propertyType" optional="YES" attributeType="String"/>
+        <attribute name="role" optional="YES" attributeType="String"/>
         <attribute name="state" attributeType="String"/>
         <attribute name="status" attributeType="String"/>
         <attribute name="totalFloorsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -63,9 +64,14 @@
     </entity>
     <entity name="Location" representedClassName=".ManagedLocation" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="department" optional="YES" attributeType="String"/>
+        <attribute name="district" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="latitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="province" optional="YES" attributeType="String"/>
+        <attribute name="zipCode" optional="YES" attributeType="String"/>
         <relationship name="config" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppConfig" inverseName="location" inverseEntity="AppConfig"/>
         <relationship name="listing" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Listing" inverseName="location" inverseEntity="Listing"/>
     </entity>
@@ -91,9 +97,9 @@
         <element name="AppConfig" positionX="394.45703125" positionY="348.25" width="128" height="105"/>
         <element name="Currency" positionX="339.6484375" positionY="184.515625" width="128" height="105"/>
         <element name="Facility" positionX="-199.4921875" positionY="115.32421875" width="128" height="148"/>
-        <element name="Listing" positionX="-0.5859375" positionY="238.36328125" width="128" height="523"/>
+        <element name="Listing" positionX="-0.5859375" positionY="238.36328125" width="128" height="538"/>
         <element name="ListingImage" positionX="181.03125" positionY="242.52734375" width="128" height="103"/>
-        <element name="Location" positionX="216.57421875" positionY="411.765625" width="128" height="135"/>
+        <element name="Location" positionX="216.57421875" positionY="411.765625" width="128" height="208"/>
         <element name="RemoteImage" positionX="31.1171875" positionY="24.29296875" width="128" height="148"/>
         <element name="User" positionX="-269.56640625" positionY="310.96875" width="128" height="148"/>
     </elements>

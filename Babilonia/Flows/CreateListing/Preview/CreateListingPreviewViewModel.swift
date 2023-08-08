@@ -16,6 +16,10 @@ final class CreateListingPreviewViewModel {
         return model.requestState.asObservable().observeOn(MainScheduler.instance)
     }
     
+    var showWarning: Observable<Bool> {
+        model.showWarning.asObservable().observeOn(MainScheduler.instance)
+    }
+    
     var listingDetailsViewModel: ListingDetailsViewModel {
         return ListingDetailsViewModel(model: model.listingDetailsModel)
     }

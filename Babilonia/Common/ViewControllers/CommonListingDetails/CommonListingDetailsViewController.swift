@@ -9,12 +9,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Core
+import FBSDKCoreKit
 
 final class CommonListingDetailsViewController: NiblessViewController, AlertApplicable, SpinnerApplicable {
 
     let alert = ApplicationAlert()
     let spinner = AppSpinner()
-
     private let containerView: UIView = .init()
     private let backButton: UIButton = .init()
     private let likeButton: UIButton = .init()
@@ -23,6 +24,8 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
     private let statusLabel: UILabel = .init()
     private let gradientView: UIView = .init()
     private let contactButton: UIButton = .init()
+    private let whatsAppButton: UIButton = .init()
+    private let shareButton: UIButton = .init()
     private let publishButton = ConfirmationButton()
     private var gradientLayer: CALayer!
     
@@ -44,6 +47,7 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
         setupView() 
         setupBindings()
         viewModel.getListingDetails()
+//        viewModel.triggerView()
         composerManager = ExternalDataComposerManager(controller: self)
     }
 
@@ -66,6 +70,10 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
             handle(state)
             stateOnAppearDidShow = true
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     override func viewDidLayoutSubviews() {
@@ -95,6 +103,12 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
             })
             .disposed(by: disposeBag)
 
+        viewModel.showWarning
+            .subscribe(onNext: { [weak self] _ in
+                self?.presentWarning()
+            })
+            .disposed(by: disposeBag)
+            
         viewModel.listingUpdated
             .drive(onNext: { [weak self] in
                 self?.setupButtonIfNeeded()
@@ -133,6 +147,12 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
                 self?.showPhoneCallAlert()
             })
             .disposed(by: disposeBag)
+        
+        whatsAppButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                self?.showWhatsappContact()
+            })
+            .disposed(by: disposeBag)
 
         backButton.rx.controlEvent(.touchUpInside)
             .subscribe(onNext: { [weak self] in
@@ -154,6 +174,12 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
                 }
             })
             .disposed(by: disposeBag)
+        
+        shareButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                self?.shareListingDetail()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupView() {
@@ -173,7 +199,7 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
             $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.leading == view.leadingAnchor
         }
-
+        
         if viewModel.viewState == .owned && !viewModel.shouldHideEditAction {
             editButton.setImage(Asset.Profile.edit.image.withRenderingMode(.alwaysTemplate), for: .normal)
             editButton.tintColor = .white
@@ -193,6 +219,15 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
                 $0.trailing.equal(to: view.trailingAnchor)
             }
         }
+        
+        shareButton.setImage(Asset.Common.shareIcon.image, for: .normal)
+        shareButton.contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 12.0, bottom: 10.0, right: 12.0)
+        view.addSubview(shareButton)
+        shareButton.layout {
+            $0.top.equal(to: view.safeAreaLayoutGuide.topAnchor, offsetBy: 45)
+            $0.trailing.equal(to: view.trailingAnchor)
+        }
+        shareButton.isHidden = !viewModel.isListingPublished
 
         titleLabel.font = FontFamily.SamsungSharpSans.bold.font(size: 16.0)
         titleLabel.textColor = .white
@@ -229,6 +264,7 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
     private func setupButtonIfNeeded() {
         if viewModel.viewState == .default {
             setupContactButtonIfNeeded()
+            setupWhatsappButtonIfNeeded()
         } else {
             setupPublishButton()
             publishButton.isHidden = viewModel.isListingPublished
@@ -244,7 +280,7 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
         view.addSubview(buttonView)
         buttonView.layout {
             $0.leading == view.leadingAnchor + 16.0
-            $0.trailing == view.trailingAnchor - 16.0
+            $0.trailing == view.trailingAnchor - 88.0
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor - 24.0
             $0.height == 56.0
         }
@@ -258,14 +294,14 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
         buttonView.addSubview(buttonTitleLabel)
         buttonTitleLabel.layout {
             $0.centerX.equal(to: buttonView.centerXAnchor)
-            $0.top.equal(to: buttonView.topAnchor, offsetBy: 10)
+            $0.top.equal(to: buttonView.topAnchor, offsetBy: 20)
         }
 
         let buttonDescriptionLabel = UILabel()
-        buttonDescriptionLabel.text = L10n.ListingDetails.ContactButton.description
-        buttonDescriptionLabel.font = FontFamily.AvenirLTStd._65Medium.font(size: 12)
-        buttonDescriptionLabel.textAlignment = .center
-        buttonDescriptionLabel.textColor = .white
+//        buttonDescriptionLabel.text = L10n.ListingDetails.ContactButton.description
+//        buttonDescriptionLabel.font = FontFamily.AvenirLTStd._65Medium.font(size: 12)
+//        buttonDescriptionLabel.textAlignment = .center
+//        buttonDescriptionLabel.textColor = .white
 
         buttonView.addSubview(buttonDescriptionLabel)
         buttonDescriptionLabel.layout {
@@ -275,6 +311,18 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
 
         buttonView.addSubview(contactButton)
         contactButton.pinEdges(to: buttonView)
+    }
+    
+    private func setupWhatsappButtonIfNeeded() {
+        view.addSubview(whatsAppButton)
+        whatsAppButton.layout {
+            $0.trailing == view.trailingAnchor - 16
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor - 24
+            $0.height == 56
+            $0.width == 56
+        }
+        whatsAppButton.makeShadow(Asset.Colors.almostBlack.color.withAlphaComponent(0.3), opacity: 1)
+        whatsAppButton.setImage(Asset.ListingDetails.iconWhatsapp.image, for: .normal)
     }
 
     private func setupPublishButton() {
@@ -330,16 +378,60 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
     }
 
     private func showPhoneCallAlert() {
-        let phone = viewModel.phoneNumber
-        SystemAlert.present(on: self,
-                            message: phone,
-                            confirmTitle: L10n.ListingDetails.Call.actionsTitle,
-                            confirm: { [weak self] in
-                                self?.composerManager.proceedPhone(phone)
-                                self?.viewModel.triggerContact()
-                            })
+        AppEvents.logEvent(AppEvents.Name("Contactenme"))
+        if self.viewModel.triggerContact() {
+            let phone = viewModel.phoneNumber
+            SystemAlert.present(on: self,
+                                message: phone,
+                                confirmTitle: L10n.ListingDetails.Call.actionsTitle,
+                                confirm: { [weak self] in
+                                    if self?.viewModel.triggerContact() ?? false {
+                                        self?.composerManager.proceedPhone(phone)
+                                    }
+                                })
+        }
     }
 
+    private func showWhatsappContact() {
+        AppEvents.logEvent(AppEvents.Name("Whatsapp"))
+        if self.viewModel.triggerWhatsapp() {
+            let phoneNumber = viewModel.phoneNumber
+            let text = "Hola! Estoy muy interesado en tu propiedad publicada en Babilonia y me gustaría más información. \(Environment.default.webSiteURL ?? "")\(viewModel.listingURL)"
+            let escapedString = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+
+            let urlWhats = "whatsapp://send?phone=\(phoneNumber)&text=\(text)"
+            if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
+                if let whatsappURL = URL(string: urlString) {
+                    if UIApplication.shared.canOpenURL(whatsappURL) {
+                        UIApplication.shared.open(whatsappURL, options: [:], completionHandler: nil)
+                    } else {
+                        let urlBase = "https://api.whatsapp.com"
+                        let whatsappURL = URL(string: "\(urlBase)/send?phone=\(phoneNumber)&text=\(escapedString)")
+                        print("whatsappURL = \(String(describing: whatsappURL))")
+                        if UIApplication.shared.canOpenURL(whatsappURL!) {
+                            UIApplication.shared.open(whatsappURL!, options: [:], completionHandler: nil)
+                        } else {
+                            print("Install Whatsapp")
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    private func shareListingDetail() {
+        let text = L10n.Common.share
+        let url = URL(string: "\(Environment.default.webSiteURL ?? "")\(viewModel.listingURL)")!
+        let items: [Any] = [text, url]
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.airDrop
+        ]
+
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
     private func showEditOptionsPopup() {
         let alert = UIAlertController(title: nil,
                                       message: nil,
@@ -372,21 +464,32 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
     }
 
     private func presentPublishActionAlert(isPublish: Bool) {
-        let title = isPublish ? nil : L10n.Popups.UnpublishListing.title
-        let message = isPublish ? L10n.Popups.PublishListing.text : L10n.Popups.UnpublishListing.text
-        let actionTitle = isPublish ? L10n.MyListings.Options.Publish.title : L10n.MyListings.Options.Unpublish.title
+        if viewModel.role == .realtor && isPublish {
+            presentWarning()
+        } else {
+            let title = isPublish ? nil : L10n.Popups.UnpublishListing.title
+            let message = isPublish ?
+                L10n.Popups.PublishListing.text :
+                L10n.Popups.UnpublishListing.text
+            let actionTitle = isPublish ? L10n.MyListings.Options.Publish.title : L10n.MyListings.Options.Unpublish.title
 
-        SystemAlert.present(on: self,
-                            title: title,
-                            message: message,
-                            confirmTitle: actionTitle,
-                            confirm: { [weak self] in
-                                if isPublish {
-                                    self?.viewModel.publishListing()
-                                } else {
-                                    self?.viewModel.unpublishListing()
-                                }
-                              })
+            SystemAlert.present(on: self,
+                                title: title,
+                                message: message,
+                                confirmTitle: actionTitle,
+                                confirm: { [weak self] in
+                                    if isPublish {
+                                        self?.viewModel.publishListing()
+                                    } else {
+                                        self?.viewModel.unpublishListing()
+                                    }
+                                  })
+        }
     }
-
+    
+    private func presentWarning() {
+        let message = L10n.Errors.actionMustBeDoneFromWeb
+        SystemAlert.present(on: self,
+                            message: message)
+    }
 }

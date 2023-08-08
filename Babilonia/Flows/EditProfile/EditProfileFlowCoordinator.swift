@@ -25,6 +25,8 @@ final class EditProfileFlowCoordinator: EventNode, FlowCoordinator {
     
     weak var containerViewController: UIViewController?
     
+    private var editProfileViewController: EditProfileViewController!
+    
     private let container: Container
     
     private let screenType: EditProfileType
@@ -42,7 +44,8 @@ final class EditProfileFlowCoordinator: EventNode, FlowCoordinator {
     
     @discardableResult
     func createFlow() -> UIViewController {
-        return container.autoresolve(arguments: self, screenType) as EditProfileViewController
+        editProfileViewController = container.autoresolve(arguments: self, screenType) as EditProfileViewController
+        return editProfileViewController
     }
     
     // MARK: - private
@@ -72,6 +75,7 @@ final class EditProfileFlowCoordinator: EventNode, FlowCoordinator {
     private func handle(_ event: CreateProfileEvent) {
         switch event {
         case .userCreated(let userSession):
+            editProfileViewController.userCreated()
             raise(event: CreateProfileFlowEvent.userCreated(userSession: userSession))
         case .cancel:
             containerViewController?.dismiss(animated: true, completion: nil)

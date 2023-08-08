@@ -12,13 +12,14 @@ import Core
 import CoreLocation.CLLocation
 
 enum CreateListingCommonEvent: Event {
+    case pickGeoValue(from: [String], updateHandler: ((Int) -> Void), title: String, startingIndex: Int)
     case pickPropertyType(from: [String], updateHandler: ((Int) -> Void), title: String, startingIndex: Int)
     case editDescription(updateHandler: ((String) -> Void), initialText: String, maxSymbolsCount: Int)
     case selectAddress(updateHandler: ((MapAddress) -> Void), initialAddress: MapAddress?)
 }
 
 final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
-    
+    let requestState = PublishSubject<RequestState>()
     let listingTypes = ListingType.allCases
     let propertyTypes = PropertyType.allCases
     var listingTypeIndex: Int { return currentListingTypeIndex.value }
@@ -38,6 +39,8 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
             self.propertyTypes[index]
         }
     }
+    //osemy
+
     var listingDescriptionUpdated: Driver<String> { return listingDescription.asDriver() }
     var addressUpdated: Driver<MapAddress?> { return address.asDriver() }
     var yearUpdated: Driver<Int> {
@@ -46,9 +49,9 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
     var currentPriceValue: String { return currentPrice.value }
     var currentAreaValue: String { return area.value }
     var currentCoveredAreaValue: String { return coveredArea.value }
+    var currentMapAddress: MapAddress? { return address.value }
     
     let updateListingCallback: ((UpdateListingBlock, Bool) -> Void)?
-    
     let mode: ListingFillMode
     let yearPickerValues: [Int]
 
@@ -67,13 +70,20 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
     private let listingFetched = BehaviorRelay(value: false)
     
     private let disposeBag = DisposeBag()
-    
+    private let geoService: GeoService
+    private var departments: [String] = []
+    private var provinces: [String] = []
+    private var districts: [String] = []
+    private var lastDistrict: String = ""
     // MARK: - lifecycle
     
-    init(parent: EventNode, mode: ListingFillMode, updateListingCallback: ((UpdateListingBlock, Bool) -> Void)?) {
+    init(parent: EventNode,
+         mode: ListingFillMode,
+         geoService: GeoService,
+         updateListingCallback: ((UpdateListingBlock, Bool) -> Void)?) {
         self.mode = mode
         self.updateListingCallback = updateListingCallback
-
+        self.geoService = geoService
         var values = [Int](1900...Calendar.current.component(.year, from: Date()))
         values.append(0)
         self.yearPickerValues = values
@@ -101,7 +111,149 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
             startingIndex: currentPropertyTypeIndex.value
         ))
     }
+    
+    func proceedWithDepartmentSelection(title: String) {
+        let updateBlock = { [weak self] (index: Int) in
+            guard let self = self else { return }
+            
+            guard let address = self.address.value else {
+                return
+            }
+            let mapAddress = MapAddress(
+                title: address.title,
+                coordinate: address.coordinate,
+                country: address.country,
+                department: self.departments[index],
+                province: "",
+                district: "",
+                zipCode: address.zipCode
+            )
+            self.address.accept(mapAddress)
+        }
+        
+        self.requestState.onNext(.started)
+        geoService.getDepartments { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let ubigeos):
+                self.requestState.onNext(.finished)
+                self.departments = ubigeos
+                self.raise(event: CreateListingCommonEvent.pickGeoValue(
+                    from: ubigeos,
+                    updateHandler: updateBlock,
+                    title: title,
+                    startingIndex: 0
+                ))
 
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
+            }
+        }
+    }
+
+    func proceedWithProvinceSelection(title: String) {
+        let updateBlock = { [weak self] (index: Int) in
+            guard let self = self else { return }
+            
+            guard let address = self.address.value else {
+                return
+            }
+            let mapAddress = MapAddress(
+                title: address.title,
+                coordinate: address.coordinate,
+                country: address.country,
+                department: address.department,
+                province: self.provinces[index],
+                district: "",
+                zipCode: address.zipCode
+            )
+            self.address.accept(mapAddress)
+        }
+        guard let department = self.address.value?.department else {
+            return
+        }
+        self.requestState.onNext(.started)
+        
+        geoService.getProvinces(department: department) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let ubigeos):
+                self.requestState.onNext(.finished)
+                self.provinces = ubigeos
+                self.raise(event: CreateListingCommonEvent.pickGeoValue(
+                    from: ubigeos,
+                    updateHandler: updateBlock,
+                    title: title,
+                    startingIndex: 0
+                ))
+
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
+            }
+        }
+    }
+    
+    func proceedWithDistrictSelection(title: String) {
+        let updateBlock = { [weak self] (index: Int) in
+            guard let self = self else { return }
+            
+            guard let address = self.address.value else {
+                return
+            }
+            var title = address.title
+            if let oldTitle = address.title {
+                if let first = oldTitle.split(separator: ",").first, let department = address.department {
+                    title = String(first) + ", \(self.districts[index]), \(department)"
+                }
+            }
+            let mapAddress = MapAddress(
+                title: title,
+                coordinate: address.coordinate,
+                country: address.country,
+                department: address.department,
+                province: address.province,
+                district: self.districts[index],
+                zipCode: address.zipCode
+            )
+            self.address.accept(mapAddress)
+        }
+        guard let department = self.address.value?.department,
+              let province = self.address.value?.province else {
+            return
+        }
+        self.requestState.onNext(.started)
+        
+        geoService.getDistricts(department: department, province: province) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let ubigeos):
+                self.requestState.onNext(.finished)
+                self.districts = ubigeos
+                self.raise(event: CreateListingCommonEvent.pickGeoValue(
+                    from: ubigeos,
+                    updateHandler: updateBlock,
+                    title: title,
+                    startingIndex: 0
+                ))
+
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
+            }
+        }
+    }
+    
     func proceedWithYearSelection(titles: [String], title: String) {
         let updateBlock = { [unowned self] (index: Int) in
             self.yearPickerIndex.accept(index)
@@ -124,6 +276,7 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
     
     func proceedWithAddressSelection() {
         let updateBlock = { [unowned self] (address: MapAddress) in
+            self.lastDistrict = address.district ?? ""
             self.address.accept(address)
         }
         raise(event: CreateListingCommonEvent.selectAddress(updateHandler: updateBlock, initialAddress: address.value))
@@ -205,11 +358,18 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
         addressUpdated
             .drive(onNext: { [unowned self] address in
                 self.updateListing { listing in
+                    
                     listing.location = address.flatMap { (address: MapAddress) in
+                        
                         Location(
                             address: address.title,
                             latitude: Float(address.coordinate.latitude),
-                            longitude: Float(address.coordinate.longitude)
+                            longitude: Float(address.coordinate.longitude),
+                            country: address.country,
+                            department: address.department,
+                            province: address.province,
+                            district: address.district,
+                            zipCode: address.zipCode
                         )
                     }
                 }
@@ -260,10 +420,15 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
                 coordinate: CLLocationCoordinate2D(
                     latitude: CLLocationDegrees(location.latitude),
                     longitude: CLLocationDegrees(location.longitude)
-                )
+                ),
+                country: location.country,
+                department: location.department,
+                province: location.province,
+                district: location.district,
+                zipCode: location.zipCode
             ))
         }
-        listingDescription.accept(listing.listingDescription)
+        listingDescription.accept(listing.listingDescription ?? "")
         if let price = listing.price {
             self.currentPrice.accept(String(price))
         }
@@ -291,4 +456,10 @@ final class CreateListingCommonModel: EventNode, CreateListingModelUpdatable {
         }
     }
     
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }

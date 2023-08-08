@@ -14,39 +14,48 @@ enum LocationSearchEvent: Event {
     case updateListings(areaInfo: FetchListingsAreaInfo,
                         placeInfo: FetchListingsPlaceInfo,
                         isCurrentLocation: Bool)
+    
+    case updateListingsBy(searchLocation: SearchLocation,
+                          isCurrentLocation: Bool)
 }
 
 final class LocationSearchModel: EventNode {
 
     let requestState = PublishSubject<RequestState>()
     var currentLocation = BehaviorRelay<String?>(value: nil)
-    var locations = BehaviorRelay<[SearchLocations]>(value: [])
+    var locations = BehaviorRelay<[SearchLocation]>(value: [])
+    
     var recentSearches = BehaviorRelay<[RecentSearch]>(value: [])
     var requestForLocationPermission = BehaviorSubject<Void>(value: ())
     var isCurrentLocationSearch = false
+    var isCurrentAutoCompleteLocationSearch = false
 
     var searchTerm: String
     private let locationManager: LocationManager
     private let placeSearchManager: PlaceSearchManager
+    private let autoCompleteSearchService: AutoCompleteSearchService
     private let userService: UserService
 
-    private let defaultRadius = 5000
+    private let defaultRadius = 2000 // 1000 // 5000
 
     init(parent: EventNode,
          searchTerm: String,
          locationManager: LocationManager,
          userService: UserService,
+         autoCompleteSearchService: AutoCompleteSearchService,
          isCurrentLocationSearch: Bool) {
         self.searchTerm = searchTerm
         self.locationManager = locationManager
         self.placeSearchManager = PlaceSearchManager()
         self.userService = userService
+        self.autoCompleteSearchService = autoCompleteSearchService
         self.isCurrentLocationSearch = isCurrentLocationSearch
 
         super.init(parent: parent)
     }
 
     func requestCurrentLocation() {
+        RecentLocation.shared.currentLocation = nil
         if locationManager.authorizationStatusIsGranted {
             guard let coordinate = locationManager.currentLocation?.coordinate else { return }
 
@@ -68,56 +77,79 @@ final class LocationSearchModel: EventNode {
     }
 
     func searchLocations(with term: String) {
+        
+        autoCompleteSearchService.fetchSearchLocations(address: term) { [weak self] result in
+            switch result {
+            case .success(let autoComplete):
+                self?.locations.accept(autoComplete.map { $0.toSearchLocation() })
+            case .failure:
+                break
+             //   self?.requestState.onNext(.failed(error))
+            }
+        }
+        /*
         placeSearchManager.placeAutocomplete(term: term) { [weak self] locations in
             self?.locations.accept(locations)
         }
+ */
     }
 
     func proccedSearch(with term: String) {
-        placeSearchManager.placeAutocomplete(term: term) { [weak self] locations in
-            guard let self = self else { return }
-            guard let location = locations.first else {
-                self.raise(event: LocationSearchEvent.updateListings(areaInfo: FetchListingsAreaInfo.empty,
-                                                                     placeInfo: FetchListingsPlaceInfo.empty,
-                                                                     isCurrentLocation: false))
-
-                return
-            }
-
-            self.generateAreaInfo(for: location.placeID)
+        
+        guard let location = RecentLocation.shared.locations.first(where: { $0.addressField == term }) else {
+            
+            return
         }
+        self.updateListingsBy(for: location)
+        
+        return
+        
+//        placeSearchManager.placeAutocomplete(term: term) { [weak self] locations in
+//            guard let self = self else { return }
+//            guard let location = locations.first else {
+//                self.raise(event: LocationSearchEvent.updateListings(areaInfo: FetchListingsAreaInfo.empty,
+//                                                                     placeInfo: FetchListingsPlaceInfo.empty,
+//                                                                     isCurrentLocation: false))
+//
+//                return
+//            }
+//
+//            self.generateAreaInfo(for: location.placeID)
+//        }
     }
 
     func updateListingsWithAddress(at index: Int, isRecentSearches: Bool) {
-        var placeID: String
         if isRecentSearches {
             guard index < recentSearches.value.count else { return }
-            if let id = recentSearches.value[index].googlePlacesLocationId {
-                placeID = id
-                generateAreaInfo(for: placeID)
-            } else {
-                let term = recentSearches.value[index].queryString
-                placeSearchManager.placeAutocomplete(term: term) { [weak self] locations in
-                    guard let id = locations.first?.placeID else { return }
-                    self?.generateAreaInfo(for: id)
-                }
+            guard let searchLocation = recentSearches.value[index].location?.toSearchLocation() else {
+                return
             }
+            RecentLocation.shared.currentLocation = searchLocation
+            RecentLocation.shared.mapCenter = false
+            updateListingsBy(for: searchLocation)
         } else {
             guard index < locations.value.count else { return }
-            placeID = locations.value[index].placeID
-            generateAreaInfo(for: placeID)
+            RecentLocation.shared.locations = Array(locations.value)
+            let searchLocation = locations.value[index]
+            RecentLocation.shared.currentLocation = searchLocation
+            RecentLocation.shared.mapCenter = false
+            updateListingsBy(for: searchLocation)
         }
     }
 
     func fetchRecentSearches() {
-        requestState.onNext(.started)
-        userService.fetchRecentSearches { [weak self] result in
-            switch result {
-            case .success(let searches):
-                self?.requestState.onNext(.finished)
-                self?.recentSearches.accept(searches)
-            case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+        if userService.userID != .guest {
+            requestState.onNext(.started)
+            userService.fetchRecentSearches { [weak self] result in
+                switch result {
+                case .success(let searches):
+                    self?.requestState.onNext(.finished)
+                    
+                    self?.recentSearches.accept(searches.filter { $0.location != nil }) // osemy
+                case .failure(let error):
+                    
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -135,6 +167,12 @@ final class LocationSearchModel: EventNode {
                                                                      isCurrentLocation: false))
             }
         }
+    }
+    
+    private func updateListingsBy(for searchLocation: SearchLocation) {
+        self.raise(event:
+                    LocationSearchEvent.updateListingsBy(searchLocation: searchLocation,
+                                                               isCurrentLocation: false))
     }
 
     private func submitCurrentLocation(address: String?, coordinate: CLLocationCoordinate2D) {

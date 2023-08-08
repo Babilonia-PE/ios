@@ -30,6 +30,7 @@ final class TopListingPreviewCell: UICollectionViewCell, Reusable {
 
     private let disposeBag = DisposeBag()
     private var isSelectedLikeButton = false
+    var isGuest = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,8 +46,10 @@ final class TopListingPreviewCell: UICollectionViewCell, Reusable {
         let listingViewModel = viewModel.listingViewModel
         let listingTypeViewModel = viewModel.listingTypeViewModel
 
-        if let imageUrl = URL(string: listingViewModel.coverImage?.photo.mediumURLString ?? "") {
+        if let imageUrl = URL(string: listingViewModel.coverImage?.photo.renderURLString ?? "") {
             primaryImageView.setImage(with: imageUrl, placeholder: Asset.MyListings.myListingsDraft.image)
+        } else {
+            primaryImageView.image = Asset.MyListings.myListingsDraft.image
         }
 
         if listingTypeViewModel.listingTypeSettings.title != nil
@@ -98,8 +101,11 @@ extension TopListingPreviewCell {
 
     @objc
     private func likeButtonDidSelect() {
-        self.isSelectedLikeButton = !self.isSelectedLikeButton
-        self.toggleLikeButton()
+        if !isGuest {
+            self.isSelectedLikeButton = !self.isSelectedLikeButton
+            self.toggleLikeButton()
+            //self.didToggleFavorite?(self.isSelectedLikeButton)
+        }
         self.didToggleFavorite?(self.isSelectedLikeButton)
     }
 

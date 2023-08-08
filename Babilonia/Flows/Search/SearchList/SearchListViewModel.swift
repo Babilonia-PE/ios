@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-
+import Core
 final class SearchListViewModel {
     
     var requestState: Observable<RequestState> {
@@ -29,8 +29,16 @@ final class SearchListViewModel {
         model.topListingsViewUpdatable.map { _ in Void() }.asObservable()
     }
 
+    var callServiceByFilter: Observable<Void> {
+        model.callServiceByFilter.map { _ in Void() }.asObservable()
+    }
+    
     var shouldShowTopListings: Bool {
         model.topListingsViewUpdatable.value
+    }
+    
+    var isGuest: Bool {
+        model.isGuest
     }
 
     var topListingsUpdated: Observable<Void> {
@@ -40,6 +48,9 @@ final class SearchListViewModel {
         model.topListings.value
     }
     
+    func clearListingsType() {
+        model.clearListingsType()
+    }
     private let model: SearchListModel
     private var listingsDisposeBag = DisposeBag()
     
@@ -48,13 +59,29 @@ final class SearchListViewModel {
     init(model: SearchListModel) {
         self.model = model
     }
+    
+    func firstListing() -> Listing? {
+        model.firstListing()
+    }
+    
+    func getMapLocation() -> CLLocationCoordinate2D? {
+        model.getMapLocation()
+    }
+    
+    func updateMapLocation(location: CLLocationCoordinate2D?) {
+        model.updateMapLocation(location: location)
+    }
 
     func incrementPage() {
         model.incrementPage()
     }
     
     func setSortOption(with id: Int) {
-        model.setSortOption(with: id)
+        if let location = RecentLocation.shared.currentLocation {
+            model.setSortOption(with: id, searchLocation: location)
+        } else {
+            model.setSortOption(with: id)
+        }
     }
     
     func acceptedLocationRequest() {
@@ -92,7 +119,11 @@ final class SearchListViewModel {
     }
 
     func fetchListings() {
-        model.fetchListings()
+        if let location = RecentLocation.shared.currentLocation {
+            model.fetchListings(searchLocation: location)
+        } else {
+            model.fetchListings()
+        }
     }
 
 }

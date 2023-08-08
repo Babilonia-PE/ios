@@ -31,6 +31,9 @@ final class CreateListingCommonViewModel: FieldsValidationApplicable {
         }
     }
     
+    var requestState: Observable<RequestState> {
+        model.requestState.asObservable().observeOn(MainScheduler.instance)
+    }
     private var propertyTypeTitles: [String] { return model.propertyTypes.map { $0.title } }
     private(set) var inputFieldViewModels = [PropertyCommonType: InputFieldViewModel]()
     private(set) var priceViewModel: InputFieldViewModel!
@@ -98,6 +101,70 @@ final class CreateListingCommonViewModel: FieldsValidationApplicable {
             }),
             image: Asset.Common.pinIcon.image,
             placeholder: L10n.CreateListing.Common.Address.placeholder
+        )
+        
+        let country = BehaviorRelay(value: model.currentMapAddress?.country ?? "")
+        model.addressUpdated.map { $0?.country ?? "" }.drive(country).disposed(by: disposeBag)
+        let countryViewModel = InputFieldViewModel(
+            title: BehaviorRelay(value: L10n.CreateListing.Common.Country.title),
+            text: country,
+            validator: nil,
+            editingMode: .action({}),
+            image: nil,
+            placeholder: L10n.CreateListing.Common.Country.title,
+            isHidden: true
+        )
+        
+        let department = BehaviorRelay(value: model.currentMapAddress?.department ?? "")
+        model.addressUpdated.map { $0?.department ?? "" }.drive(department).disposed(by: disposeBag)
+        let departmentViewModel = InputFieldViewModel(
+            title: BehaviorRelay(value: L10n.CreateListing.Common.Department.title),
+            text: department,
+            validator: NotEmptyValidator(),
+            editingMode: .action({ [unowned self] in
+                self.endEditing.accept(())
+                self.model.proceedWithDepartmentSelection(
+                    title: L10n.CreateListing.Common.Department.title
+                )
+            }),
+            image: Asset.Common.dropdownIcon.image,
+            placeholder: L10n.CreateListing.Common.Department.title,
+            isHidden: true
+        )
+        
+        let province = BehaviorRelay(value: "")
+        model.addressUpdated.map { $0?.province ?? "" }.drive(province).disposed(by: disposeBag)
+        let provinceViewModel = InputFieldViewModel(
+            title: BehaviorRelay(value: L10n.CreateListing.Common.Province.title),
+            text: province,
+            validator: NotEmptyValidator(),
+            editingMode: .action({ [unowned self] in
+                self.endEditing.accept(())
+                self.model.proceedWithProvinceSelection(
+                    title: L10n.CreateListing.Common.Province.title
+                )
+            }),
+            image: Asset.Common.dropdownIcon.image,
+            placeholder: L10n.CreateListing.Common.Province.title,
+            isHidden: true
+        )
+        
+        let district = BehaviorRelay(value: "")
+        model.addressUpdated.map { $0?.district ?? "" }.drive(district).disposed(by: disposeBag)
+//        district.bind(onNext: model.updateCoveredArea).disposed(by: disposeBag)
+        let districtViewModel = InputFieldViewModel(
+            title: BehaviorRelay(value: L10n.CreateListing.Common.District.title),
+            text: district,
+            validator: NotEmptyValidator(),
+            editingMode: .action({ [unowned self] in
+                self.endEditing.accept(())
+                self.model.proceedWithDistrictSelection(
+                    title: L10n.CreateListing.Common.District.title
+                )
+            }),
+            image: Asset.Common.dropdownIcon.image,
+            placeholder: L10n.CreateListing.Common.District.title,
+            isHidden: true
         )
         
         let validator = ListingDescriptionValidator()
@@ -172,6 +239,10 @@ final class CreateListingCommonViewModel: FieldsValidationApplicable {
         
         inputFieldViewModels = [.propertyType: propertyTypeViewModel,
                                 .address: addressViewModel,
+                                .country: countryViewModel,
+                                .department: departmentViewModel,
+                                .province: provinceViewModel,
+                                .district: districtViewModel,
                                 .description: descriptionViewModel,
                                 .price: priceViewModel,
                                 .totalArea: areaViewModel,
@@ -210,6 +281,28 @@ extension PropertyType {
             return L10n.CreateListing.Common.PropertyType.Land.title
         case .room:
             return L10n.CreateListing.Common.PropertyType.Room.title
+        case .localIndustrial:
+            return L10n.CreateListing.Common.PropertyType.LocalIndustrial.title
+        case .landAgricultural:
+            return L10n.CreateListing.Common.PropertyType.LandAgricultural.title
+        case .landIndustrial:
+            return L10n.CreateListing.Common.PropertyType.LandIndustrial.title
+        case .landCommercial:
+            return L10n.CreateListing.Common.PropertyType.LandCommercial.title
+        case .cottage:
+            return L10n.CreateListing.Common.PropertyType.Cottage.title
+        case .beachHouse:
+            return L10n.CreateListing.Common.PropertyType.BeachHouse.title
+        case .building:
+            return L10n.CreateListing.Common.PropertyType.Building.title
+        case .hotel:
+            return L10n.CreateListing.Common.PropertyType.Hotel.title
+        case .deposit:
+            return L10n.CreateListing.Common.PropertyType.Deposit.title
+        case .parking:
+            return L10n.CreateListing.Common.PropertyType.Parking.title
+        case .airs:
+            return L10n.CreateListing.Common.PropertyType.Airs.title
         }
     }
     

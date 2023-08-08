@@ -10,10 +10,15 @@
 		<string>https://api.babilonia.io/api/</string>
 	</dict>
 	<key>stripePublishableKey</key>
-	<string>pk_test_51HrWElClCN3bUtFD6El0FXkaZa2TLsmQXFNKZ7LJW720vViwW8HfmyU1i1BARpvMctZJhJZ118CfSPGmcnyn2Hd400ef2nm5aL</string>
+	<string>pk_live_3qaZOjQfqLzIA3rfAiJ9Ttbz00HjSRVd5d</string>
 	<key>deeplinkHost</key>
 	<string>babilonia.io</string>
 	<key>webSiteURL</key>
 	<string>https://babilonia.io/</string>
+	<key>paymentURL</key>
+	<dict>
+		<key>relative</key>
+		<string>https://services.babilonia.io</string>
+	</dict>
 </dict>
 </plist>

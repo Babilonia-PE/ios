@@ -58,7 +58,7 @@ class ProfileFieldView: UIView {
         titleLabel = UILabel()
         addSubview(titleLabel)
         titleLabel.layout {
-            $0.top == topAnchor + 21.0
+            $0.top == safeAreaLayoutGuide.topAnchor + 21.0
             $0.leading == leadingAnchor + 17.0
             $0.trailing <= selectedValueLabel.leadingAnchor - 8.0
             $0.bottom == bottomAnchor - 18.0
@@ -67,7 +67,7 @@ class ProfileFieldView: UIView {
         selectButton = UIButton()
         addSubview(selectButton)
         selectButton.layout {
-            $0.top == topAnchor
+            $0.top == safeAreaLayoutGuide.topAnchor
             $0.leading == leadingAnchor
             $0.trailing == trailingAnchor
             $0.bottom == bottomAnchor

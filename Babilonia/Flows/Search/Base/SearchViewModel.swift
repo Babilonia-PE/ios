@@ -65,27 +65,66 @@ final class SearchViewModel {
     
     func viewModel(for mode: SearchMode) -> Any {
         if let viewModel = viewModelsMap[mode] {
+//            if mode == .map {
+//                updateViewModelData()
+//            }
             return viewModel
         } else {
             let viewModel: Any
             switch mode {
             case .list:
-                guard let model = model.model(for: mode) as? SearchListModel else {
+                guard let searchListModel = model.model(for: mode) as? SearchListModel else {
                     fatalError("Can't cast to \(SearchListModel.self)")
                 }
-                viewModel = SearchListViewModel(model: model)
+                viewModel = SearchListViewModel(model: searchListModel)
             case .map:
-                guard let model = model.model(for: mode) as? SearchMapModel else {
+                guard let searchMapModel = model.model(for: mode) as? SearchMapModel else {
                     fatalError("Can't cast to \(SearchMapModel.self)")
                 }
-                viewModel = SearchMapViewModel(model: model)
+                
+//                if let searchListModel = model.model(for: .list) as? SearchListModel {
+//                    if RecentLocation.shared.currentLocation != nil {
+//                        searchMapModel.updateListingByList(listing: searchListModel.firstListing())
+//                    } else if let mapLocation = searchListModel.getMapLocation() {
+//                        searchMapModel.updateListingByList(listing: nil)
+//                        searchMapModel.updateCoordinate(mapLocation)
+//                    } else {
+//                        searchMapModel.updateListingByList(listing: searchListModel.firstListing())
+//                    }
+//                } else {
+//                    searchMapModel.updateListingByList(listing: nil)
+//                }
+                
+                viewModel = SearchMapViewModel(model: searchMapModel)
+                
+                if mode == .map {
+                    updateViewModelData()
+                }
             }
             viewModelsMap[mode] = viewModel
             
             return viewModel
         }
     }
-    
+
+    func updateViewModelData() {
+        guard let searchMapModel = model.model(for: .map) as? SearchMapModel else {
+            return
+        }
+        
+        if let searchListModel = model.model(for: .list) as? SearchListModel {
+            if RecentLocation.shared.currentLocation != nil {
+                searchMapModel.updateListingByList(listing: searchListModel.firstListing())
+            } else if let mapLocation = searchListModel.getMapLocation() {
+                searchMapModel.updateListingByList(listing: nil)
+                searchMapModel.updateCoordinate(mapLocation)
+            } else {
+                searchMapModel.updateListingByList(listing: searchListModel.firstListing())
+            }
+        } else {
+            searchMapModel.updateListingByList(listing: nil)
+        }
+    }
 }
 
 private extension SearchMode {

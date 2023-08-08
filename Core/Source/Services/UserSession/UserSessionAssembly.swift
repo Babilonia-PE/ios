@@ -31,6 +31,7 @@ final class UserSessionAssembly: Assembly {
             let networkClient = APIClient(
                 requestExecutor: AlamofireRequestExecutor(baseURL: Constants.API.baseURL),
                 plugins: [
+                    LoggingPlugin(),
                     AuthorizationPlugin(provider: userSession.store),
                     AcceptLanguagePlugin(),
                     ErrorPreprocessorPlugin(errorPreprocessor: ServerErrorProcessor()),
@@ -39,6 +40,40 @@ final class UserSessionAssembly: Assembly {
             )
             return networkClient
         }.inObjectScope(.container)
+        
+        container
+            .register(NetworkClient.self, name: "clientPayment") { resolver in
+                let userSession: UserSession = resolver.autoresolve()
+                
+                let networkClient = APIClient(
+                    requestExecutor: AlamofireRequestExecutor(baseURL: Constants.API.paymentBaseURL),
+                    plugins: [
+                        LoggingPlugin(),
+                        AuthorizationPlugin(provider: userSession.store),
+                        AcceptLanguagePlugin(),
+                        ErrorPreprocessorPlugin(errorPreprocessor: ServerErrorProcessor())
+                    ]
+                )
+                return networkClient
+            }
+            .inObjectScope(.container)
+        
+        container
+            .register(NetworkClient.self, name: "newClient") { resolver in
+                let userSession: UserSession = resolver.autoresolve()
+                
+                let networkClient = APIClient(
+                    requestExecutor: AlamofireRequestExecutor(baseURL: Constants.API.paymentBaseURL),
+                    plugins: [
+                        LoggingPlugin(),
+                        AuthorizationPlugin(provider: userSession.store),
+                        AcceptLanguagePlugin(),
+                        ErrorPreprocessorPlugin(errorPreprocessor: ServerErrorProcessor()),
+                    ]
+                )
+                return networkClient
+            }
+            .inObjectScope(.container)
         
         container
             .register(DBClient.self) { _ in

@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import Core
 final class SearchListViewController: UIViewController, AlertApplicable, SpinnerApplicable {
     
     let alert = ApplicationAlert()
@@ -160,7 +160,6 @@ final class SearchListViewController: UIViewController, AlertApplicable, Spinner
         viewModel.listingsUpdated
             .subscribe(onNext: { [weak self] newIndexPathsToReload in
                 guard let self = self else { return }
-
                 if let indexPathes = newIndexPathsToReload,
                    let maxRow = indexPathes.map({ $0.row }).max(),
                    maxRow >= self.viewModel.listingsCount {
@@ -172,6 +171,11 @@ final class SearchListViewController: UIViewController, AlertApplicable, Spinner
                 } else {
                     self.tableView.reloadData()
                 }
+                if !RecentLocation.shared.searchSession && self.viewModel.listingsCount == 0 {
+                    self.viewModel.updateMapLocation(location: Constants.Location.defaultLocation)
+                    self.viewModel.fetchListings()
+                }
+                RecentLocation.shared.searchSession = true
             })
             .disposed(by: disposeBag)
     }
@@ -189,6 +193,12 @@ final class SearchListViewController: UIViewController, AlertApplicable, Spinner
                 self?.topListingsView.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.callServiceByFilter
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.shouldReloadOnAppear = false
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupTopListingsHeader() {
@@ -199,10 +209,10 @@ final class SearchListViewController: UIViewController, AlertApplicable, Spinner
     private func updateTopAppearance() {
         if viewModel.shouldShowTopListings {
             sortViewHeightConstraint?.constant = 0
-            tableViewTopConstraint?.constant = -20
+            tableViewTopConstraint?.constant = 0
         } else {
             sortViewHeightConstraint?.constant = 40
-            tableViewTopConstraint?.constant = 30
+            tableViewTopConstraint?.constant = 50
         }
 
         view.layoutIfNeeded()
@@ -311,8 +321,10 @@ extension SearchListViewController: UICollectionViewDataSource, UICollectionView
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(indexPath) as TopListingPreviewCell
         cell.apply(with: viewModel.listingPreviewViewModel(at: indexPath.row, isTopListing: true))
+        cell.isGuest = viewModel.isGuest
         cell.didToggleFavorite = { [weak self] _ in
-            self?.viewModel.setListingFavoriteState(at: indexPath.row, isTopListing: true)
+            guard let self = self else { return }
+            self.viewModel.setListingFavoriteState(at: indexPath.row, isTopListing: true)
         }
 
         return cell

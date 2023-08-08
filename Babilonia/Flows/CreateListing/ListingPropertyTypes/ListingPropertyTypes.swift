@@ -16,6 +16,12 @@ typealias PropertyType = Core.PropertyType
 struct MapAddress {
     var title: String?
     var coordinate: CLLocationCoordinate2D
+    var country: String?
+    var department: String?
+    var province: String?
+    var district: String?
+    var zipCode: String?
+
 }
 
 enum PropertyDetailsType: CaseIterable {
@@ -27,5 +33,5 @@ enum PropertyDetailsDisplayType {
 }
 
 enum PropertyCommonType: Int, CaseIterable {
-    case propertyType = 0, address, description, price, totalArea, coveredArea, yearOfConstraction
+    case propertyType = 0, address, country, department, province, district, description, price, totalArea, coveredArea, yearOfConstraction
 }

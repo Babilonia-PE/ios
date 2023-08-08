@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AVFoundation
+import FBSDKCoreKit
 
 final class EditProfileViewController: UIViewController, AlertApplicable {
     
@@ -442,6 +443,10 @@ extension EditProfileViewController {
         keyboardAnimationController.animateKeyboardDismissal = { [unowned self] _ in
             self.view.layoutIfNeeded()
         }
+    }
+    
+    func userCreated() {
+        AppEvents.logEvent(AppEvents.Name("CompleteRegistration"))
     }
 
 }

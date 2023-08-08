@@ -276,6 +276,28 @@ extension PropertyType {
             return Asset.MyListings.myListingsLandIcon.image
         case .room:
             return Asset.MyListings.myListingsRoomIcon.image
+        case .localIndustrial:
+            return Asset.MyListings.myListingsCommercialIcon.image
+        case .landAgricultural:
+            return Asset.MyListings.myListingsLandIcon.image
+        case .landIndustrial:
+            return Asset.MyListings.myListingsLandIcon.image
+        case .landCommercial:
+            return Asset.MyListings.myListingsCommercialIcon.image
+        case .cottage:
+            return Asset.MyListings.myListingsHouseIcon.image
+        case .beachHouse:
+            return Asset.MyListings.myListingsHouseIcon.image
+        case .building:
+            return Asset.MyListings.myListingsCommercialIcon.image
+        case .hotel:
+            return Asset.MyListings.myListingsCommercialIcon.image
+        case .deposit:
+            return Asset.MyListings.myListingsLandIcon.image
+        case .parking:
+            return Asset.MyListings.myListingsLandIcon.image
+        case .airs:
+            return Asset.MyListings.myListingsOfficeIcon.image
         }
     }
     

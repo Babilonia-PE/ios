@@ -72,7 +72,12 @@ final class ProfileFlowAssembly: Assembly {
     
     private func assembleServices(_ container: Container) {
         container
-            .autoregister(UserService.self, initializer: UserService.init)
+            .register(UserService.self) { (resolver) in
+                return UserService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
     }
     

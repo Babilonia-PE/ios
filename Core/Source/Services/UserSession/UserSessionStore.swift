@@ -56,7 +56,7 @@ extension UserSessionStore: AuthorizationCredentialsProvider {
     }
     
     var authorizationType: AuthType {
-        return .bearer
+        return .default
     }
     
 }

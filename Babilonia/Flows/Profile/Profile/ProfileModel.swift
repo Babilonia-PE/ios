@@ -13,6 +13,7 @@ import Core
 enum ProfileEvent: Event {
     case editProfile
     case editEmail
+    case editPhoneNumber
     case open(link: String, title: String)
     case openCurrencies
     case openAccount
@@ -58,6 +59,10 @@ final class ProfileModel: EventNode {
         raise(event: ProfileEvent.editEmail)
     }
     
+    func editPhoneNumber() {
+        raise(event: ProfileEvent.editPhoneNumber)
+    }
+    
     func openAccount() {
         raise(event: ProfileEvent.openAccount)
     }
@@ -80,6 +85,10 @@ final class ProfileModel: EventNode {
         raise(event: ProfileEvent.open(link: link, title: L10n.Profile.About.Privacy.title))
     }
     
+    func openLogin() {
+        raise(event: MainFlowEvent.logoutAndLogin)
+    }
+    
     func refreshUser() {
         userService.getProfile { [weak self] result in
             guard let self = self else { return }
@@ -87,10 +96,19 @@ final class ProfileModel: EventNode {
             switch result {
             case .success(let user):
                 self.user.accept(user)
-            case .failure:
-                break
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                }
             }
         }
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
     }
     
     // MARK: - currency observing

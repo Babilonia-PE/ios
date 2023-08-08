@@ -60,6 +60,7 @@ final class MainFlowAssembly: Assembly {
     }
     
     private func assembleServices(in container: Container) {
+        //print("assembleServices1 container = \(container)")
         container
             .register(Currency.self) { _ in
                 let storage: DBClient = container.autoresolve()
@@ -77,9 +78,18 @@ final class MainFlowAssembly: Assembly {
             }
             .inObjectScope(.container)
         
+//        container
+//            .autoregister(ConfigurationsService.self, initializer: ConfigurationsService.init)
+//            .inObjectScope(.container)
         container
-            .autoregister(ConfigurationsService.self, initializer: ConfigurationsService.init)
+            .register(ConfigurationsService.self) { (resolver) in
+                return ConfigurationsService(client: resolver.autoresolve(),
+                                             storage: resolver.autoresolve(),
+                                             currency: resolver.autoresolve(),
+                                             newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
+        //print("assembleServices2 container = \(container)")
     }
     
 }

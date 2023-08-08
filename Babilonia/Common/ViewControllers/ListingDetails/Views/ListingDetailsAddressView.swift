@@ -163,6 +163,28 @@ extension PropertyType {
             return Asset.ListingDetails.pinLand.image
         case .room:
             return Asset.ListingDetails.pinRoom.image
+        case .localIndustrial:
+            return Asset.ListingDetails.pinCommercial.image
+        case .landAgricultural:
+            return Asset.ListingDetails.pinLand.image
+        case .landIndustrial:
+            return Asset.ListingDetails.pinLand.image
+        case .landCommercial:
+            return Asset.ListingDetails.pinCommercial.image
+        case .cottage:
+            return Asset.ListingDetails.pinHouse.image
+        case .beachHouse:
+            return Asset.ListingDetails.pinHouse.image
+        case .building:
+            return Asset.ListingDetails.pinCommercial.image
+        case .hotel:
+            return Asset.ListingDetails.pinCommercial.image
+        case .deposit:
+            return Asset.ListingDetails.pinLand.image
+        case .parking:
+            return Asset.ListingDetails.pinLand.image
+        case .airs:
+            return Asset.ListingDetails.pinOffice.image
         }
     }
     

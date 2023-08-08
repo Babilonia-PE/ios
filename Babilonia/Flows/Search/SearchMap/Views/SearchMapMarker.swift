@@ -161,6 +161,28 @@ private extension PropertyType {
             image = Asset.Search.Map.officePinIcon.image
         case .room:
             image = Asset.Search.Map.roomPinIcon.image
+        case .localIndustrial:
+            return Asset.Search.Map.commercialPinIcon.image
+        case .landAgricultural:
+            return Asset.Search.Map.landPinIcon.image
+        case .landIndustrial:
+            return Asset.Search.Map.landPinIcon.image
+        case .landCommercial:
+            return Asset.Search.Map.commercialPinIcon.image
+        case .cottage:
+            return Asset.Search.Map.housePinIcon.image
+        case .beachHouse:
+            return Asset.Search.Map.housePinIcon.image
+        case .building:
+            return Asset.Search.Map.commercialPinIcon.image
+        case .hotel:
+            return Asset.Search.Map.commercialPinIcon.image
+        case .deposit:
+            return Asset.Search.Map.landPinIcon.image
+        case .parking:
+            return Asset.Search.Map.landPinIcon.image
+        case .airs:
+            return Asset.Search.Map.officePinIcon.image
         }
         
         return image.withRenderingMode(.alwaysTemplate)
@@ -181,6 +203,28 @@ private extension PropertyType {
             image = Asset.Search.Map.officeViewedPinIcon.image
         case .room:
             image = Asset.Search.Map.roomViewedPinIcon.image
+        case .localIndustrial:
+            return Asset.Search.Map.commercialViewedPinIcon.image
+        case .landAgricultural:
+            return Asset.Search.Map.landViewedPinIcon.image
+        case .landIndustrial:
+            return Asset.Search.Map.landViewedPinIcon.image
+        case .landCommercial:
+            return Asset.Search.Map.commercialViewedPinIcon.image
+        case .cottage:
+            return Asset.Search.Map.houseViewedPinIcon.image
+        case .beachHouse:
+            return Asset.Search.Map.houseViewedPinIcon.image
+        case .building:
+            return Asset.Search.Map.commercialViewedPinIcon.image
+        case .hotel:
+            return Asset.Search.Map.commercialViewedPinIcon.image
+        case .deposit:
+            return Asset.Search.Map.landViewedPinIcon.image
+        case .parking:
+            return Asset.Search.Map.landViewedPinIcon.image
+        case .airs:
+            return Asset.Search.Map.officeViewedPinIcon.image
         }
         return image.withRenderingMode(.alwaysTemplate)
     }

@@ -57,7 +57,11 @@ final class CreateListingFacilitiesModel: EventNode, CreateListingModelUpdatable
                 self?.facilities.accept(facilities.sorted { $0.id < $1.id })
                 self?.facilitiesAreEmpty.accept(facilities.isEmpty)
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -71,6 +75,13 @@ final class CreateListingFacilitiesModel: EventNode, CreateListingModelUpdatable
         var map = facilityValuesMap.value
         map[facilities.value[index].id] = value
         facilityValuesMap.accept(map)
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
     }
     
     // MARK: - private

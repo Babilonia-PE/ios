@@ -11,7 +11,7 @@ import YALAPIClient
 struct AppConfigRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    let path = "app_config"
+    let path = "public/app_config"
     let authRequired: Bool = false
     
 }

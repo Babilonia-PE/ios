@@ -13,9 +13,9 @@ typealias FilterPropertyTypeValue = (titles: [String], startingIndex: Int)
 
 final class ListingPropertyTypeViewModel {
 
-    let listingType = BehaviorRelay<ListingType>(value: .sale)
+    let listingType = BehaviorRelay<ListingType?>(value: nil)
     let proceedPropertyTypePicker: BehaviorRelay<FilterPropertyTypeValue>
-    var listingTypeChanged: BehaviorRelay<ListingType>
+    var listingTypeChanged: BehaviorRelay<ListingType?>
     var propertyTypeChanged: BehaviorRelay<PropertyType?>
     var currentPropertyType: PropertyType?
 
@@ -26,7 +26,7 @@ final class ListingPropertyTypeViewModel {
         return index + 1
     }
 
-    var listingTypeObservable: Observable<ListingType> {
+    var listingTypeObservable: Observable<ListingType?> {
         listingTypeChanged.asObservable()
     }
     
@@ -57,7 +57,7 @@ final class ListingPropertyTypeViewModel {
     private let propertyTypeText = BehaviorRelay(value: "")
     private let bag = DisposeBag()
 
-    init(listingTypeChanged: BehaviorRelay<ListingType>,
+    init(listingTypeChanged: BehaviorRelay<ListingType?>,
          propertyTypeChanged: BehaviorRelay<PropertyType?>,
          proceedPropertyTypePicker: BehaviorRelay<FilterPropertyTypeValue>) {
         self.listingTypeChanged = listingTypeChanged
@@ -84,7 +84,7 @@ final class ListingPropertyTypeViewModel {
     }
 
     func reset() {
-        listingTypeChanged.accept(.sale)
+        listingTypeChanged.accept(nil)
         propertyTypeChanged.accept(nil)
         updatePropertyType(for: 0)
     }

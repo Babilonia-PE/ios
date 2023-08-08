@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 # Specify which schemes refer to the debug configuration
 project 'Babilonia', {
@@ -24,23 +24,29 @@ abstract_target 'Shared' do
     pod 'NSObject+Rx', '~> 5.1.0'
     
     # Network
-    pod 'YALAPIClient/Alamofire', :git => 'https://github.com/Yalantis/APIClient.git', :tag => '2.9'
+    pod 'YALAPIClient/Alamofire', :git => 'https://gitlab.com/babilonia-public/babilonia-public.git'
 
     #Payments
-    pod 'Stripe', '19.0.1'
-
+#    pod 'Stripe', '19.0.1'
+    
     target 'Core' do
         # db client component
         pod 'DBClient/CoreData', '~> 1.4.2'
     end
     
     target 'Babilonia' do
-        pod_dev_tools
+     #   pod_dev_tools
         
         pod 'Firebase/Crashlytics'
         pod 'Firebase/Analytics'
-        pod 'FirebaseUI/Phone'
+        pod 'FirebaseUI/Phone', '~> 12.0.0'
         pod 'Firebase/DynamicLinks'
+        
+        # Facebook
+        
+        pod 'FBSDKCoreKit', '~> 11.1.0'
+        pod 'FBSDKLoginKit'
+        pod 'FBSDKShareKit'
         
         # Image fetching
         pod 'Kingfisher', '~> 5.13.4'
@@ -57,6 +63,8 @@ abstract_target 'Shared' do
         
         pod 'GoogleMaps', '~> 3.10.0'
         pod 'GooglePlaces', '~> 3.10.0'
+        
+        pod 'CountryPickerView', '~> 3.3.0'
 
 	pod 'MultiSlider', '~> 1.10.12 '
     end

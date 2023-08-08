@@ -7,7 +7,7 @@
 //
 
 import Core
-import Stripe
+//import Stripe
 import RxSwift
 import RxCocoa
 
@@ -20,69 +20,89 @@ final class CheckoutModel: EventNode {
     let paymentModel: ListingPaymentModel
     private let paymentService: PaymentService
     private let listingsService: ListingsService
-
+    private let userService: UserService
+    
     init(parent: EventNode,
          model: ListingPaymentModel,
          paymentService: PaymentService,
-         listingsService: ListingsService) {
+         listingsService: ListingsService,
+         userService: UserService) {
         self.paymentModel = model
         self.paymentService = paymentService
         self.listingsService = listingsService
+        self.userService = userService
 
         super.init(parent: parent)
     }
-
-    func checkout(with cardParams: STPPaymentMethodCardParams,
-                  authenticationContext: STPAuthenticationContext) {
+    
+    func checkoutPayu(cardNumber: String,
+                      cardCvv: String,
+                      cardExpiration: String,
+                      cardName: String) {
         guard let listingID = paymentModel.listing?.id else { return }
-
+        
         requestState.onNext(.started)
-        paymentService.purchaseListing(with: "\(listingID)",
-                                       productKey: paymentModel.productKey,
-                                       publisherRole: paymentModel.role) { [weak self] result in
+        paymentService.paymentIntent(with: "\(listingID)",
+                                     productKey: paymentModel.productKey,
+                                     clientId: "\(userService.userID)",
+                                     publisherRole: paymentModel.role,
+                                     completion: { [weak self] result in
             guard let self = self else { return }
-
+            
             switch result {
-            case .success(let paymentSecret):
-                self.confirmPayment(cardParams: cardParams,
-                                    clientSecret: paymentSecret.clientSecret,
-                                    authenticationContext: authenticationContext)
-
-            case .failure:
+            case .success(let paymentIntent):
+                self.paymentProcess(cardNumber: cardNumber,
+                               cardCvv: cardCvv,
+                               cardExpiration: cardExpiration,
+                               cardName: cardName,
+                               paymentIntent: paymentIntent)
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.finished)
+                    let state: RequestState = .failed(error)
+                    self.raise(event: CreateListingFlowEvent.published(listing: self.paymentModel.listing, state: state))
+                }
+            }
+        })
+    }
+    
+    private func paymentProcess(cardNumber: String,
+                                cardCvv: String,
+                                cardExpiration: String,
+                                cardName: String,
+                                paymentIntent: PaymentIntent) {
+        paymentService.paymentProcess(with: paymentIntent.deviceSessionId,
+                                      cardNumber: cardNumber,
+                                 orderId: paymentIntent.orderId,
+                                 cardCvv: cardCvv,
+                                 cardExpiration: cardExpiration,
+                                 cardName: cardName) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                if response.status == "ok" {
+                    self.procceedPaymentListing { [weak self] listing in
+                        let state: RequestState = .success(L10n.Payments.Alert.listingPublishedSuccess)
+                        self?.raise(event: CreateListingFlowEvent.published(listing: listing,
+                                                                            state: state))
+                    }
+                } else {
+                    self.requestState.onNext(.finished)
+                    let state: RequestState = .failedMessage(L10n.Errors.SomethingWentWrong.long)
+                    self.raise(event: CreateListingFlowEvent.published(listing: self.paymentModel.listing,
+                                                                       state: state))
+                }
+          //      self.getListingStatus()
+            case .failure(let error):
                 self.requestState.onNext(.finished)
-                let state: RequestState = .failedMessage(L10n.Errors.SomethingWentWrong.long)
-                self.raise(event: CreateListingFlowEvent.published(listing: self.paymentModel.listing,
-                                                                   state: state))
+                let state: RequestState = .failed(error)
+                self.raise(event: CreateListingFlowEvent.published(listing: self.paymentModel.listing, state: state))
             }
         }
     }
-
-    private func confirmPayment(cardParams: STPPaymentMethodCardParams,
-                                clientSecret: String,
-                                authenticationContext: STPAuthenticationContext) {
-        let paymentMethodParams = STPPaymentMethodParams(card: cardParams, billingDetails: nil, metadata: nil)
-        let paymentIntentParams = STPPaymentIntentParams(clientSecret: clientSecret)
-        paymentIntentParams.paymentMethodParams = paymentMethodParams
-
-        let paymentHandler = STPPaymentHandler.shared()
-        paymentHandler.confirmPayment(
-            withParams: paymentIntentParams,
-            authenticationContext: authenticationContext
-        ) { [weak self] (status, _, _) in
-            switch status {
-            case .failed:
-                self?.requestState.onNext(.failedMessage(L10n.Errors.Payment.declined))
-
-            case .canceled:
-                self?.requestState.onNext(.finished)
-            case .succeeded:
-                self?.getListingStatus()
-            @unknown default:
-                fatalError()
-            }
-        }
-    }
-
+    
     private func getListingStatus() {
         guard let listingID = paymentModel.listing?.id else { return }
 
@@ -108,7 +128,11 @@ final class CheckoutModel: EventNode {
                     self.togglePaymentStatusWithDelay()
                 }
             case .failure(let error):
-                self.requestState.onNext(.failed(error))
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -123,7 +147,11 @@ final class CheckoutModel: EventNode {
                 successCompletion(listing)
 
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -134,4 +162,10 @@ final class CheckoutModel: EventNode {
         }
     }
 
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }

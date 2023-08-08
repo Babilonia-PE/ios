@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 
 final class SearchViewController: UIViewController {
-    
     private var searchContainerView: UIView!
     private var searchBackgroundView: UIView!
     private var searchShadowLayer: CALayer!
@@ -31,7 +30,6 @@ final class SearchViewController: UIViewController {
     private var arButton: SearchActionButton!
     private var arShadowView: UIView!
     private var arShadowLayer: CALayer!
-    
     private let viewModel: SearchViewModel
     
     private var viewControllersMap = [SearchMode: UIViewController]()
@@ -40,9 +38,7 @@ final class SearchViewController: UIViewController {
     
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
-        
         super.init(nibName: nil, bundle: nil)
-        
         layout()
         setupViews()
         setupBindings()
@@ -54,19 +50,16 @@ final class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.isNavigationBarHidden = true
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         setupShadows()
     }
 
     private func layout() {
         layoutSearchView()
-        
         contentContainerView = UIView()
         view.insertSubview(contentContainerView, belowSubview: searchBackgroundView)
         contentContainerView.layout {
@@ -75,7 +68,6 @@ final class SearchViewController: UIViewController {
             $0.trailing == view.trailingAnchor
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
         }
-        
         switchFlowButton = SearchActionButton()
         switchFlowButton.imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         view.addSubview(switchFlowButton)
@@ -85,7 +77,6 @@ final class SearchViewController: UIViewController {
             $0.width == 56.0
             $0.height == 56.0
         }
-        
         switchFlowShadowView = UIView()
         view.insertSubview(switchFlowShadowView, belowSubview: switchFlowButton)
         switchFlowShadowView.layout {
@@ -94,7 +85,6 @@ final class SearchViewController: UIViewController {
             $0.trailing == switchFlowButton.trailingAnchor
             $0.bottom == switchFlowButton.bottomAnchor
         }
-        
         arButton = SearchActionButton()
         view.addSubview(arButton)
         arButton.layout {
@@ -103,14 +93,11 @@ final class SearchViewController: UIViewController {
             $0.width == 56.0
             $0.height == 56.0
         }
-
         arButton.layoutIfNeeded()
         arButton.makeViewRound()
-
         if viewModel.shouldShowARPopUp {
             arButton.setupGradient()
         }
-
         arShadowView = UIView()
         view.insertSubview(arShadowView, belowSubview: arButton)
         arShadowView.layout {
@@ -130,9 +117,7 @@ final class SearchViewController: UIViewController {
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
         }
-        
         searchBackgroundView = UIView()
-
         view.insertSubview(searchBackgroundView, belowSubview: searchContainerView)
         searchBackgroundView.layout {
             $0.top == searchContainerView.topAnchor
@@ -140,7 +125,6 @@ final class SearchViewController: UIViewController {
             $0.trailing == searchContainerView.trailingAnchor
             $0.bottom == searchContainerView.bottomAnchor
         }
-        
         logoImageView = UIImageView()
         searchContainerView.addSubview(logoImageView)
         logoImageView.layout {
@@ -149,7 +133,6 @@ final class SearchViewController: UIViewController {
             $0.width == 32.0
             $0.height == 32.0
         }
-        
         filtersButton = UIButton()
         searchContainerView.addSubview(filtersButton)
         filtersButton.layout {
@@ -158,7 +141,6 @@ final class SearchViewController: UIViewController {
             $0.width == 56.0
             $0.height == 56.0
         }
-        
         searchBar = UISearchBar()
         searchContainerView.addSubview(searchBar)
         searchBar.layout {
@@ -166,7 +148,6 @@ final class SearchViewController: UIViewController {
             $0.leading == logoImageView.trailingAnchor + 10.0
             $0.trailing == filtersButton.leadingAnchor - 1.0
         }
-        
         searchBarBackgroundView = UIView()
         searchContainerView.insertSubview(searchBarBackgroundView, belowSubview: searchBar)
         searchBarBackgroundView.layout {
@@ -175,7 +156,6 @@ final class SearchViewController: UIViewController {
             $0.leading == searchBar.leadingAnchor + 4.0
             $0.trailing == searchBar.trailingAnchor - 4.0
         }
-        
         tagsContainerView = UIView()
         searchContainerView.addSubview(tagsContainerView)
         tagsContainerView.layout {
@@ -185,7 +165,6 @@ final class SearchViewController: UIViewController {
             $0.bottom == searchContainerView.bottomAnchor
             tagsHeightConstraint = $0.height == 0.0
         }
-        
         filtersView = FiltersView()
         tagsContainerView.addSubview(filtersView)
         filtersView.layout {
@@ -193,7 +172,6 @@ final class SearchViewController: UIViewController {
             $0.leading == tagsContainerView.leadingAnchor
             $0.trailing == tagsContainerView.trailingAnchor
         }
-        
         listingsFoundLabel = UILabel()
         tagsContainerView.addSubview(listingsFoundLabel)
         listingsFoundLabel.layout {
@@ -201,7 +179,6 @@ final class SearchViewController: UIViewController {
             $0.leading == tagsContainerView.leadingAnchor + 16.0
             $0.height == 16.0
         }
-        
         filtersTipLabel = UILabel()
         tagsContainerView.addSubview(filtersTipLabel)
         filtersTipLabel.layout {
@@ -213,18 +190,13 @@ final class SearchViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
-        
         searchContainerView.backgroundColor = .white
         searchContainerView.addCornerRadius(13.0, corners: [.layerMaxXMaxYCorner, .layerMinXMaxYCorner])
-
         logoImageView.image = Asset.Search.logoIcon.image
-        
         filtersButton.setImage(Asset.Search.filterIcon.image.withRenderingMode(.alwaysTemplate),
                                for: .normal)
         filtersButton.setImage(Asset.Search.filterIconSelected.image, for: .selected)
-
         searchBar.placeholder = L10n.ListingSearch.SearchBar.placeholder
-
         searchBar.barTintColor = .clear
         searchBar.backgroundColor = .clear
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
@@ -251,18 +223,13 @@ final class SearchViewController: UIViewController {
                                         offset: CGSize(width: 0, height: 2),
                                         radius: 3,
                                         opacity: 0.15)
-
         contentContainerView.backgroundColor = .white
-        
         arButton.setImage(Asset.Search.arModeIcon.image, for: .normal)
-        
         listingsFoundLabel.font = FontFamily.AvenirLTStd._55Roman.font(size: 12.0)
         listingsFoundLabel.textColor = Asset.Colors.osloGray.color
-        
         filtersTipLabel.font = FontFamily.AvenirLTStd._55Roman.font(size: 12.0)
         filtersTipLabel.textColor = Asset.Colors.osloGray.color
         filtersTipLabel.text = L10n.Search.Bar.FiltersTip.text
-
         filtersView.removedFilterClosure = { [weak self] index in
             self?.viewModel.removeFilter(at: index)
         }
@@ -364,7 +331,25 @@ final class SearchViewController: UIViewController {
     
     private func viewController(for mode: SearchMode) -> UIViewController {
         if let viewController = viewControllersMap[mode] {
+            if let searchListViewModel = viewModel.viewModel(for: .list) as? SearchListViewModel,
+               let searchMapViewModel = viewModel.viewModel(for: .map) as? SearchMapViewModel {
+                switch mode {
+                case .list:
+                    searchListViewModel.updateMapLocation(location: searchMapViewModel.currentCoordinateShown)
+                    if searchMapViewModel.currentCoordinateShown != nil {
+                        searchListViewModel.clearListingsType()
+                    }
+                case .map:
+                    viewModel.updateViewModelData()
+                    if RecentLocation.shared.currentLocation == nil {
+                        searchMapViewModel
+                            .updateListingByList(listing:
+                                                    nil)
+                    }
+                }
+            }
             return viewController
+            
         } else {
             let viewController: UIViewController
             switch mode {
@@ -372,13 +357,16 @@ final class SearchViewController: UIViewController {
                 guard let viewModel = viewModel.viewModel(for: mode) as? SearchListViewModel else {
                     fatalError("Can't cast to \(SearchListViewModel.self)")
                 }
-                
                 viewController = SearchListViewController(viewModel: viewModel)
             case .map:
                 guard let viewModel = viewModel.viewModel(for: mode) as? SearchMapViewModel else {
                     fatalError("Can't cast to \(SearchMapViewModel.self)")
                 }
+                
                 viewController = SearchMapViewController(viewModel: viewModel)
+                if let viewController = viewController as? SearchMapViewController {
+                    viewController.setSearchBar(searchBar: searchBar)
+                }
             }
             viewControllersMap[mode] = viewController
             
@@ -412,7 +400,6 @@ final class SearchViewController: UIViewController {
             viewModel.requestAugmentedRealityPresentation()
             return
         }
-
         guard let window = UIApplication.shared.delegate?.window, let presentingView = window else { return }
         let popupView = LocationPermissionPopupView(popupViewType: .arView)
 
@@ -422,7 +409,6 @@ final class SearchViewController: UIViewController {
             self?.viewModel.requestAugmentedRealityPresentation()
             self?.arButton.removeGradient()
         }
-
         popupView.setup(with: doneAction)
         popupView.show(in: presentingView)
     }

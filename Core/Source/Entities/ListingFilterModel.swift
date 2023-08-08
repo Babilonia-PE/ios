@@ -10,7 +10,7 @@ import Foundation
 
 public struct ListingFilterModel {
 
-    public var listingType: ListingType = .sale
+    public var listingType: ListingType?
     public var propertyType: PropertyType?
     public var petFriendly: Bool = false
     public var totalAreaFrom: Int?
@@ -30,13 +30,14 @@ public struct ListingFilterModel {
     public var warehouse: Bool = false
     public var facilityIds = [Int]()
     public var areaInfo: FetchListingsAreaInfo?
+    public var searchLocation: SearchLocation?
 
     public init() { }
 
     func convertToJSON() -> [String: Any] {
         var parameters = [String: Any]()
 
-        parameters["listing_type"] = listingType.rawValue
+        parameters["listing_type"] = listingType?.rawValue
         parameters["property_type"] = propertyType?.rawValue
         parameters["pet_friendly"] = petFriendly.requestValue
         parameters["price_start"] = priceStart
@@ -52,15 +53,36 @@ public struct ListingFilterModel {
         parameters["parking_for_visits"] = parkingForVisits.requestValue
         parameters["warehouse"] = warehouse.requestValue
         parameters["facility_ids"] = facilityIds
-
-        if let areaInfo = areaInfo {
-            var area = [String: Any]()
-            area["latitude"] = areaInfo.latitude
-            area["longitude"] = areaInfo.longitude
-            area["radius"] = areaInfo.radius
-
-            parameters["area"] = area
+        
+        if let searchLocation = searchLocation {
+            if !searchLocation.address.isEmpty {
+                parameters["location[address]"] = searchLocation.address
+            }
+            
+            if !searchLocation.country.isEmpty {
+                parameters["location[country]"] = searchLocation.country
+            }
+            if !searchLocation.department.isEmpty {
+                parameters["location[department]"] = searchLocation.department
+            }
+            
+            if !searchLocation.province.isEmpty {
+                parameters["location[province]"] = searchLocation.province
+            }
+            
+            if !searchLocation.district.isEmpty {
+                parameters["location[district]"] = searchLocation.district
+            }
+        } else {
+            if let areaInfo = areaInfo {
+                var area = [String: Any]()
+                area["latitude"] = areaInfo.latitude
+                area["longitude"] = areaInfo.longitude
+                area["radius"] = areaInfo.radius
+                parameters["area"] = area
+            }
         }
+        //osemy
 
         return parameters
     }

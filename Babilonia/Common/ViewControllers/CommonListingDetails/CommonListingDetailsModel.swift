@@ -12,6 +12,7 @@ import RxSwift
 
 enum CommonListingDetailsEvent: Event {
     case editListing(listing: Listing)
+    case alertGuest//osemy
 }
 
 enum ListingDetailsViewState {
@@ -20,7 +21,7 @@ enum ListingDetailsViewState {
 }
 
 final class CommonListingDetailsModel: EventNode {
-
+    let showWarning = PublishSubject<Bool>()
     let requestState = PublishSubject<RequestState>()
     var listingUpdated: Driver<Listing?> { return listingSubject.asDriver() }
     var listingDetailsModel: ListingDetailsModel?
@@ -32,7 +33,14 @@ final class CommonListingDetailsModel: EventNode {
         String(listing.id)
     }
     var phoneNumber: String {
-        listing.user.phoneNumber
+        if let phoneNumber = listing.contact?.contactPhone {
+            return phoneNumber
+        } else {
+            return listing.user.phoneNumber ?? ""
+        }
+    }
+    var listingURL: String {
+        String(listing.url ?? "")
     }
     var listingState: ListingState {
         listing.state
@@ -69,6 +77,7 @@ final class CommonListingDetailsModel: EventNode {
     }
 
     func getListingDetails() {
+        
         switch viewState {
         case .default:
             requestState.onNext(.started)
@@ -78,50 +87,139 @@ final class CommonListingDetailsModel: EventNode {
                     self?.requestState.onNext(.finished)
                     guard let listing = listing else { return }
 
+                    self?.listing = listing
                     self?.proccedListing(listing)
 
-                case .failure:
-                    self?.requestState.onNext(.failed(nil))
+                case .failure(let error):
+                    if self?.isUnauthenticated(error) == false {
+                        self?.raise(event: MainFlowEvent.logout)
+                    } else {
+                        self?.requestState.onNext(.failed(nil))
+                    }
                 }
             }
 
         case .owned:
-            proccedListing(listing)
+            requestState.onNext(.started)
+            listingsService.getMyListingDetails(for: listingID) { [weak self] result in
+                switch result {
+                case .success(let listing):
+                    self?.requestState.onNext(.finished)
+                    guard let listing = listing else { return }
+
+                    self?.listing = listing
+                    self?.proccedListing(listing)
+
+                case .failure(let error):
+                    if self?.isUnauthenticated(error) == true {
+                        self?.raise(event: MainFlowEvent.logout)
+                    } else {
+                        self?.requestState.onNext(.failed(nil))
+                    }
+                }
+            }
         }
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
     }
 
     func addListingToFavorites() {
-        requestState.onNext(.started)
-        listingsService.addListingToFavorite(listingID: listingID) { [weak self] result in
-            switch result {
-            case .success:
-                self?.requestState.onNext(.finished)
-                self?.listingIsFavorite.accept(true)
+        if userService.userID == .guest {
+            raise(event: CommonListingDetailsEvent.alertGuest)
+        } else {
+            requestState.onNext(.started)
+            listingsService.addListingToFavorite(
+                listingID: listingID,
+                ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                userAgent: "ios",
+                signProvider: "email") { [weak self] result in
+                switch result {
+                case .success:
+                    self?.requestState.onNext(.finished)
+                    self?.listingIsFavorite.accept(true)
 
-            case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                case .failure(let error):
+                    if self?.isUnauthenticated(error) == true {
+                        self?.raise(event: MainFlowEvent.logout)
+                    } else {
+                        self?.requestState.onNext(.failed(error))
+                    }
+                }
             }
         }
     }
 
     func removeListingFromFavorites() {
         requestState.onNext(.started)
-        listingsService.deleteListingFromFavorite(listingID: listingID) { [weak self] result in
+        listingsService.deleteListingFromFavorite(listingID: listingID,
+                                                  ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                  userAgent: "ios",
+                                                  signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
                 self?.listingIsFavorite.accept(false)
 
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
 
-    func triggerContact() {
-        listingsService.triggerContactFromFavorite(listingID: listingID) { [weak self] result in
-            if case .failure(let error) = result {
-                self?.requestState.onNext(.failed(error))
+    func triggerContact() -> Bool {
+        if userService.userID == .guest {
+            raise(event: CommonListingDetailsEvent.alertGuest)
+            return false
+        } else {
+            listingsService.triggerContactFromFavorite(listingID: listingID,
+                                                       ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                       userAgent: "ios",
+                                                       signProvider: "email") { [weak self] result in
+                if case .failure(let error) = result {
+                    self?.requestState.onNext(.failed(error))
+                }
+            }
+            return true
+        }
+    }
+    
+    func triggerWhatsapp() -> Bool {
+        if userService.userID == .guest {
+            raise(event: CommonListingDetailsEvent.alertGuest)
+            return false
+        } else {
+            listingsService.triggerWhatsappFromDetail(listingID: listingID,
+                                                      ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                      userAgent: "ios",
+                                                      signProvider: "email") { [weak self] result in
+                if case .failure(let error) = result {
+                    self?.requestState.onNext(.failed(error))
+                }
+            }
+            return true
+        }
+    }
+    
+    func triggerView() {
+        if userService.userID == .guest {
+            raise(event: CommonListingDetailsEvent.alertGuest)
+        } else {
+            listingsService.triggerViewFromDetail(listingID: listingID,
+                                                  ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                  userAgent: "ios",
+                                                  signProvider: "email") { [weak self] result in
+                if case .failure(let error) = result {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -138,13 +236,17 @@ final class CommonListingDetailsModel: EventNode {
     }
 
     func publishListing() {
-        if listing.isPurchased {
-            var editableListing = listing
-            editableListing.status = .visible
-            editableListing.state = .published
-            updateListing(editableListing)
+        if listing.role == .realtor {
+            showWarning.onNext(true)
         } else {
-            raise(event: MyListingsEvent.publishListing(listing: listing))
+            if listing.isPurchased {
+                var editableListing = listing
+                editableListing.status = .visible
+                editableListing.state = .published
+                updateListing(editableListing)
+            } else {
+                raise(event: MyListingsEvent.publishListing(listing: listing))
+            }
         }
     }
 
@@ -167,7 +269,11 @@ final class CommonListingDetailsModel: EventNode {
                 }
 
             case .failure(let error):
-                self.requestState.onNext(.failed(error))
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -208,7 +314,7 @@ extension CommonListingDetailsModel {
     private func proccedListing(_ listing: Listing) {
         configurateListingModel(for: listing)
         listingSubject.accept(listing)
-        listingIsFavorite.accept(listing.favourited)
+        listingIsFavorite.accept(listing.favourited ?? false)
     }
 
 }

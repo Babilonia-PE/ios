@@ -54,7 +54,7 @@ final class ApplicationFlowAssembly: Assembly {
     private func assembeMain(in container: Container) {
         container
             .register(MainFlowCoordinator.self) { (_, parent: EventNode, userSession: UserSession) in
-                return MainFlowCoordinator(container: userSession.container, parent: parent)
+                return MainFlowCoordinator(container: userSession.container, userSession: userSession, parent: parent)
             }
             .inObjectScope(.transient)
     }

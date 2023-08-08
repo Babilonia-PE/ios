@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AppConfig" representedClassName=".ManagedAppConfig" syncable="YES">
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="privacyURLString" attributeType="String"/>
+        <attribute name="termsURLString" attributeType="String"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="config" inverseEntity="Location"/>
+    </entity>
+    <entity name="Contact" representedClassName=".ManagedContact" syncable="YES">
+        <attribute name="contactEmail" optional="YES" attributeType="String"/>
+        <attribute name="contactName" optional="YES" attributeType="String"/>
+        <attribute name="contactPhone" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Currency" representedClassName=".ManagedCurrency" syncable="YES">
+        <attribute name="code" attributeType="String"/>
+        <attribute name="rate" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="symbol" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
+    <entity name="Facility" representedClassName=".ManagedFacility" syncable="YES">
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="key" attributeType="String"/>
+        <attribute name="propertyTypes" optional="YES" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="details" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Listing" inverseName="advancedDetails" inverseEntity="Listing"/>
+        <relationship name="icon" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RemoteImage" inverseName="facility" inverseEntity="RemoteImage"/>
+        <relationship name="icon_ios" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RemoteImage"/>
+        <relationship name="listings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Listing" inverseName="facilities" inverseEntity="Listing"/>
+    </entity>
+    <entity name="Listing" representedClassName=".ManagedListing" syncable="YES">
+        <attribute name="adExpiresAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="adPlan" optional="YES" attributeType="String"/>
+        <attribute name="adPurchasedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="area" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bathroomsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bedroomsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="contactViewsCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="coveredArea" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="favourited" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="favouritesCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="floorNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="listingDescription" attributeType="String"/>
+        <attribute name="listingType" optional="YES" attributeType="String"/>
+        <attribute name="parkingForVisits" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="parkingSlotsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="petFriendly" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="primaryImageId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="propertyType" optional="YES" attributeType="String"/>
+        <attribute name="role" optional="YES" attributeType="String"/>
+        <attribute name="state" attributeType="String"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="totalFloorsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String"/>
+        <attribute name="viewsCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="yearOfConstruction" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="advancedDetails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Facility" inverseName="details" inverseEntity="Facility"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact"/>
+        <relationship name="facilities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Facility" inverseName="listings" inverseEntity="Facility"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListingImage" inverseName="listing" inverseEntity="ListingImage"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="listing" inverseEntity="Location"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="listings" inverseEntity="User"/>
+    </entity>
+    <entity name="ListingImage" representedClassName=".ManagedListingImage" syncable="YES">
+        <attribute name="created_at" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="listing" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Listing" inverseName="images" inverseEntity="Listing"/>
+        <relationship name="photo" maxCount="1" deletionRule="Cascade" destinationEntity="RemoteImage" inverseName="listingImage" inverseEntity="RemoteImage"/>
+    </entity>
+    <entity name="Location" representedClassName=".ManagedLocation" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="department" optional="YES" attributeType="String"/>
+        <attribute name="district" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="latitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="province" optional="YES" attributeType="String"/>
+        <attribute name="zipCode" optional="YES" attributeType="String"/>
+        <relationship name="config" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppConfig" inverseName="location" inverseEntity="AppConfig"/>
+        <relationship name="listing" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Listing" inverseName="location" inverseEntity="Listing"/>
+    </entity>
+    <entity name="RemoteImage" representedClassName=".ManagedRemoteImage" syncable="YES">
+        <attribute name="largeURLString" optional="YES" attributeType="String"/>
+        <attribute name="mediumURLString" optional="YES" attributeType="String"/>
+        <attribute name="originalURLString" attributeType="String"/>
+        <attribute name="smallURLString" optional="YES" attributeType="String"/>
+        <relationship name="facility" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Facility" inverseName="icon" inverseEntity="Facility"/>
+        <relationship name="listingImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ListingImage" inverseName="photo" inverseEntity="ListingImage"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="avatar" inverseEntity="User"/>
+    </entity>
+    <entity name="User" representedClassName=".ManagedUser" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" attributeType="String"/>
+        <relationship name="avatar" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RemoteImage" inverseName="user" inverseEntity="RemoteImage"/>
+        <relationship name="listings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Listing" inverseName="user" inverseEntity="Listing"/>
+    </entity>
+    <elements>
+        <element name="AppConfig" positionX="394.45703125" positionY="348.25" width="128" height="105"/>
+        <element name="Currency" positionX="339.6484375" positionY="184.515625" width="128" height="105"/>
+        <element name="Facility" positionX="-199.4921875" positionY="115.32421875" width="128" height="149"/>
+        <element name="Listing" positionX="-0.5859375" positionY="238.36328125" width="128" height="553"/>
+        <element name="ListingImage" positionX="181.03125" positionY="242.52734375" width="128" height="103"/>
+        <element name="Location" positionX="216.57421875" positionY="411.765625" width="128" height="208"/>
+        <element name="RemoteImage" positionX="31.1171875" positionY="24.29296875" width="128" height="134"/>
+        <element name="User" positionX="-269.56640625" positionY="310.96875" width="128" height="148"/>
+        <element name="Contact" positionX="-258.602783203125" positionY="573.8001708984375" width="127.6222229003906" height="88"/>
+    </elements>
+</model>

@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import Stripe
+//import Stripe
 
 final class CheckoutViewController: NiblessViewController, AlertApplicable, SpinnerApplicable, HasCustomView {
     
@@ -39,12 +39,6 @@ final class CheckoutViewController: NiblessViewController, AlertApplicable, Spin
         setupBindings()
         setupView() 
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        customView.paymentField.resignFirstResponder()
-    }
     
     // MARK: - Bindings
     
@@ -52,9 +46,7 @@ final class CheckoutViewController: NiblessViewController, AlertApplicable, Spin
         customView.checkoutButton.rx.controlEvent(.touchUpInside)
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-
-                self.viewModel.checkout(with: self.customView.paymentField.cardParams,
-                                        authenticationContext: self)
+                self.viewModel.checkout()
             })
             .disposed(by: disposeBag)
 
@@ -73,19 +65,11 @@ final class CheckoutViewController: NiblessViewController, AlertApplicable, Spin
 
     private func setupView() {
         title = L10n.Payments.Checkout.title
-        
         customView.apply(model: viewModel.paymentModel)
-        customView.setupInputsFields(cvcViewModel: viewModel.cvcViewModel,
+        customView.setupInputsFields(cardValueViewModel: viewModel.cardValueViewModel,
+                                     cvcViewModel: viewModel.cvcViewModel,
                                      expirationViewModel: viewModel.expirationViewModel,
                                      cardNameViewModel: viewModel.cardNameViewModel)
-    }
-
-}
-
-extension CheckoutViewController: STPAuthenticationContext {
-
-    func authenticationPresentingViewController() -> UIViewController {
-        return self
     }
 
 }

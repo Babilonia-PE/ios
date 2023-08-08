@@ -59,6 +59,10 @@ internal enum L10n {
       /// Configuración
       internal static let title = L10n.tr("Localizable", "buttons.settings.title")
     }
+    internal enum Login {
+    /// Login
+    internal static let title = L10n.tr("Localizable", "buttons.login.title")
+    }
   }
 
   internal enum Common {
@@ -68,6 +72,8 @@ internal enum L10n {
         return L10n.tr("Localizable", "common.for.text", String(describing: p1))
       }
     }
+    internal static let share = L10n.tr("Localizable", "common.share")
+    internal static let all = L10n.tr("Localizable", "common.all")
   }
 
   internal enum CreateListing {
@@ -90,6 +96,14 @@ internal enum L10n {
         /// Área, m²
         internal static let title = L10n.tr("Localizable", "create_listing.common.area.title")
       }
+      internal enum Country {
+        /// País
+        internal static let title = L10n.tr("Localizable", "create_listing.common.country.title")
+      }
+      internal enum Department {
+        /// Departamento
+        internal static let title = L10n.tr("Localizable", "create_listing.common.department.title")
+      }
       internal enum Description {
         /// La descripción no debe estar vacía
         internal static let emptyErrorText = L10n.tr("Localizable", "create_listing.common.description.empty_error_text")
@@ -108,8 +122,12 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "create_listing.common.description.edit.title")
         }
       }
+      internal enum District {
+        /// Distrito
+        internal static let title = L10n.tr("Localizable", "create_listing.common.district.title")
+      }
       internal enum ListingType {
-        /// TIPO DE OPERACION
+        /// TIPO DE OPERACIÓN
         internal static let title = L10n.tr("Localizable", "create_listing.common.listing_type.title")
         internal enum Rent {
           /// Alquiler
@@ -151,6 +169,54 @@ internal enum L10n {
           /// Cuarto
           internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.room.title")
         }
+          internal enum LocalIndustrial {
+            /// Local Industrial
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.local_industrial.title")
+          }
+          internal enum LandAgricultural {
+            /// Terreno Agrícola;
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.land_agricultural.title")
+          }
+          internal enum LandIndustrial {
+            /// Terreno Industrial
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.land_industrial.title")
+          }
+          internal enum LandCommercial {
+            /// Terreno Comercial
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.land_commercial.title")
+          }
+          internal enum Cottage {
+            /// Casa de Campo
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.cottage.title")
+          }
+          internal enum BeachHouse {
+            /// Casa de Playa
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.beach_house.title")
+          }
+          internal enum Building {
+            /// Edificio
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.building.title")
+          }
+          internal enum Hotel {
+            /// Hotel
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.hotel.title")
+          }
+          internal enum Deposit {
+            /// Depósito
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.deposit.title")
+          }
+          internal enum Parking {
+            /// Estacionamiento
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.parking.title")
+          }
+          internal enum Airs {
+            /// Aires
+            internal static let title = L10n.tr("Localizable", "create_listing.common.property_type.airs.title")
+          }
+      }
+      internal enum Province {
+        /// Provincia
+        internal static let title = L10n.tr("Localizable", "create_listing.common.province.title")
       }
     }
     internal enum Continue {
@@ -378,6 +444,10 @@ internal enum L10n {
       /// Cambiar correo electrónico
       internal static let title = L10n.tr("Localizable", "edit_profile.change_email.title")
     }
+      internal enum ChangePhoneNumber {
+        /// Cambiar correo electrónico
+        internal static let title = L10n.tr("Localizable", "edit_profile.change_phone_number.title")
+      }
     internal enum ExitAlert {
       /// Usted tiene cambios sin guardar. Si sale, se perderán.
       internal static let message = L10n.tr("Localizable", "edit_profile.exit_alert.message")
@@ -392,6 +462,10 @@ internal enum L10n {
       /// Apellido
       internal static let title = L10n.tr("Localizable", "edit_profile.last_name.title")
     }
+  internal enum FullName {
+    /// Apellido
+    internal static let title = L10n.tr("Localizable", "edit_profile.full_name.title")
+  }
     internal enum UpdateAvatar {
       internal enum Popup {
         internal enum Success {
@@ -421,6 +495,7 @@ internal enum L10n {
   internal enum Errors {
     /// ¡Lo sentimos! Algo salió mal...
     internal static let somethingWentWrong = L10n.tr("Localizable", "errors.something_went_wrong")
+    internal static let actionMustBeDoneFromWeb = L10n.tr("Localizable", "errors.action_must_be_done_from_web")
     internal enum Network {
       /// Request was cancelled by the system.
       internal static let canceled = L10n.tr("Localizable", "errors.network.canceled")
@@ -545,6 +620,17 @@ internal enum L10n {
     }
   }
 
+  internal enum Guest {
+    internal enum Message {
+      /// Inicia sesión o regístrate para poder acceder a todas nuestras funciones\n\n• Ponte en contacto con los anunciantes\n• Agrega inmuebles a tus favoritos\n• Publica y maneja tus inmuebles
+      internal static let title = L10n.tr("Localizable", "guest.message.title")
+    }
+    internal enum Welcome {
+      /// Ingresa a Babilonia
+      internal static let title = L10n.tr("Localizable", "guest.welcome.title")
+    }
+  }
+
   internal enum Hud {
     internal enum Alert {
       internal enum Error {
@@ -559,6 +645,10 @@ internal enum L10n {
         /// Éxito
         internal static let title = L10n.tr("Localizable", "hud.alert.success.title")
       }
+        internal enum Loading {
+          /// Cargando
+          internal static let title = L10n.tr("Localizable", "hud.alert.loading.title")
+        }
     }
   }
 
@@ -671,7 +761,7 @@ internal enum L10n {
     internal enum ContactButton {
       /// Esta llamada puede incurrir costos adicionales
       internal static let description = L10n.tr("Localizable", "listing_details.contact_button.description")
-      /// Contactar
+      /// Llamar
       internal static let title = L10n.tr("Localizable", "listing_details.contact_button.title")
     }
     internal enum CoveredArea {
@@ -767,7 +857,7 @@ internal enum L10n {
     /// Inmuebles Top
     internal static let topListingsTitle = L10n.tr("Localizable", "listing_search.top_listings_title")
     internal enum ArPopup {
-      /// ¿Te gusta la zona en donde estas? Explórala con nuestro AR y descubre que inmuebles están en venta o alquiler. Haga click en navegar y lo llevaremos por la ruta mas corta...
+      /// ¿Te gusta la zona en donde estás? Escanéala con la vista AR y descubre que inmuebles están en venta o alquiler. Haz clic en navegar y te llevaremos al inmueble por la ruta más corta.
       internal static let text = L10n.tr("Localizable", "listing_search.ar_popup.text")
       /// Busca propiedades\n con Realidad Aumentada
       internal static let title = L10n.tr("Localizable", "listing_search.ar_popup.title")
@@ -779,7 +869,7 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "listing_search.empty_result.title")
     }
     internal enum LocationPopup {
-      /// Para mostrarle inmuebles cerca a usted y ordenarlos por distancia cuando lo desee. Además, podrá ver su ubicación en la vista de mapa...
+      /// Para mostrarte inmuebles cerca a ti. Además, podrás ver tu ubicación en la vista de mapa.
       internal static let text = L10n.tr("Localizable", "listing_search.location_popup.text")
       /// Porque preguntamos por tu ubicación
       internal static let title = L10n.tr("Localizable", "listing_search.location_popup.title")
@@ -793,7 +883,7 @@ internal enum L10n {
       }
     }
     internal enum SearchBar {
-      /// Urbanización, distrito o ciudad
+      /// Dirección, distrito o ciudad
       internal static let placeholder = L10n.tr("Localizable", "listing_search.search_bar.placeholder")
     }
   }
@@ -865,7 +955,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "my_listings.options.edit.title")
       }
       internal enum Open {
-        /// Open
+        /// Abrir
         internal static let title = L10n.tr("Localizable", "my_listings.options.open.title")
       }
       internal enum Publish {
@@ -876,6 +966,10 @@ internal enum L10n {
         /// Despublicar
         internal static let title = L10n.tr("Localizable", "my_listings.options.unpublish.title")
       }
+        internal enum Share {
+          /// Despublicar
+          internal static let title = L10n.tr("Localizable", "my_listings.options.share.title")
+        }
     }
     internal enum ParkingSlots {
       /// %d estac
@@ -939,6 +1033,13 @@ internal enum L10n {
     }
   }
 
+  internal enum NotNow {
+    internal enum Button {
+      /// Ahora no
+      internal static let title = L10n.tr("Localizable", "notNow.button.title")
+    }
+  }
+
   internal enum Payments {
     internal enum Alert {
       /// Aviso publicado con éxito
@@ -955,6 +1056,8 @@ internal enum L10n {
       internal static func pay(_ p1: Any) -> String {
         return L10n.tr("Localizable", "payments.checkout.pay", String(describing: p1))
       }
+      /// Al hacer clic en 'Pagar', estas aceptando nuestros Términos y Condiciones de Compra
+      internal static let termsConditions = L10n.tr("Localizable", "payments.checkout.termsConditions")
       /// Comprar
       internal static let title = L10n.tr("Localizable", "payments.checkout.title")
     }
@@ -979,7 +1082,7 @@ internal enum L10n {
     internal enum PeriodSelection {
       /// COMPRAR
       internal static let button = L10n.tr("Localizable", "payments.period_selection.button")
-      /// Seleccione el periodo de publicación.
+      /// Selecciona el período de publicación
       internal static let description = L10n.tr("Localizable", "payments.period_selection.description")
     }
     internal enum Plan {
@@ -991,7 +1094,7 @@ internal enum L10n {
     internal enum PlanSelection {
       /// SELECCIONAR PLAN
       internal static let button = L10n.tr("Localizable", "payments.plan_selection.button")
-      /// Compare y seleccione el tipo de aviso que más le convenga.
+      /// Compara y selecciona la categoría de aviso que más te convenga.
       internal static let description = L10n.tr("Localizable", "payments.plan_selection.description")
     }
     internal enum PlanTitle {
@@ -1023,7 +1126,7 @@ internal enum L10n {
     internal enum ProfileSelection {
       /// SELECCIONAR PERFIL
       internal static let button = L10n.tr("Localizable", "payments.profile_selection.button")
-      /// ¿Cómo desea publicar?
+      /// ¿Cómo deseas publicar?
       internal static let description = L10n.tr("Localizable", "payments.profile_selection.description")
     }
   }
@@ -1066,6 +1169,16 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "popups.sign_out.sign_out.title")
       }
     }
+      internal enum DeleteAccount {
+        /// No podrás buscar propiedades ni recibir notificaciones
+        internal static let text = L10n.tr("Localizable", "popups.delete_account.text")
+        /// ¿Desea cerrar sesión?
+        internal static let title = L10n.tr("Localizable", "popups.delete_account.title")
+        internal enum DeleteAccount {
+          /// Cerrar sesión
+          internal static let title = L10n.tr("Localizable", "popups.delete_account.delete_account.title")
+        }
+      }
     internal enum UnpublishListing {
       /// Podrá volver a publicarlo más tarde en cualquier momento
       internal static let text = L10n.tr("Localizable", "popups.unpublish_listing.text")
@@ -1093,6 +1206,10 @@ internal enum L10n {
       internal enum SignOut {
         /// Cerrar sesión
         internal static let title = L10n.tr("Localizable", "profile.account.sign_out.title")
+      }
+      internal enum DeleteAccount {
+        /// Cerrar sesión
+        internal static let title = L10n.tr("Localizable", "profile.account.delete_account.title")
       }
     }
     internal enum Currency {
@@ -1139,9 +1256,45 @@ internal enum L10n {
     }
   }
 
+  internal enum Sign {
+    internal enum Button {
+      /// Ingresar
+      internal static let title = L10n.tr("Localizable", "sign.button.title")
+    }
+  }
+
   internal enum SignUp {
     /// Crear cuenta
     internal static let title = L10n.tr("Localizable", "sign_up.title")
+      
+      internal enum FirstName {
+        internal static let title = L10n.tr("Localizable", "sign_up.first_name.title")
+      }
+      internal enum LastName {
+        internal static let title = L10n.tr("Localizable", "sign_up.last_name.title")
+      }
+      internal enum FullName {
+        internal static let title = L10n.tr("Localizable", "sign_up.full_name.title")
+      }
+      internal enum Email {
+        internal static let title = L10n.tr("Localizable", "sign_up.email.title")
+      }
+      internal enum Phone {
+        internal static let title = L10n.tr("Localizable", "sign_up.phone.title")
+      }
+      internal enum Password {
+        internal static let title = L10n.tr("Localizable", "sign_up.password.title")
+      }
+      internal enum CountryList {
+        internal static let title = L10n.tr("Localizable", "sign_up.contry_list.title")
+      }
+  }
+
+  internal enum Skip {
+    internal enum Button {
+      /// Saltar
+      internal static let title = L10n.tr("Localizable", "skip.button.title")
+    }
   }
 
   internal enum Start {
@@ -1149,6 +1302,14 @@ internal enum L10n {
       /// ¡COMENCEMOS!
       internal static let title = L10n.tr("Localizable", "start.button.title")
     }
+      internal enum SignUpButton {
+        /// ¡COMENCEMOS!
+        internal static let title = L10n.tr("Localizable", "signup.button.title")
+      }
+      internal enum LogInButton {
+        /// ¡COMENCEMOS!
+        internal static let title = L10n.tr("Localizable", "login.button.title")
+      }
   }
 
   internal enum TabBar {

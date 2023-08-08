@@ -48,14 +48,21 @@ final class FavoritesModel: EventNode {
         let listingID = String(listings.value[index].id)
 
         requestState.onNext(.started)
-        listingsService.deleteListingFromFavorite(listingID: listingID) { [weak self] result in
+        listingsService.deleteListingFromFavorite(listingID: listingID,
+                                                  ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                  userAgent: "ios",
+                                                  signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
                 self?.fetchFavoritesListings()
 
             case .failure(let error):
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
                 self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -65,4 +72,10 @@ final class FavoritesModel: EventNode {
         raise(event: ListingDetailsPresentableEvent.presentListingDetails(listing: listing))
     }
     
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }

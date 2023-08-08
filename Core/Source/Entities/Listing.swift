@@ -13,7 +13,24 @@ public enum ListingType: String, CaseIterable, Codable {
 }
 
 public enum PropertyType: String, CaseIterable, Codable {
-    case apartment, house, commercial, office, land, room
+    case apartment,
+         house,
+         commercial,
+         office,
+         land,
+         room,
+         localIndustrial = "local_industrial",
+         landAgricultural = "land_agricultural",
+         landIndustrial = "land_industrial",
+         landCommercial = "land_commercial",
+         cottage,
+         beachHouse = "beach_house",
+         building,
+         hotel,
+         deposit,
+         parking,
+         airs
+    
 }
 
 public enum ListingStatus: String, Codable {
@@ -22,6 +39,10 @@ public enum ListingStatus: String, Codable {
 
 public enum ListingState: String, Codable {
     case published, notPublished = "not_published", expired, unpublished
+}
+
+public enum ListingRole: String, Codable {
+    case realtor, owner
 }
 
 public enum PlanType: String, Codable {
@@ -35,11 +56,11 @@ public struct Listing: Codable {
     public var area: Int?
     public var bathroomsCount: Int?
     public var bedroomsCount: Int?
-    public var contactViewsCount: Int
+    public var contactViewsCount: Int?
     public var favouritesCount: Int
-    public var favourited: Bool
+    public var favourited: Bool?
     public var id: ListingId
-    public var listingDescription: String
+    public var listingDescription: String?
     public var listingType: ListingType?
     public var parkingSlotsCount: Int?
     public var petFriendly: Bool?
@@ -47,6 +68,7 @@ public struct Listing: Codable {
     public var primaryImageId: Int?
     public var propertyType: PropertyType?
     public var status: ListingStatus
+    public var role: ListingRole?
     public var viewsCount: Int
     public var yearOfConstruction: Int?
     public var createdAt: Date
@@ -60,16 +82,26 @@ public struct Listing: Codable {
     public var floorNumber: Int?
 
     public var user: User
+    public var contact: Contact?
     public var location: Location?
     public var images: [ListingImage]?
     public var facilities: [Facility]?
     public var advancedDetails: [Facility]?
+    public var url: String?
     
+    public var isEdit: Bool = false
+
     //55547 TODO: - Remove it.
 
-    public init(area: Int?, bathroomsCount: Int?, bedroomsCount: Int?, contactViewsCount: Int,
-                favouritesCount: Int, favourited: Bool = false, id: ListingId, listingDescription: String,
-                listingType: ListingType?, parkingSlotsCount: Int?,
+    public init(area: Int?,
+                bathroomsCount: Int?,
+                bedroomsCount: Int?,
+                contactViewsCount: Int?,
+                favouritesCount: Int,
+                favourited: Bool = false, id: ListingId,
+                listingDescription: String?,
+                listingType: ListingType?,
+                parkingSlotsCount: Int?,
                 petFriendly: Bool?, price: Int?,
                 primaryImageId: Int?,
                 propertyType: PropertyType?,
@@ -81,6 +113,7 @@ public struct Listing: Codable {
                 adExpiresAt: Date?,
                 adPlan: PlanType?,
                 state: ListingState,
+                role: ListingRole?,
                 coveredArea: Int?,
                 parkingForVisits: Bool?,
                 totalFloorsCount: Int?,
@@ -89,7 +122,9 @@ public struct Listing: Codable {
                 location: Location?,
                 images: [ListingImage]?,
                 facilities: [Facility]?,
-                advancedDetails: [Facility]?
+                advancedDetails: [Facility]?,
+                contact: Contact? = nil,
+                url: String? = nil
         ) {
         self.area = area
         self.bathroomsCount = bathroomsCount
@@ -112,6 +147,7 @@ public struct Listing: Codable {
         self.adExpiresAt = adExpiresAt
         self.adPlan = adPlan
         self.state = state
+        self.role = role
         self.coveredArea = coveredArea
         self.parkingForVisits = parkingForVisits
         self.totalFloorsCount = totalFloorsCount
@@ -122,13 +158,15 @@ public struct Listing: Codable {
         self.facilities = facilities
         self.advancedDetails = advancedDetails
         self.price = price
+        self.contact = contact
+        self.url = url
     }
     
     enum CodingKeys: String, CodingKey {
         case area
         case bathroomsCount
         case bedroomsCount
-        case contactViewsCount
+        case contactViewsCount = "contactsCount"
         case favouritesCount
         case favourited
         case id
@@ -143,6 +181,7 @@ public struct Listing: Codable {
         case viewsCount
         case yearOfConstruction
         case user
+        case contact
         case location
         case images
         case facilities
@@ -151,11 +190,13 @@ public struct Listing: Codable {
         case adExpiresAt
         case adPlan
         case state
+        case role = "publisherRole"
         case coveredArea = "builtArea"
         case parkingForVisits
         case totalFloorsCount
         case floorNumber
         case advancedDetails
+        case url
     }
     
 }

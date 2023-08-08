@@ -87,7 +87,7 @@ extension FavoritesView {
             with: Asset.Common.favoritesIcon.image,
             secondPart: L10n.FavoritesListings.Empty.Description.second,
             font: FontFamily.AvenirLTStd._55Roman.font(size: 16),
-            lineSpacing: 10,
+            lineSpacing: 20,
             alignment: .center,
             color: .white,
             kern: 0

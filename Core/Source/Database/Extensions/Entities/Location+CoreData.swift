@@ -31,7 +31,7 @@ extension Location: CoreDataModelConvertible {
         guard let object = managedObject as? ManagedLocation else {
             fatalError("can't cast given `NSManagedObject`: \(managedObject) to `\(Location.self)`")
         }
-        
+        print("object location = \(object)")
         return instantiate(object)
     }
     
@@ -40,9 +40,8 @@ extension Location: CoreDataModelConvertible {
         existedInstance: NSManagedObject?
     ) -> NSManagedObject {
         let object: ManagedLocation = upsertingManagedObject(of: Location.self, in: context, with: existedInstance)
-        
         map(object)
-        
+        print("object map = \(object)")
         return object
     }
     
@@ -53,6 +52,11 @@ extension Location: CoreDataModelConvertible {
         object.address = address
         object.latitude = latitude
         object.longitude = longitude
+        object.country = country
+        object.department = department
+        object.province = province
+        object.district = district
+        object.zipCode = zipCode
     }
     
     private static func instantiate(_ object: ManagedLocation) -> Location {
@@ -60,7 +64,12 @@ extension Location: CoreDataModelConvertible {
             id: object.id,
             address: object.address,
             latitude: object.latitude,
-            longitude: object.longitude
+            longitude: object.longitude,
+            country: object.country,
+            department: object.department,
+            province: object.province,
+            district: object.district,
+            zipCode: object.zipCode
         )
     }
 }

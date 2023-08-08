@@ -14,10 +14,12 @@ public struct Facility: Codable {
     public let key: String
     public let title: String
     public let icon: RemoteImage?
+    public let iconIos: RemoteImage?
     public var propertyTypes: [PropertyType]?
 
     enum CodingKeys: String, CodingKey {
-        case icon = "iconIos"
+        case icon
+        case iconIos
         case key
         case title
         case id 

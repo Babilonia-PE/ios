@@ -11,12 +11,12 @@ import YALAPIClient
 struct CurrencyRateRequest: APIRequest, DecoratableRequest {
 
     let method: APIRequestMethod = .get
-    var path = "currency_rate"
-    let authRequired: Bool = true
+    var path = "public/currency_rate"
+    let authRequired: Bool = false
     private(set) var parameters: [String: Any]?
     
     init(fromCurrency: String, toCurrency: String) {
-        parameters = ["data[from]": fromCurrency, "data[to]": toCurrency]
+        parameters = ["data_from": fromCurrency, "data_to": toCurrency]
     }
     
 }

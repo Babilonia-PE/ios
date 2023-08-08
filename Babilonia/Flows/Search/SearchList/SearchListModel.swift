@@ -13,17 +13,20 @@ import DBClient
 import CoreLocation
 import UIKit
 
-protocol ListingsUpdatable: class {
+protocol ListingsUpdatable: AnyObject {
     func updateListings(filters: ListingFilterModel)
     func updateListings(areaInfo: FetchListingsAreaInfo,
                         placeInfo: FetchListingsPlaceInfo,
                         isCurrentLocation: Bool)
+    func updateListings(searchLocation: SearchLocation,
+                        isCurrentLocation: Bool)
 }
 
-private let defaultSearchRadius: Float = 5000
+private let defaultSearchRadius: Float = 2000 // 1000 // 5000
 
 enum ListingDetailsPresentableEvent: Event {
     case presentListingDetails(listing: Listing)
+    case alertGuest
 }
 
 final class SearchListModel: EventNode {
@@ -41,12 +44,19 @@ final class SearchListModel: EventNode {
             topListings.asDriver().map { $0.isEmpty }.skip(1).distinctUntilChanged()
         ) { $0 && $1 }
     }
-    var listingsCount: Int { return listings.value.count }
+    var listingsCount: Int {
+        return listings.value.count
+    }
+    
+    var isGuest: Bool {
+        userService.userID == .guest
+    }
     var sortOptionValue: SortOption { return sortOption.value }
     var sortOptionTitle: Driver<String> { return sortOption.map { $0.title }.asDriver(onErrorJustReturn: "") }
     var requestForLocationPermission = BehaviorSubject<Void>(value: ())
 
     var topListingsViewUpdatable = BehaviorRelay(value: true)
+    var callServiceByFilter = BehaviorRelay(value: false)
 
     var showLocationPromptUpdated: Signal<Bool> {
         return showLocationPrompt.asSignal(onErrorJustReturn: false).debounce(.seconds(1))
@@ -76,12 +86,13 @@ final class SearchListModel: EventNode {
     private var listingsType: ListingsType = .all
     private var searchAreaInfo: FetchListingsAreaInfo?
     private var filters: ListingFilterModel?
+    private let updateFoundListingsCount: PublishSubject<ListingFilterModel?>
     private var shouldShowTopListings = true
 
-    private let defaultPerPage = 25
+    private let defaultPerPage = 50 //osemy
     private var page = 1
     private var canFetchMore = false
-    
+    private var mapLocation: CLLocationCoordinate2D?
     // MARK: - lifecycle
     
     init(parent: EventNode,
@@ -90,19 +101,24 @@ final class SearchListModel: EventNode {
          listingsService: ListingsService,
          userService: UserService,
          updateDefaulLocation: @escaping (() -> Void),
-         sortOption: BehaviorRelay<SortOption>) {
+         sortOption: BehaviorRelay<SortOption>,
+         updateFoundListingsCount: PublishSubject<ListingFilterModel?>) {
         self.locationManager = locationManager
         self.configService = configService
         self.listingsService = listingsService
         self.userService = userService
         self.updateDefaulLocation = updateDefaulLocation
         self.sortOption = sortOption
+        self.updateFoundListingsCount = updateFoundListingsCount
 
         super.init(parent: parent)
-        
         checkLocation()
     }
 
+    func clearListingsType() {
+        listingsType = .all
+    }
+    
     func incrementPage() {
         let remainder = Double(listingsCount).truncatingRemainder(dividingBy: Double(defaultPerPage))
         guard canFetchMore, listingsCount >= defaultPerPage,
@@ -122,6 +138,18 @@ final class SearchListModel: EventNode {
         setupInitialParamsAndFetch()
     }
         
+    public func firstListing() -> Listing? {
+        listings.value.first
+    }
+    
+    public func getMapLocation() -> CLLocationCoordinate2D? {
+        mapLocation
+    }
+    
+    public func updateMapLocation(location: CLLocationCoordinate2D?) {
+        mapLocation = location
+    }
+    
     func listingModel(at index: Int, isTopListing: Bool) -> Listing {
         isTopListing ? topListings.value[index] : listings.value[index]
     }
@@ -143,7 +171,14 @@ final class SearchListModel: EventNode {
 
         checkForLocationPermission()
         sortOption.accept(option)
-        fetchListings()
+        fetchListings()//osemy
+    }
+    
+    func setSortOption(with id: Int, searchLocation: SearchLocation) {
+        guard let option = SortOption(rawValue: id) else { return }
+        checkForLocationPermission()
+        sortOption.accept(option)
+        fetchListings(searchLocation: searchLocation)
     }
 
     func presentListingDetails(for index: Int, isTopListing: Bool = false) {
@@ -152,39 +187,58 @@ final class SearchListModel: EventNode {
     }
 
     func setListingFavoriteState(at index: Int, isTopListing: Bool = false) {
-        let listing = isTopListing ? topListings.value[index] : listings.value[index]
-        let listingID = String(listing.id)
-
-        requestState.onNext(.started)
-        if listing.favourited {
-            deleteListingFromFavorite(listingID: listingID)
+        if userService.userID == .guest {
+            raise(event: ListingDetailsPresentableEvent.alertGuest)
         } else {
-            addListingToFavorite(listingID: listingID)
+            let listing = isTopListing ? topListings.value[index] : listings.value[index]
+            let listingID = String(listing.id)
+            requestState.onNext(.started)
+            let favourited = listing.favourited ?? false
+            if favourited {
+                deleteListingFromFavorite(listingID: listingID)
+            } else {
+                addListingToFavorite(listingID: listingID)
+            }
         }
+        
     }
     
     // MARK: - private
 
     private func addListingToFavorite(listingID: String) {
-        listingsService.addListingToFavorite(listingID: listingID) { [weak self] result in
+        listingsService.addListingToFavorite(listingID: listingID,
+                                             ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                             userAgent: "ios",
+                                             signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
                 self?.fetchListings()
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
 
     private func deleteListingFromFavorite(listingID: String) {
-        listingsService.deleteListingFromFavorite(listingID: listingID) { [weak self] result in
+        listingsService.deleteListingFromFavorite(listingID: listingID,
+                                                  ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                  userAgent: "ios",
+                                                  signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
                 self?.fetchListings()
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -196,14 +250,15 @@ final class SearchListModel: EventNode {
     func fetchListings(placeInfo: FetchListingsPlaceInfo? = nil,
                        shouldResetListings: Bool = false) {
         requestState.onNext(.started)
-
+        
         if shouldShowTopListings {
             fetchTopListings()
         } else {
             topListingsViewUpdatable.accept(false)
         }
-        
         let areaInfo = generateAreaInfo()
+        self.filters?.areaInfo = areaInfo
+        self.updateFoundListingsCount.onNext(self.filters)
         listingsService.fetchAllListings(
             areaInfo: areaInfo,
             sort: sortOptionValue.sortParam,
@@ -238,8 +293,66 @@ final class SearchListModel: EventNode {
                     }
 
                 case .failure(let error):
-                    self.requestState.onNext(.failed(error))
-                    self.topListingsViewUpdatable.accept(false)
+                    if self.isUnauthenticated(error) {
+                        self.raise(event: MainFlowEvent.logout)
+                    } else {
+                        self.requestState.onNext(.failed(error))
+                        self.topListingsViewUpdatable.accept(false)
+                    }
+                }
+        }
+    }
+    
+    func fetchListings(searchLocation: SearchLocation,
+                       isCurrentLocation: Bool = false) {
+        
+        requestState.onNext(.started)
+
+        if shouldShowTopListings {
+            fetchTopListings()
+        } else {
+            topListingsViewUpdatable.accept(false)
+        }
+        self.updateFoundListingsCount.onNext(self.filters)
+        listingsService.fetchAllListings(
+            searchLocation: searchLocation,
+            sort: sortOptionValue.sortParam,
+            direction: sortOptionValue.directionParam,
+            filters: filters,
+            page: page
+        ) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let listings):
+                    self.requestState.onNext(.finished)
+
+                    self.canFetchMore = listings.count == self.defaultPerPage
+                    if self.page > 1 {
+                        var fetchedListings = self.listings.value
+                        let indexPathsToReload = self.calculateIndexPathsToReload(from: listings)
+                        if self.shouldAppendListings(listings) {
+                            self.listings.accept(fetchedListings + listings)
+                        } else {
+                            if let first = indexPathsToReload.first,
+                               let last = indexPathsToReload.last, last.row < fetchedListings.count {
+                                fetchedListings.replaceSubrange(first.row...last.row, with: listings)
+                            }
+                            self.listings.accept(fetchedListings)
+                        }
+                        self.listingsUpdated.onNext(indexPathsToReload)
+                    } else {
+                        self.listings.accept(listings)
+                        self.listingsUpdated.onNext(nil)
+                    }
+
+                case .failure(let error):
+                    if self.isUnauthenticated(error) {
+                        self.raise(event: MainFlowEvent.logout)
+                    } else {
+                        self.requestState.onNext(.failed(error))
+                        self.topListingsViewUpdatable.accept(false)
+                    }
                 }
         }
     }
@@ -247,20 +360,34 @@ final class SearchListModel: EventNode {
     func generateAreaInfo() -> FetchListingsAreaInfo? {
         switch (listingsType, searchAreaInfo) {
         case (.searchResult, let areaInfo):
+            
             return areaInfo
 
         default:
             var area: FetchListingsAreaInfo?
+            
             if let coordinate = currentCoordinate {
-                area = FetchListingsAreaInfo(latitude: Float(coordinate.latitude),
-                                             longitude: Float(coordinate.longitude),
-                                             radius: defaultSearchRadius)
-
+                if let mapLocation = mapLocation {
+                    area = FetchListingsAreaInfo(latitude: Float(mapLocation.latitude),
+                                                 longitude: Float(mapLocation.longitude),
+                                                 radius: defaultSearchRadius)
+                } else {
+                    area = FetchListingsAreaInfo(latitude: Float(coordinate.latitude),
+                                                 longitude: Float(coordinate.longitude),
+                                                 radius: defaultSearchRadius)
+                }
+                
                 return area
             } else {
-                area = FetchListingsAreaInfo(latitude: Float(defaultLocation.latitude),
-                                             longitude: Float(defaultLocation.longitude),
-                                             radius: defaultSearchRadius)
+                if let mapLocation = mapLocation {
+                    area = FetchListingsAreaInfo(latitude: Float(mapLocation.latitude),
+                                                 longitude: Float(mapLocation.longitude),
+                                                 radius: defaultSearchRadius)
+                } else {
+                    area = FetchListingsAreaInfo(latitude: Float(defaultLocation.latitude),
+                                                 longitude: Float(defaultLocation.longitude),
+                                                 radius: defaultSearchRadius)
+                }
 
                 return area
             }
@@ -276,8 +403,12 @@ final class SearchListModel: EventNode {
                 self?.topListingsViewUpdatable.accept(!listings.isEmpty)
                 self?.topListingsUpdated.onNext(())
 
-            case .failure:
-                self?.topListingsViewUpdatable.accept(false)
+            case .failure(let error):
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.topListingsViewUpdatable.accept(false)
+                }
             }
         }
     }
@@ -297,6 +428,12 @@ final class SearchListModel: EventNode {
         return uniqueIDs == (newListingsIDs + listingsIDs).count
     }
     
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }
 
 // MARK: - Location setup & updating
@@ -376,7 +513,12 @@ extension SearchListModel {
 // MARK: - ListingsUpdatable
 
 extension SearchListModel: ListingsUpdatable {
-
+    func updateListings(searchLocation: SearchLocation, isCurrentLocation: Bool) {
+        listingsType = .searchResult
+        resetPagination(shouldShowTopListings: isCurrentLocation && filters == nil)
+        fetchListings(searchLocation: searchLocation, isCurrentLocation: isCurrentLocation)
+    }
+    
     func updateListings(areaInfo: FetchListingsAreaInfo,
                         placeInfo: FetchListingsPlaceInfo,
                         isCurrentLocation: Bool) {
@@ -389,11 +531,16 @@ extension SearchListModel: ListingsUpdatable {
 
     func updateListings(filters: ListingFilterModel) {
         self.filters = filters
-        if let areaInfo = searchAreaInfo {
-            self.filters?.areaInfo = areaInfo
-        }
         resetPagination()
-        fetchListings(shouldResetListings: true)
+        callServiceByFilter.accept(true)
+        if let location = RecentLocation.shared.currentLocation {
+            fetchListings(searchLocation: location, isCurrentLocation: true)
+        } else {
+            if let areaInfo = searchAreaInfo {
+                self.filters?.areaInfo = areaInfo
+            }
+            fetchListings(shouldResetListings: true)
+        }
+        
     }
-
 }

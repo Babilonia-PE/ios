@@ -39,8 +39,13 @@ extension FiltersListingTypeView {
             guard let self = self else { return }
             if type == .sale {
                 self.configureButtonState(selectedButton: self.forSaleButton, deselectedButton: self.forRentButton)
-            } else {
+            } else if type == .rent {
                 self.configureButtonState(selectedButton: self.forRentButton, deselectedButton: self.forSaleButton)
+            } else {
+                self.forSaleButton.setTitleColor(Asset.Colors.gunmetal.color, for: .normal)
+                self.forSaleButton.backgroundColor = Asset.Colors.veryLightBlueTwo.color
+                self.forRentButton.setTitleColor(Asset.Colors.gunmetal.color, for: .normal)
+                self.forRentButton.backgroundColor = Asset.Colors.veryLightBlueTwo.color
             }
         })
         .disposed(by: disposeBag)
@@ -74,6 +79,7 @@ extension FiltersListingTypeView {
         backgroundColor = .white
 
         setupListingType()
+        //configureButtonState(selectedButton: forSaleButton, deselectedButton: forRentButton)
     }
 
     private func setupListingType() {
@@ -101,7 +107,6 @@ extension FiltersListingTypeView {
         forRentButton.setTitle(L10n.Filters.forRent, for: .normal)
         forRentButton.titleLabel?.font = FontFamily.AvenirLTStd._85Heavy.font(size: 13)
         forRentButton.layerCornerRadius = 6
-        configureButtonState(selectedButton: forSaleButton, deselectedButton: forRentButton)
 
         addSubview(forRentButton)
         forRentButton.layout {
@@ -118,6 +123,27 @@ extension FiltersListingTypeView {
         deselectedButton.setTitleColor(Asset.Colors.gunmetal.color, for: .normal)
         selectedButton.backgroundColor = Asset.Colors.biscay.color
         deselectedButton.backgroundColor = Asset.Colors.veryLightBlueTwo.color
+    }
+    
+    func showOnlyComponent(for filterType: FilterType) {
+        switch filterType {
+        case .listingType:
+            setupListingType()
+            propertyTypeInputFieldView.removeFromSuperview()
+        case .propertyType:
+            listingTypeLabel.removeFromSuperview()
+            forSaleButton.removeFromSuperview()
+            forRentButton.removeFromSuperview()
+            addSubview(propertyTypeInputFieldView)
+            propertyTypeInputFieldView.layout {
+                $0.top.equal(to: topAnchor, offsetBy: 38)
+                $0.leading.equal(to: leadingAnchor, offsetBy: 16)
+                $0.trailing.equal(to: trailingAnchor, offsetBy: -16)
+                $0.height.equal(to: 56)
+            }
+        default:
+            break
+        }
     }
 
 }

@@ -118,7 +118,7 @@ final class LocationSearchView: NiblessView {
 
     func animateSearchBar(onAppear: Bool) {
         let leadingConstant: CGFloat = onAppear ? 16 : 58
-        let trailingConstant: CGFloat = onAppear ? -78 : -57
+        let trailingConstant: CGFloat = onAppear ? -88 : -57
         let alpha: CGFloat = onAppear ? 1 : 0
         searchBarLeadingConstraint?.constant = leadingConstant
         searchBarTrailingConstraint?.constant = trailingConstant

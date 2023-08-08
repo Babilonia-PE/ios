@@ -102,13 +102,23 @@ final class FavoritesFlowAssembly: Assembly {
     
     private func assembleServices(_ container: Container) {
         container
-            .autoregister(ListingsService.self, initializer: ListingsService.init)
+            .register(ListingsService.self) { (resolver) in
+                return ListingsService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
         container
             .autoregister(LocationManager.self, initializer: LocationManager.init)
             .inObjectScope(.container)
         container
-            .autoregister(UserService.self, initializer: UserService.init)
+            .register(UserService.self) { (resolver) in
+                return UserService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
     }
     

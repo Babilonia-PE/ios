@@ -57,6 +57,7 @@ final class ListingDetailsDescriptionViewController: UIViewController {
         descriptionTextView.tintColor = Asset.Colors.hippieBlue.color
         descriptionTextView.textColor = Asset.Colors.vulcan.color
         descriptionTextView.font = FontFamily.AvenirLTStd._55Roman.font(size: 16.0)
+        descriptionTextView.isEditable = false
     }
     
     private func setupBindings() {

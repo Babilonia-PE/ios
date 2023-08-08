@@ -9,15 +9,25 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import FirebaseUI
+import FirebasePhoneAuthUI
 
 final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplicable {
     
     let alert = ApplicationAlert()
     let spinner = AppSpinner()
-    
+    var autoPhoneAuth: Bool = false {
+        didSet {
+            if autoPhoneAuth {
+                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self](_) in
+                    self?.presentLogIn()
+                }
+            }
+        }
+    }
     private let viewModel: AuthViewModel
-    private var startButton: UIButton!
+    private var signUpButton: UIButton = .init()
+    private var logInButton: UIButton = .init()
+    private var guestButton: UIButton = .init()
     
     // MARK: - lifecycle
     
@@ -35,6 +45,22 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+
+        super.viewWillDisappear(animated)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - private
     
     private func layout() {
@@ -48,13 +74,29 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
             $0.trailing <= view.trailingAnchor - 8.0
         }
         
-        startButton = UIButton()
-        view.addSubview(startButton)
-        startButton.layout {
+        view.addSubview(guestButton)
+        guestButton.layout {
+            $0.leading == view.leadingAnchor + 24.0
+            $0.trailing == view.trailingAnchor - 24.0
+            $0.bottom == view.bottomAnchor - 24.0
+            $0.height == 56.0
+        }
+        
+        view.addSubview(logInButton)
+        logInButton.layout {
             $0.top >= logoImage.bottomAnchor + 8.0
             $0.leading == view.leadingAnchor + 24.0
             $0.trailing == view.trailingAnchor - 24.0
-            $0.bottom == view.bottomAnchor - 36.0
+            $0.bottom == guestButton.topAnchor - 5.0
+            $0.height == 56.0
+        }
+        
+        view.addSubview(signUpButton)
+        signUpButton.layout {
+            $0.top >= logoImage.bottomAnchor + 8.0
+            $0.leading == view.leadingAnchor + 24.0
+            $0.trailing == view.trailingAnchor - 24.0
+            $0.bottom == logInButton.topAnchor - 16.0
             $0.height == 56.0
         }
     }
@@ -62,17 +104,52 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
     private func setupViews() {
         view.backgroundColor = Asset.Colors.biscay.color
         
-        let buttonTitle = L10n.Start.Button.title.toAttributed(
+        let signUpButtonTitle = L10n.Start.SignUpButton.title.toAttributed(
             with: FontFamily.SamsungSharpSans.bold.font(size: 16.0),
             alignment: .center,
             color: .white,
             kern: 1
         )
-        startButton.setAttributedTitle(buttonTitle, for: .normal)
-        startButton.titleEdgeInsets = UIEdgeInsets(top: 2.0, left: 0.0, bottom: 0.0, right: 0.0)
-        startButton.backgroundColor = Asset.Colors.mandy.color
-        startButton.layer.cornerRadius = 28.0
-        startButton.layer.addShadowLayer(
+        signUpButton.setAttributedTitle(signUpButtonTitle, for: .normal)
+        signUpButton.titleEdgeInsets = UIEdgeInsets(top: 2.0, left: 0.0, bottom: 0.0, right: 0.0)
+        signUpButton.backgroundColor = Asset.Colors.mandy.color
+        signUpButton.layer.cornerRadius = 28.0
+        signUpButton.layer.addShadowLayer(
+            color: Asset.Colors.mandy.color.withAlphaComponent(0.3).cgColor,
+            offset: CGSize(width: 0, height: 4),
+            radius: 6.0,
+            cornerRadius: 28.0
+        )
+        
+        let loginButtonTitle = L10n.Start.LogInButton.title.toAttributed(
+            with: FontFamily.SamsungSharpSans.bold.font(size: 16.0),
+            alignment: .center,
+            color: .white,
+            kern: 1
+        )
+        logInButton.setAttributedTitle(loginButtonTitle, for: .normal)
+        logInButton.titleEdgeInsets = UIEdgeInsets(top: 2.0, left: 0.0, bottom: 0.0, right: 0.0)
+        logInButton.backgroundColor = Asset.Colors.mandy.color
+        logInButton.layer.cornerRadius = 28.0
+        logInButton.layer.addShadowLayer(
+            color: Asset.Colors.mandy.color.withAlphaComponent(0.3).cgColor,
+            offset: CGSize(width: 0, height: 4),
+            radius: 6.0,
+            cornerRadius: 28.0
+        )
+        
+        let guestTitle = L10n.Skip.Button.title.toAttributed(
+            with: FontFamily.SamsungSharpSans.bold.font(size: 16.0),
+            alignment: .center,
+            color: .white,
+            kern: 1,
+            underlineStyle: .single
+        )
+        
+        guestButton.setAttributedTitle(guestTitle, for: .normal)
+        guestButton.titleEdgeInsets = UIEdgeInsets(top: 2.0, left: 0.0, bottom: 0.0, right: 0.0)
+        guestButton.layer.cornerRadius = 28.0
+        guestButton.layer.addShadowLayer(
             color: Asset.Colors.mandy.color.withAlphaComponent(0.3).cgColor,
             offset: CGSize(width: 0, height: 4),
             radius: 6.0,
@@ -89,8 +166,16 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
             }
             .disposed(by: disposeBag)
         
-        startButton.rx.tap
-            .bind(onNext: presentPhoneAuth)
+        signUpButton.rx.tap
+            .bind(onNext: presentSignUp)
+            .disposed(by: disposeBag)
+        
+        logInButton.rx.tap
+            .bind(onNext: presentLogIn)
+            .disposed(by: disposeBag)
+        
+        guestButton.rx.tap
+            .bind(onNext: loginAsGuest)
             .disposed(by: disposeBag)
     }
     
@@ -102,33 +187,45 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
         }
     }
     
-    private func presentPhoneAuth() {        
-        let authUI = FUIAuth.defaultAuthUI()
-        let phoneProvider = FUIPhoneAuth(authUI: FUIAuth.defaultAuthUI()!)
-        authUI?.delegate = self
-        authUI?.providers = [phoneProvider]
-        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
-    }
-}
-
-extension AuthViewController: FUIAuthDelegate {
+//    private func presentPhoneAuth() {
+//        let authUI = FUIAuth.defaultAuthUI()
+//        let phoneProvider = FUIPhoneAuth(authUI: FUIAuth.defaultAuthUI()!)
+//        authUI?.delegate = self
+//        authUI?.providers = [phoneProvider]
+//        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+//    }
     
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        if let error = error {
-            //canceled auth
-            guard (error as NSError).code != 1 else { return } 
-
-            showDefaultAlert(with: .error, message: error.localizedDescription)
-        } else if let authResult = authDataResult {
-            authResult.user.getIDToken { [weak self] token, error in
-                if let error = error {
-                    self?.showDefaultAlert(with: .error, message: error.localizedDescription)
-                } else {
-                    self?.viewModel.login(with: token ?? "")
-                }
-            }
-        } else {
-            showDefaultAlert(with: .error, message: L10n.Errors.somethingWentWrong)
-        }
+    private func presentSignUp() {
+        viewModel.signUp()
+    }
+    
+    private func presentLogIn() {
+        viewModel.login()
+    }
+    
+    private func loginAsGuest() {
+        viewModel.loginGuest()
     }
 }
+
+//extension AuthViewController: FUIAuthDelegate {
+//
+//    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//        if let error = error {
+//            //canceled auth
+//            guard (error as NSError).code != 1 else { return }
+//
+//            showDefaultAlert(with: .error, message: error.localizedDescription)
+//        } else if let authResult = authDataResult {
+//            authResult.user.getIDToken { [weak self] token, error in
+//                if let error = error {
+//                    self?.showDefaultAlert(with: .error, message: error.localizedDescription)
+//                } else {
+//                    self?.viewModel.login(with: token ?? "")
+//                }
+//            }
+//        } else {
+//            showDefaultAlert(with: .error, message: L10n.Errors.somethingWentWrong)
+//        }
+//    }
+//}

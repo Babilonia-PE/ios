@@ -67,7 +67,7 @@ final class CreateListingDescriptionViewController: UIViewController {
                               opacity: 0.3)
         view.addSubview(shadowView)
         shadowView.layout {
-            $0.top.equal(to: view.topAnchor, offsetBy: 0)
+            $0.top.equal(to: view.safeAreaLayoutGuide.topAnchor, offsetBy: 0)
             $0.leading.equal(to: view.leadingAnchor)
             $0.trailing.equal(to: view.trailingAnchor)
             $0.height.equal(to: 1)
@@ -76,7 +76,7 @@ final class CreateListingDescriptionViewController: UIViewController {
         titleLabel = UILabel()
         view.addSubview(titleLabel)
         titleLabel.layout {
-            $0.top == view.topAnchor + 22.0
+            $0.top == view.safeAreaLayoutGuide.topAnchor + 22.0
             $0.leading == view.leadingAnchor + 16.0
             $0.height >= 24.0
         }
@@ -84,7 +84,7 @@ final class CreateListingDescriptionViewController: UIViewController {
         countLabel = UILabel()
         view.addSubview(countLabel)
         countLabel.layout {
-            $0.top == view.topAnchor + 26.0
+            $0.top == view.safeAreaLayoutGuide.topAnchor + 26.0
             $0.leading == titleLabel.trailingAnchor + 8.0
             $0.trailing <= view.trailingAnchor - 16.0
             $0.height == 19.0

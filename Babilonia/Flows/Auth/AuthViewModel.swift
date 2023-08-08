@@ -20,8 +20,19 @@ final class AuthViewModel {
         self.model = model
     }
     
-    func login(with token: String) {
-        model.login(with: token)
+//    func login(with token: String) {
+//        model.login(with: token)
+//    }
+    
+    func login() {
+        model.login()
     }
     
+    func loginGuest() {
+        model.loginGuest()
+    }
+    
+    func signUp() {
+        model.signUp()
+    }
 }

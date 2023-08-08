@@ -23,7 +23,9 @@ final class InputFieldView: UIView {
     private var buttonsView: UIView!
     private var doneButton: UIButton!
     private var buttonsTitleLabel: UILabel!
-    
+    var topConstraint: NSLayoutConstraint?
+    private var actionButton: UIButton!
+
     private let viewModel: InputFieldViewModel
     
     private var errorLabelTopConstraint: NSLayoutConstraint!
@@ -44,10 +46,18 @@ final class InputFieldView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateConstraintsIfVisible() {
+        let isGone = self.viewModel.isHidden && textField.text!.isEmpty
+        if isGone {
+            self.goneViews()
+        }
+    }
+    
     // MARK: - private
     
     //swiftlint:disable:next function_body_length
     private func layout() {
+        
         backgroundView = UIView()
         addSubview(backgroundView)
         backgroundView.layout {
@@ -76,7 +86,7 @@ final class InputFieldView: UIView {
         titleLabel.layout {
             $0.height >= 16.0
             $0.top == backgroundView.topAnchor + 7.0
-            $0.leading == backgroundView.leadingAnchor + 16.0
+            $0.leading == leadingAnchor + 16.0
             $0.trailing == rightSideAnchor - 16.0
         }
         
@@ -86,7 +96,7 @@ final class InputFieldView: UIView {
             $0.height >= 22.0
             $0.height <= 120.0
             $0.top == titleLabel.bottomAnchor + 1.0
-            $0.leading == backgroundView.leadingAnchor + 16.0
+            $0.leading == leadingAnchor + 16.0
             $0.trailing == rightSideAnchor - 16.0
             $0.bottom == backgroundView.bottomAnchor - 10.0
         }
@@ -96,7 +106,7 @@ final class InputFieldView: UIView {
         placeholderLabel.layout {
             $0.height >= 22.0
             $0.top == titleLabel.bottomAnchor + 1.0
-            $0.leading == backgroundView.leadingAnchor + 16.0
+            $0.leading == leadingAnchor + 16.0
             $0.trailing == rightSideAnchor - 16.0
         }
         
@@ -105,7 +115,7 @@ final class InputFieldView: UIView {
         textField.layout {
             $0.height >= 22.0
             $0.top == titleLabel.bottomAnchor + 1.0
-            $0.leading == backgroundView.leadingAnchor + 16.0
+            $0.leading == leadingAnchor + 16.0
             $0.trailing == rightSideAnchor - 16.0
         }
         
@@ -144,6 +154,10 @@ final class InputFieldView: UIView {
             $0.top == buttonsView.topAnchor
             $0.bottom == buttonsView.bottomAnchor
         }
+        
+        if let view = actionButton {
+            bringSubviewToFront(view)
+        }
     }
     
     private func setupViews() {
@@ -174,6 +188,7 @@ final class InputFieldView: UIView {
         textField.returnKeyType = viewModel.returnKeyType
         textField.autocapitalizationType = viewModel.autocapitalizationType
         textField.autocorrectionType = viewModel.autocorrectionType
+        textField.isSecureTextEntry = viewModel.isSecureText
         textField.delegate = self
         
         buttonsView.backgroundColor = Asset.Colors.grayNurse.color
@@ -232,7 +247,22 @@ final class InputFieldView: UIView {
                 .drive(textLabel.rx.text)
                 .disposed(by: disposeBag)
         }
-
+        
+        viewModel.textUpdated.map { [weak self] textValue -> Bool in
+            guard let isHidden = self?.viewModel.isHidden else {
+                return false
+            }
+            let isGone = isHidden && textValue.isEmpty
+            if isGone {
+                self?.goneViews()
+            } else {
+                self?.viewModel.isHidden = false
+                self?.showViews()
+            }
+            return isGone
+        }.drive(self.rx.isHidden)
+        .disposed(by: disposeBag)
+        
         viewModel.textUpdated
             .map { _ in }
             .drive(onNext: { [weak self] in
@@ -266,8 +296,15 @@ final class InputFieldView: UIView {
                 self?.processValidation()
             })
             .disposed(by: disposeBag)
-        
         setupComponentsBindings()
+    }
+    
+    private func goneViews() {
+        topConstraint?.constant = -56.0
+    }
+    
+    private func showViews() {
+        topConstraint?.constant = 24.0
     }
 
     private func setupComponentsBindings() {

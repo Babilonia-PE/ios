@@ -14,15 +14,28 @@ final public class ListingsService {
     private let userSession: UserSession
     private let client: NetworkClient
     private let storage: DBClient
+    private let newClient: NetworkClient
     
-    public init(userSession: UserSession, client: NetworkClient, storage: DBClient) {
+    public init(userSession: UserSession, client: NetworkClient, storage: DBClient, newClient: NetworkClient) {
         self.userSession = userSession
         self.client = client
         self.storage = storage
+        self.newClient = newClient
     }
     
     private let updatesQueue = DispatchQueue(label: "ListingsService.updatesQueue")
     private let updatesGroup = DispatchGroup()
+    
+    public func getMyListingDetails(for listingID: String, completion: @escaping (Result<Listing?>) -> Void) {
+        let request = GetMyListingRequest(listingID: listingID)
+        let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
+
+        newClient.execute(
+            request: request,
+            parser: DecodableParser<Listing?>(keyPath: "data", decoder: decoder),
+            completion: completion
+        )
+    }
     
     public func createListing(
         _ listing: Listing,
@@ -31,9 +44,9 @@ final public class ListingsService {
         ) {
         let request = CreateListingRequest(listing: listing, photosInfo: photosInfo)
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
-        client.execute(
+        newClient.execute(
             request: request,
-            parser: DecodableParser<Listing>(keyPath: "data", decoder: decoder)
+            parser: DecodableParser<Listing>(keyPath: "object", decoder: decoder)
         ) { result in
             switch result {
             case .success(let listing):
@@ -56,19 +69,20 @@ final public class ListingsService {
         }
     }
     
-    public func updateListing(
+    public func updateListing( //osemy
         _ listing: Listing,
         photosInfo: CreateListingPhotosInfo,
         completion: @escaping (Result<Bool>) -> Void
         ) {
         let request = UpdateListingRequest(listing: listing, photosInfo: photosInfo)
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
-        client.execute(
+        newClient.execute(
             request: request,
-            parser: DecodableParser<Listing>(keyPath: "data", decoder: decoder)
+            parser: DecodableParser<Listing>(keyPath: "object", decoder: decoder)
         ) { result in
             switch result {
             case .success(let listing):
+                print("updateListing = \(listing)")
                 self.processListings([listing], completion: completion)
             case .failure(let error):
                 completion(.failure(error))
@@ -87,24 +101,29 @@ final public class ListingsService {
 
     }
     
-    public func fetchMyListings(completion: @escaping (Result<Bool>) -> Void) {
+    public func fetchMyListings(state: String, completion: @escaping (Result<Bool>) -> Void) {
         let dbrequest = FetchRequest<Listing>(
             predicate: NSPredicate(
-                format: "\(#keyPath(ManagedListing.user.id)) == %d", userSession.user.id
+                format: "\(#keyPath(ManagedListing.user.id)) == %d AND \(#keyPath(ManagedListing.state)) == %@",
+                userSession.user.id,
+                state
         ), sortDescriptors: [
                 NSSortDescriptor(key: #keyPath(ManagedListing.createdAt), ascending: false)
         ])
 
         let localListings = storage.execute(dbrequest).require()
 
-        let request = FetchMyListingsRequest()
+        let request = FetchMyListingsRequest(page: 1, state: state )
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
-        client.execute(
+        newClient.execute(
             request: request,
             parser: DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder)
         ) { result in
             switch result {
             case .success(let listings):
+#if DEBUG
+                print("state = \(state), count = \(listings.count), listings = \(listings)")
+#endif
                 self.processMyListings(localListings: localListings,
                                        remoteListings: listings,
                                        completion: completion)
@@ -115,13 +134,14 @@ final public class ListingsService {
         }
     }
     
+    //osemy 25 -> 5
     public func fetchAllListings(
         areaInfo: FetchListingsAreaInfo? = nil,
         sort: String?,
         direction: String?,
         filters: ListingFilterModel? = nil,
         placeInfo: FetchListingsPlaceInfo? = nil,
-        perPage: Int = 25,
+        perPage: Int = 50,
         page: Int = 1,
         completion: @escaping (Result<[Listing]>) -> Void
     ) {
@@ -134,7 +154,31 @@ final public class ListingsService {
                                               page: page)
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
 
-        client.execute(
+        newClient.execute(
+            request: request,
+            parser: DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder),
+            completion: completion
+        )
+    }
+    //osemy
+    public func fetchAllListings(
+        searchLocation: SearchLocation,
+        sort: String?,
+        direction: String?,
+        filters: ListingFilterModel? = nil,
+        perPage: Int = 50,
+        page: Int = 1,
+        completion: @escaping (Result<[Listing]>) -> Void
+    ) {
+        let request = FetchAllListingsAddressRequest(searchLocation: searchLocation,
+                                                     sort: sort,
+                                                     direction: direction,
+                                                     filters: filters,
+                                                     perPage: perPage,
+                                                     page: page)
+        let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
+
+        newClient.execute(
             request: request,
             parser: DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder),
             completion: completion
@@ -145,7 +189,7 @@ final public class ListingsService {
         let request = ListingDetailsRequest(listingID: listingID)
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
 
-        client.execute(
+        newClient.execute(
             request: request,
             parser: DecodableParser<Listing?>(keyPath: "data", decoder: decoder),
             completion: completion
@@ -156,17 +200,26 @@ final public class ListingsService {
         let request = FavotitesListingsRequest()
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
 
-        client.execute(
+        newClient.execute(
             request: request,
             parser: DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder),
             completion: completion
         )
     }
 
-    public func addListingToFavorite(listingID: String, completion: @escaping ((Result<Bool>) -> Void)) {
-        let request = TrackUserActionRequest(listingID: listingID, key: .favourite)
+    public func addListingToFavorite(
+        listingID: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping ((Result<Bool>) -> Void)) {
+        let request = TrackUserActionRequest(listingID: listingID,
+                                             key: .favourite,
+                                             ipAddress: ipAddress,
+                                             userAgent: userAgent,
+                                             signProvider: signProvider)
 
-        client.execute(request: request, parser: EmptyParser()) { result in
+        newClient.execute(request: request, parser: EmptyParser()) { result in
             switch result {
             case .success(let isAdded):
                 completion(.success(isAdded))
@@ -177,10 +230,19 @@ final public class ListingsService {
         }
     }
 
-    public func deleteListingFromFavorite(listingID: String, completion: @escaping ((Result<Bool>) -> Void)) {
-        let request = DeleteUserActionRequest(listingID: listingID, key: .favourite)
+    public func deleteListingFromFavorite(
+        listingID: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping ((Result<Bool>) -> Void)) {
+        let request = DeleteUserActionRequest(listingID: listingID,
+                                              key: .favourite,
+                                              ipAddress: ipAddress,
+                                              userAgent: userAgent,
+                                              signProvider: signProvider)
 
-        client.execute(request: request, parser: EmptyParser()) { result in
+        newClient.execute(request: request, parser: EmptyParser()) { result in
             switch result {
             case .success(let isDeleted):
                 completion(.success(isDeleted))
@@ -191,10 +253,19 @@ final public class ListingsService {
         }
     }
 
-    public func triggerContactFromFavorite(listingID: String, completion: @escaping ((Result<Bool>) -> Void)) {
-        let request = TrackUserActionRequest(listingID: listingID, key: .contactView)
+    public func triggerContactFromFavorite(
+        listingID: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping ((Result<Bool>) -> Void)) {
+        let request = TrackUserActionRequest(listingID: listingID,
+                                             key: .phoneView,
+                                             ipAddress: ipAddress,
+                                             userAgent: userAgent,
+                                             signProvider: signProvider)
 
-        client.execute(request: request, parser: EmptyParser()) { result in
+        newClient.execute(request: request, parser: EmptyParser()) { result in
             switch result {
             case .success(let isTriggered):
                 completion(.success(isTriggered))
@@ -205,12 +276,58 @@ final public class ListingsService {
         }
     }
 
+    public func triggerWhatsappFromDetail(
+        listingID: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping ((Result<Bool>) -> Void)) {
+        let request = TrackUserActionRequest(listingID: listingID,
+                                             key: .whatsappView,
+                                             ipAddress: ipAddress,
+                                             userAgent: userAgent,
+                                             signProvider: signProvider)
+
+        newClient.execute(request: request, parser: EmptyParser()) { result in
+            switch result {
+            case .success(let isTriggered):
+                completion(.success(isTriggered))
+
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    public func triggerViewFromDetail(
+        listingID: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping ((Result<Bool>) -> Void)) {
+        let request = TrackUserActionRequest(listingID: listingID,
+                                             key: .viewsView,
+                                             ipAddress: ipAddress,
+                                             userAgent: userAgent,
+                                             signProvider: signProvider)
+
+        newClient.execute(request: request, parser: EmptyParser()) { result in
+            switch result {
+            case .success(let isTriggered):
+                completion(.success(isTriggered))
+
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     public func getFilteredListingsCount(for model: ListingFilterModel,
                                          completion: @escaping ((Result<SearchMetadata>) -> Void)) {
         let request = ListingSearchMetadataRequest(listingFilterModel: model)
         let parser = DecodableParser<SearchMetadata>(keyPath: "data")
 
-        client.execute(request: request, parser: parser) { result in
+        newClient.execute(request: request, parser: parser) { result in
             switch result {
             case .success(let searchMetadata):
                 completion(.success(searchMetadata))
@@ -237,7 +354,7 @@ final public class ListingsService {
         let request = TopListingsRequest(areaInfo: areaInfo)
         let parser = DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder)
 
-        client.execute(request: request, parser: parser, completion: completion)
+        newClient.execute(request: request, parser: parser, completion: completion)
     }
     
     public func newDraftListing() -> Listing {
@@ -342,6 +459,7 @@ private extension Listing {
             adExpiresAt: nil,
             adPlan: nil,
             state: .notPublished,
+            role: nil,
             coveredArea: nil,
             parkingForVisits: nil,
             totalFloorsCount: nil,

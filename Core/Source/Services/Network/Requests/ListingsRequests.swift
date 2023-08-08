@@ -13,19 +13,41 @@ import Alamofire
 struct FetchMyListingsRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    var path = "users/me/listings"
+    var path = "me/listings"
     let authRequired: Bool = true
     private(set) var parameters: [String: Any]?
     
-    init() {
-        parameters = ["per_page": 1000]
+    init(page: Int, state: String) {
+        parameters = [
+            "page": page,
+            "per_page": 1500,
+            "publisher_role": "all",
+            "listing_type": "all",
+            "property_type": "all",
+            "state": state
+        ]
+    }
+}
+
+struct GetMyListingRequest: APIRequest, DecoratableRequest {
+    
+    let method: APIRequestMethod = .get
+    var path: String {
+        "me/listing_detail?id=\(listingID)"
+    }
+    let authRequired = true
+
+    private let listingID: String
+
+    init(listingID: String) {
+        self.listingID = listingID
     }
 }
 
 struct CreateListingRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .post
-    var path = "users/me/listings"
+    var path = "me/validation_data"
     let authRequired: Bool = true
     var encoding: APIRequestEncoding? = JSONEncoding.default
     private(set) var parameters: [String: Any]?
@@ -45,7 +67,7 @@ struct UpdateListingRequest: APIRequest, DecoratableRequest {
     private(set) var parameters: [String: Any]?
     
     init(listing: Listing, photosInfo: CreateListingPhotosInfo) {
-        path = "users/me/listings/\(listing.id)"
+        path = "me/validation_data"
         parameters = listing.JSON(with: photosInfo)
     }
     
@@ -54,7 +76,7 @@ struct UpdateListingRequest: APIRequest, DecoratableRequest {
 struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    let path = "listings"
+    let path = "public/listings"
     let authRequired = true
     private(set) var parameters: [String: Any]?
     
@@ -70,7 +92,8 @@ struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
         if let areaInfo = areaInfo {
             params = areaInfo.JSONRepresentation()
         }
-        
+        print("FetchListingsAreaInfo = \(params)")
+
         if let sort = sort {
             params["sort"] = sort
         }
@@ -79,8 +102,9 @@ struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
             params["direction"] = direction
         }
 
-        if let filters = filters?.convertToJSON() {
-            params.merge(filters) { (_, second) in second }
+        if var filters = filters {
+            filters.areaInfo = areaInfo
+            params.merge(filters.convertToJSON()) { (_, second) in second }
         }
 
         if let placeInfo = placeInfo, !placeInfo.placeID.isEmpty, !placeInfo.searchPlace.isEmpty {
@@ -95,11 +119,66 @@ struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
 
 }
 
+struct FetchAllListingsAddressRequest: APIRequest, DecoratableRequest {
+    
+    let method: APIRequestMethod = .get
+    let path = "public/listings"
+    let authRequired = true
+    private(set) var parameters: [String: Any]?
+    
+    init(searchLocation: SearchLocation,
+         sort: String?,
+         direction: String?,
+         filters: ListingFilterModel? = nil,
+         perPage: Int = 25,
+         page: Int = 1) {
+        var params = [String: Any]()
+
+        if !searchLocation.address.isEmpty {
+            params["location[address]"] = searchLocation.address
+        }
+        
+        if !searchLocation.country.isEmpty {
+            params["location[country]"] = searchLocation.country
+        }
+        if !searchLocation.department.isEmpty {
+            params["location[department]"] = searchLocation.department
+        }
+        
+        if !searchLocation.province.isEmpty {
+            params["location[province]"] = searchLocation.province
+        }
+        
+        if !searchLocation.district.isEmpty {
+            params["location[district]"] = searchLocation.district
+        }
+        
+        if let sort = sort {
+            params["sort"] = sort
+        }
+        
+        if let direction = direction {
+            params["direction"] = direction
+        }
+        
+        if var filters = filters {
+            filters.searchLocation = searchLocation
+            params.merge(filters.convertToJSON()) { (_, second) in second }
+        }
+
+        params["per_page"] = perPage
+        params["page"] = page
+        
+        parameters = params
+    }
+
+}
+
 struct ListingDetailsRequest: APIRequest, DecoratableRequest {
 
     let method: APIRequestMethod = .get
     var path: String {
-        "listings/\(listingID)"
+        "public/listing_detail?id=\(listingID)"
     }
     let authRequired = true
 
@@ -115,9 +194,9 @@ struct ListingSearchMetadataRequest: APIRequest, DecoratableRequest {
 
     let method: APIRequestMethod = .get
     var path: String {
-        "listings/search_metadata"
+        "public/search_metadata"
     }
-    let authRequired = true
+    let authRequired = false
     private(set) var parameters: [String: Any]?
 
     init(listingFilterModel: ListingFilterModel) {
@@ -145,14 +224,14 @@ struct TopListingsRequest: APIRequest, DecoratableRequest {
 
     let method: APIRequestMethod = .get
     var path: String {
-        "last_viewed_listings"
+        "public/last_viewed_listings"
     }
     let authRequired = true
     private(set) var parameters: [String: Any]?
 
     init(areaInfo: FetchListingsAreaInfo? = nil) {
         if let areaInfo = areaInfo {
-            parameters = areaInfo.JSONRepresentation()
+            parameters = areaInfo.JSONFlatRepresentation()
         }
     }
 
@@ -165,8 +244,11 @@ private extension Listing {
         var dataJSON = [String: Any]()
 
         // General step listing creation
-
-        dataJSON["status"] = status == .visible ? status.rawValue : ListingStatus.hidden.rawValue
+        if !isEdit {
+            dataJSON["status"] = status == .visible ? status.rawValue : ListingStatus.hidden.rawValue
+        }
+        dataJSON["source"] = "ios"
+        dataJSON["id"] = id
         dataJSON["listing_type"] = (listingType ?? .sale).rawValue
         dataJSON["property_type"] = (propertyType ?? .apartment).rawValue
 
@@ -177,6 +259,21 @@ private extension Listing {
             }
             locationJSON["latitude"] = location.latitude
             locationJSON["longitude"] = location.longitude
+            if let country = location.country {
+                locationJSON["country"] = country
+            }
+            if let department = location.department {
+                locationJSON["department"] = department
+            }
+            if let province = location.province {
+                locationJSON["province"] = province
+            }
+            if let district = location.district {
+                locationJSON["district"] = district
+            }
+            if let zipCode = location.zipCode {
+                locationJSON["zipCode"] = zipCode
+            }
             dataJSON["location_attributes"] = locationJSON
         }
 
@@ -195,8 +292,7 @@ private extension Listing {
         }
 
         // Details step listing creation
-
-        if let bedroomsCount = bedroomsCount {
+        if propertyType != .office, let bedroomsCount = bedroomsCount {
             dataJSON["bedrooms_count"] = bedroomsCount
         }
         if let bathroomsCount = bathroomsCount {
@@ -235,7 +331,17 @@ private extension Listing {
         dataJSON["primary_image_id"] = photosInfo.primaryImageID
         dataJSON["image_ids"] = photosInfo.imageIDs
         
-        return ["data": dataJSON]
+        // Contact
+        if let contact = contact {
+            dataJSON["contact_name"] = contact.contactName
+            dataJSON["contact_email"] = contact.contactEmail
+            dataJSON["contact_phone"] = contact.contactPhone
+        }
+        
+#if DEBUG
+        print("dataJSON = \(dataJSON)")
+#endif
+        return dataJSON
     }
     
 }

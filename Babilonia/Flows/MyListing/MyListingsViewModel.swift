@@ -12,13 +12,17 @@ import RxCocoa
 import Core
 
 enum MyListingOptions {
-    case open, edit, publish, unpublish, delete
+    case open, edit, publish, unpublish, delete, share
 }
 
 final class MyListingsViewModel {
     
     var requestState: Observable<RequestState> {
         model.requestState .asObservable().observeOn(MainScheduler.instance)
+    }
+    
+    var showWarning: Observable<Bool> {
+        model.showWarning.asObservable().observeOn(MainScheduler.instance)
     }
     
     var shouldShowAddListingButton: Driver<Bool> {
@@ -63,6 +67,10 @@ final class MyListingsViewModel {
         model.isListingNotPurchased(at: listingID)
     }
     
+    func isListingRealtor(at listingID: Int) -> Bool {
+        model.isListingRealtor(at: listingID)
+    }
+    
     func openListing(with id: ListingId) {
         model.openListing(with: id)
     }
@@ -91,7 +99,7 @@ final class MyListingsViewModel {
         }
         
         switch listing.state {
-        case .published: return (listing.id, [.open, .edit, .unpublish])
+        case .published: return (listing.id, [.open, .share, .edit, .unpublish])
         default: return (listing.id, [.open, .edit, .publish])
         }
     }

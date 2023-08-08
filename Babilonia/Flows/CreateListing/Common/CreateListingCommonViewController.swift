@@ -10,10 +10,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class CreateListingCommonViewController: UIViewController {
-    
+final class CreateListingCommonViewController: UIViewController, AlertApplicable, SpinnerApplicable {
+    let alert = ApplicationAlert()
+    let spinner = AppSpinner()
     private let viewModel: CreateListingCommonViewModel
-    
     private var scrollView: UIScrollView!
     private var typeTitleLabel: UILabel!
     private var segmentSelectionView: SegmentSelectionView!
@@ -79,6 +79,7 @@ final class CreateListingCommonViewController: UIViewController {
 
         var lastInputView: UIView = segmentSelectionView
         var bottomViewConstraint: NSLayoutConstraint?
+        var topConstraint: NSLayoutConstraint?
         viewModels.sorted { $0.key.rawValue < $1.key.rawValue }.enumerated().forEach { [weak self] model in
             guard let self = self else { return }
 
@@ -88,17 +89,32 @@ final class CreateListingCommonViewController: UIViewController {
 
             self.scrollView.addSubview(inputFieldView)
             inputFieldView.layout {
-                $0.top.equal(to: lastInputView.bottomAnchor, offsetBy: 24.0)
+                topConstraint = $0.top.equal(to: lastInputView.bottomAnchor, offsetBy: 24.0)
                 $0.leading.equal(to: scrollView.leadingAnchor, offsetBy: 16)
                 $0.trailing.equal(to: scrollView.trailingAnchor, offsetBy: -16)
                 bottomViewConstraint = $0.bottom.equal(to: scrollView.bottomAnchor, offsetBy: -24.0)
             }
             bottomViewConstraint?.isActive = index == viewModels.count - 1
+            inputFieldView.topConstraint = topConstraint
+            inputFieldView.updateConstraintsIfVisible()
             lastInputView = inputFieldView
         }
+        
     }
     
     private func setupBindings() {
+        viewModel.requestState
+            .subscribe(onNext: { [weak self] state in
+                self?.handle(state)
+                switch state {
+                case .started:
+                    self?.showSpinner()
+                default:
+                    self?.hideSpinner()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         segmentSelectionView.currentIndexUpdated
             .drive(onNext: viewModel.selectListingType)
             .disposed(by: disposeBag)

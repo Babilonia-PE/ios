@@ -21,7 +21,8 @@ final class ProfileViewController: UIViewController {
     private var accountView: ProfileFieldView!
     private var termsView: ProfileFieldView!
     private var privacyView: ProfileFieldView!
-    
+    private var loginLabel: UILabel!
+    private var loginView: ProfileFieldView!
     private var shadowApplied: Bool = false
     
     private let viewModel: ProfileViewModel
@@ -47,7 +48,7 @@ final class ProfileViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        if viewModel.canRefreshUser {
+        if viewModel.canRefreshUser && !viewModel.isUserGuest {
             viewModel.refreshUser()
         }
     }
@@ -89,49 +90,71 @@ final class ProfileViewController: UIViewController {
             $0.height == 1
         }
         
-        avatarView = ProfileAvatarView()
-        scrollView.addSubview(avatarView)
-        avatarView.layout {
-            $0.top == scrollView.topAnchor
-            $0.leading == scrollView.leadingAnchor
-            $0.trailing == scrollView.trailingAnchor
-        }
+        var separator: UIView!
         
-        emailView = ProfileContactsView()
-        scrollView.addSubview(emailView)
-        emailView.layout {
-            $0.top == avatarView.bottomAnchor
-            $0.leading == scrollView.leadingAnchor
-            $0.trailing == scrollView.trailingAnchor
+        if viewModel.isUserGuest {
+            loginLabel = UILabel()
+            scrollView.addSubview(loginLabel)
+            loginLabel.layout {
+                $0.top == scrollView.topAnchor + 24.0
+                $0.leading == scrollView.leadingAnchor + 19.0
+                $0.trailing <= scrollView.trailingAnchor - 19.0
+            }
+            loginView = ProfileFieldView(viewModel: viewModel.loginViewModel)
+            scrollView.addSubview(loginView)
+            loginView.layout {
+                $0.top == loginLabel.bottomAnchor + 4.0
+                $0.leading == scrollView.leadingAnchor
+                $0.trailing == scrollView.trailingAnchor
+            }
+            separator = addSeparatorView(height: 1.0, topAnchor: loginView.bottomAnchor)
+        } else {
+            avatarView = ProfileAvatarView()
+            scrollView.addSubview(avatarView)
+            avatarView.layout {
+                $0.top == scrollView.topAnchor
+                $0.leading == scrollView.leadingAnchor
+                $0.trailing == scrollView.trailingAnchor
+            }
+            
+            emailView = ProfileContactsView()
+            scrollView.addSubview(emailView)
+            emailView.layout {
+                $0.top == avatarView.bottomAnchor
+                $0.leading == scrollView.leadingAnchor
+                $0.trailing == scrollView.trailingAnchor
+            }
+            
+            separator = addSeparatorView(height: 1.0, topAnchor: emailView.bottomAnchor)
+            
+            phoneView = ProfileContactsView()
+            scrollView.addSubview(phoneView)
+            phoneView.layout {
+                $0.top == separator.bottomAnchor
+                $0.leading == scrollView.leadingAnchor
+                $0.trailing == scrollView.trailingAnchor
+            }
+            
+            separator = addSeparatorView(height: 8.0, topAnchor: phoneView.bottomAnchor)
+            
+            currencyView = ProfileFieldView(viewModel: viewModel.currencyViewModel)
+            scrollView.addSubview(currencyView)
+            currencyView.layout {
+                $0.top == separator.bottomAnchor
+                $0.leading == scrollView.leadingAnchor
+                $0.trailing == scrollView.trailingAnchor
+            }
+            separator = addSeparatorView(height: 1.0, topAnchor: currencyView.bottomAnchor)
+            
+            accountView = ProfileFieldView(viewModel: viewModel.accountViewModel)
+            scrollView.addSubview(accountView)
+            accountView.layout {
+                $0.top == separator.bottomAnchor
+                $0.leading == scrollView.leadingAnchor
+                $0.trailing == scrollView.trailingAnchor
+            }
+            separator = addSeparatorView(height: 8.0, topAnchor: accountView.bottomAnchor)
         }
-        var separator = addSeparatorView(height: 1.0, topAnchor: emailView.bottomAnchor)
-        
-        phoneView = ProfileContactsView()
-        scrollView.addSubview(phoneView)
-        phoneView.layout {
-            $0.top == separator.bottomAnchor
-            $0.leading == scrollView.leadingAnchor
-            $0.trailing == scrollView.trailingAnchor
-        }
-        separator = addSeparatorView(height: 8.0, topAnchor: phoneView.bottomAnchor)
-        
-        currencyView = ProfileFieldView(viewModel: viewModel.currencyViewModel)
-        scrollView.addSubview(currencyView)
-        currencyView.layout {
-            $0.top == separator.bottomAnchor
-            $0.leading == scrollView.leadingAnchor
-            $0.trailing == scrollView.trailingAnchor
-        }
-        separator = addSeparatorView(height: 1.0, topAnchor: currencyView.bottomAnchor)
-        
-        accountView = ProfileFieldView(viewModel: viewModel.accountViewModel)
-        scrollView.addSubview(accountView)
-        accountView.layout {
-            $0.top == separator.bottomAnchor
-            $0.leading == scrollView.leadingAnchor
-            $0.trailing == scrollView.trailingAnchor
-        }
-        separator = addSeparatorView(height: 8.0, topAnchor: accountView.bottomAnchor)
         
         aboutLabel = UILabel()
         scrollView.addSubview(aboutLabel)
@@ -166,7 +189,12 @@ final class ProfileViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
-        
+        if viewModel.isUserGuest {
+            loginLabel.attributedText = "Login".toAttributed(
+                with: FontFamily.AvenirLTStd._85Heavy.font(size: 12.0),
+                color: Asset.Colors.osloGray.color
+            )
+        }
         aboutLabel.attributedText = L10n.Profile.About.text.toAttributed(
             with: FontFamily.AvenirLTStd._85Heavy.font(size: 12.0),
             color: Asset.Colors.osloGray.color
@@ -174,23 +202,56 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupBindings() {
-        avatarView.editButtonTap
-            .bind(onNext: { [weak viewModel] _ in
-                viewModel?.editProfile()
-            })
-            .disposed(by: disposeBag)
-        
-        emailView.editButtonTap
-            .bind(onNext: { [weak viewModel] _ in
-                viewModel?.editEmail()
-            })
-            .disposed(by: disposeBag)
-        
-        accountView.selectButtonTap
-            .bind(onNext: { [weak viewModel] _ in
-                viewModel?.openAccount()
-            })
-            .disposed(by: disposeBag)
+        if viewModel.isUserGuest {
+            loginView.selectButtonTap
+                .bind(onNext: { [weak viewModel] _ in
+                    viewModel?.openLogin()
+                })
+                .disposed(by: disposeBag)
+        } else {
+            avatarView.editButtonTap
+                .bind(onNext: { [weak viewModel] _ in
+                    viewModel?.editProfile()
+                })
+                .disposed(by: disposeBag)
+            
+            emailView.editButtonTap
+                .bind(onNext: { [weak viewModel] _ in
+                    viewModel?.editEmail()
+                })
+                .disposed(by: disposeBag)
+            
+            phoneView.editButtonTap
+                .bind(onNext: { [weak viewModel] _ in
+                    viewModel?.editPhoneNumber()
+                })
+                .disposed(by: disposeBag)
+            
+            accountView.selectButtonTap
+                .bind(onNext: { [weak viewModel] _ in
+                    viewModel?.openAccount()
+                })
+                .disposed(by: disposeBag)
+            currencyView.selectButtonTap
+                .bind(onNext: { [weak viewModel] _ in
+                    viewModel?.openCurrencies()
+                })
+                .disposed(by: disposeBag)
+            
+            viewModel.userUpdated
+                .drive(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    
+                    self.avatarView.setup(
+                        with: self.viewModel.avatarURLString,
+                        avatarImage: self.viewModel.avatarImage,
+                        name: self.viewModel.name
+                    )
+                    self.emailView.setup(with: self.viewModel.emailViewModel)
+                    self.phoneView.setup(with: self.viewModel.phoneViewModel)
+                })
+                .disposed(by: disposeBag)
+        }
         
         termsView.selectButtonTap
             .bind(onNext: { [weak viewModel] _ in
@@ -204,25 +265,6 @@ final class ProfileViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        currencyView.selectButtonTap
-            .bind(onNext: { [weak viewModel] _ in
-                viewModel?.openCurrencies()
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.userUpdated
-            .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                
-                self.avatarView.setup(
-                    with: self.viewModel.avatarURLString,
-                    avatarImage: self.viewModel.avatarImage,
-                    name: self.viewModel.name
-                )
-                self.emailView.setup(with: self.viewModel.emailViewModel)
-                self.phoneView.setup(with: self.viewModel.phoneViewModel)
-            })
-            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {

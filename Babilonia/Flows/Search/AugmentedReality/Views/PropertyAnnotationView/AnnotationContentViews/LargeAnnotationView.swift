@@ -109,6 +109,8 @@ final class LargeAnnotationView: UIView, AnnotationView {
         inlinePropertiesView.setup(with: viewModel.annotationInlinePropertiesInfo)
         if let imageUrl = URL(string: viewModel.coverImage?.photo.smallURLString ?? "") {
             coverImageView.setImage(with: imageUrl)
+        } else {
+            coverImageView.image = Asset.MyListings.myListingsDraft.image
         }
 
         separatorView.backgroundColor = Asset.Colors.whiteLilac.color

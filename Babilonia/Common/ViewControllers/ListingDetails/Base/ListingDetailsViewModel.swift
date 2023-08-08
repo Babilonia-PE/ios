@@ -70,11 +70,19 @@ private extension ListingDetailsCommonInfo {
             perSquareMeterString = ""
         }
         let priceString = currencyCode + (NumberFormatter.integerFormatter.string(from: NSNumber(value: price)) ?? "0")
+        var userName = ""
+        if let contactName = listing?.contact?.contactName {
+            userName = contactName
+        } else {
+            //userName = "\(listing?.user.firstName ?? "") \((listing?.user.lastName ?? "").prefix(1))."
+            userName = listing?.user.fullName ?? ""
+        }
+        
         self = ListingDetailsCommonInfo(
             price: priceString,
             pricePerSquareMeter: perSquareMeterString,
             userImageURLString: listing?.user.avatar?.smallURLString,
-            userName: "\(listing?.user.firstName ?? "") \((listing?.user.lastName ?? "").prefix(1)).",
+            userName: userName,
             propertyType: listing?.propertyType,
             listingType: listing?.listingType,
             inlinePropertiesInfo: listing.flatMap { InlinePropertiesConfig.details($0).info }
@@ -90,8 +98,18 @@ private extension ListingDetailsCommonInfo {
 private extension ListingDetailsAddressInfo {
     
     init(listing: Listing?) {
+        let addressArray = (listing?.location?.address ?? "").split(separator: ",")
+        var address = String(addressArray[0])
+        if let district = listing?.location?.district {
+            address += ", \(district)"
+        }
+        
+        if let department = listing?.location?.department {
+            address += ", \(department)"
+        }
+        
         self = ListingDetailsAddressInfo(
-            title: listing?.location?.address ?? "",
+            title: address,
             coordinate: CLLocationCoordinate2D(
                 latitude: CLLocationDegrees(listing?.location?.latitude ?? 0.0),
                 longitude: CLLocationDegrees(listing?.location?.longitude ?? 0.0)
@@ -127,7 +145,7 @@ private extension Array where Element == ListingDetailsFacilityInfo {
                 .map {
                     ListingDetailsFacilityInfo(
                         title: $0.title,
-                        imageURL: URL(string: $0.icon?.originalURLString ?? "")
+                        imageURL: URL(string: $0.iconIos?.originalURLString ?? "")
                     )
                 } ?? []
         case .advancedDetails:
@@ -136,7 +154,7 @@ private extension Array where Element == ListingDetailsFacilityInfo {
                 .map {
                     ListingDetailsFacilityInfo(
                         title: $0.title,
-                        imageURL: URL(string: $0.icon?.originalURLString ?? "")
+                        imageURL: URL(string: $0.iconIos?.originalURLString ?? "")
                     )
                 } ?? []
         }

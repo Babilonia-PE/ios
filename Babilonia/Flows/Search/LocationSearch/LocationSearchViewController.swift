@@ -43,7 +43,7 @@ final class LocationSearchViewController: NiblessViewController, AlertApplicable
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         customView.animateSearchBar(onAppear: true)
     }
 
@@ -112,6 +112,25 @@ final class LocationSearchViewController: NiblessViewController, AlertApplicable
             })
             .disposed(by: disposeBag)
 
+        viewModel.locationsObservable
+            .skip(1)
+            .subscribe(onNext: { [weak self] autoCompleteLocations in
+                guard self?.viewModel.isCurrentLocationSearch == false else {
+                    self?.customView.viewType = .empty
+
+                    return
+                }
+                
+                if autoCompleteLocations.isEmpty {
+                    let recentSearchesNotEmpty = self?.viewModel.recentSearches.isEmpty == false
+                    self?.customView.viewType = .notFound(recentSearchesNotEmpty: recentSearchesNotEmpty)
+                } else {
+                    self?.customView.viewType = .locations
+                }
+                self?.customView.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.locationsObservable
             .skip(1)
             .subscribe(onNext: { [weak self] locations in

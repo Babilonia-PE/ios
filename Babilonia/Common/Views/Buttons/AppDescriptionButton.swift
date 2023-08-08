@@ -69,4 +69,11 @@ extension AppDescriptionButton {
         button.pinEdges(to: placeholderView)
     }
 
+    func removeDescription() {
+        descriprionLabel.removeFromSuperview()
+        titleLabel.layout {
+            $0.centerX.equal(to: placeholderView.centerXAnchor)
+            $0.centerY.equal(to: placeholderView.centerYAnchor)
+        }
+    }
 }

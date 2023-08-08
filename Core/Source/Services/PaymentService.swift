@@ -12,16 +12,18 @@ import YALAPIClient
 final public class PaymentService: NSObject {
 
     private let client: NetworkClient
-
-    public init(client: NetworkClient) {
+    private let clientPayment: NetworkClient
+    
+    public init(client: NetworkClient, clientPayment: NetworkClient) {
         self.client = client
+        self.clientPayment = clientPayment
     }
 
     public func getPaymentPlan(completion: @escaping (Result<[PaymentPlan]>) -> Void) {
         let request = PaymentPlanRequest()
         let parser = DecodableParser<[PaymentPlan]>(keyPath: "data.records")
 
-        client.execute(request: request, parser: parser, completion: completion)
+        clientPayment.execute(request: request, parser: parser, completion: completion)
     }
 
     public func purchaseListing(with listingID: String,
@@ -35,7 +37,38 @@ final public class PaymentService: NSObject {
 
         client.execute(request: request, parser: parser, completion: completion)
     }
-
+    
+    public func paymentIntent(with listingID: String,
+                              productKey: String,
+                              clientId: String,
+                              publisherRole: String,
+                              completion: @escaping (Result<PaymentIntent>) -> Void) {
+        let request = PaymentIntentRequest(listingID: listingID,
+                                           productKey: productKey,
+                                           clientId: clientId,
+                                           publisherRole: publisherRole)
+        let parser = DecodableParser<PaymentIntent>(keyPath: "data")
+        
+        clientPayment.execute(request: request, parser: parser, completion: completion)
+    }
+    
+    public func paymentProcess(with deviceSessionId: String,
+                               cardNumber: String,
+                               orderId: Int,
+                               cardCvv: String,
+                               cardExpiration: String,
+                               cardName: String,
+                               completion: @escaping (Result<GeneralRespose>) -> Void) {
+        let request = PaymentProcessRequest(deviceSessionId: deviceSessionId,
+                                       cardNumber: cardNumber,
+                                       orderId: orderId,
+                                       cardCvv: cardCvv,
+                                       cardExpiration: cardExpiration,
+                                       cardName: cardName)
+        let parser = DecodableParser<GeneralRespose>(keyPath: "data")
+        clientPayment.execute(request: request, parser: parser, completion: completion)
+    }
+    
     public func listingPublishingStatus(with listingID: String,
                                         completion: @escaping (Result<PublishingStatus>) -> Void) {
         let request = ListingPublishingStatusRequest(listingID: listingID)

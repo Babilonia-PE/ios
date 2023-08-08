@@ -32,6 +32,15 @@ public struct FetchListingsAreaInfo {
 
         return ["area": dataJSON]
     }
+    
+    func JSONFlatRepresentation() -> [String: Any] {
+        var dataJSON = [String: Any]()
+        dataJSON["area_longitude"] = longitude
+        dataJSON["area_latitude"] = latitude
+        dataJSON["area_radius"] = radius
+
+        return dataJSON
+    }
 
 }
 

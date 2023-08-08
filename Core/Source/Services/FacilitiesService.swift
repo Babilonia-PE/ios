@@ -13,12 +13,14 @@ final public class FacilitiesService {
     
     private let client: NetworkClient
     private let storage: DBClient
+    private let newClient: NetworkClient
     
     // MARK: - lifecycle
     
-    public init(client: NetworkClient, storage: DBClient) {
+    public init(client: NetworkClient, storage: DBClient, newClient: NetworkClient) {
         self.client = client
         self.storage = storage
+        self.newClient = newClient
     }
     
     public func getObserver(for propertyType: PropertyType) -> RequestObservable<Facility> {
@@ -34,7 +36,7 @@ final public class FacilitiesService {
                                 type: FacilitiesType = .facility,
                                 completion: @escaping (Result<Bool>) -> Void) {
         let request = FetchFacilitiesRequest(propertyType: propertyType, type: type)
-        client.execute(
+        newClient.execute(
             request: request,
             parser: DecodableParser<[Facility]>(keyPath: "data.records")
         ) { result in
@@ -53,7 +55,7 @@ final public class FacilitiesService {
         let request = FetchFacilitiesRequest(propertyType: propertyType, type: type)
         let parser = DecodableParser<[Facility]>(keyPath: "data.records")
 
-        client.execute(request: request, parser: parser, completion: { result in
+        newClient.execute(request: request, parser: parser, completion: { result in
             switch result {
             case .success(let facilities):
                 completion(.success(facilities))

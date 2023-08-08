@@ -55,11 +55,125 @@ public final class UserSessionController {
     
     // MARK: Session managment
     
+    public func createAccount(
+        fullName: String,
+        //lastName: String,
+        email: String,
+        password: String,
+        //phonePrefix: String,
+        phoneNumber: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping (Result<UserSession>) -> Void
+    ) {
+        authService.signUp(
+            fullName: fullName,
+            //lastName: lastName,
+            email: email,
+            password: password,
+            //phonePrefix: phonePrefix,
+            phoneNumber: phoneNumber,
+            ipAddress: ipAddress,
+            userAgent: userAgent,
+            signProvider: signProvider,
+            completion: { [weak self] result in
+                guard let `self` = self else { return }
+
+                switch result {
+                case .success:
+                    var userId = UserId.guest
+                    if let id = result.value?.userId {
+                        userId = UserId.init(id)
+                    }
+                    //let user = User.init(id: userId, email: email, firstName: fullName, lastName: "", phoneNumber: nil, avatar: nil)
+                    let user = User.init(id: userId, email: email, fullName: fullName, phoneNumber: nil, avatar: nil)
+                    let authToken = UserAuthTokens.init(
+                        authenticationToken: result.value?.authorization ?? "",
+                        exchangeToken: ""
+                    )
+                    let sessionInfo = UserSessionInfo.init(user: user, authTokens: authToken)
+                    completion(`self`.openSession(sessionInfo))
+                case .failure(let error):
+                    completion(Result.failure(error))
+                }
+            })
+    }
+    
+    public func logInAccount(
+        email: String,
+        password: String,
+        ipAddress: String,
+        userAgent: String,
+        signProvider: String,
+        completion: @escaping (Result<UserSession>) -> Void
+    ) {
+        authService.logIn(
+            email: email,
+            password: password,
+            ipAddress: ipAddress,
+            userAgent: userAgent,
+            signProvider: signProvider,
+            completion: { [weak self] result in
+                guard let `self` = self else { return }
+
+                switch result {
+                case .success:
+                    var userId = UserId.guest
+                    if let id = result.value?.tokens?.userId {
+                        userId = UserId.init(id)
+                    }
+                    let user = User.init(
+                        id: userId,
+                        email: email,
+                        fullName: "",
+                        //lastName: "",
+                        phoneNumber: "",
+                        avatar: nil
+                    )
+                    let authenticationToken = "\(result.value?.tokens?.type ?? "") \(result.value?.tokens?.authentication ?? "")"
+                    let authToken = UserAuthTokens.init(
+                        authenticationToken: authenticationToken,
+                        exchangeToken: ""
+                    )
+                    let sessionInfo = UserSessionInfo.init(user: user, authTokens: authToken)
+                    completion(`self`.openSession(sessionInfo))
+                case .failure(let error):
+                    completion(Result.failure(error))
+                }
+            })
+    }
+    
+    public func verifyToken(
+        userSession: UserSession,
+        completion: @escaping (Bool) -> Void
+    ) {
+        authService.verifyToken(
+            userSession: userSession
+        ) { [weak self] result in
+            //guard let `self` = self else { return }
+            
+            switch result {
+            case .success:
+                completion(true)
+            case .failure:
+                `self`?.closeSession()
+                completion(false)
+            }
+        }
+    }
+    
     public func openSession(_ authorizationToken: String, completion: @escaping (Result<UserSession>) -> Void) {
         authService.signIn(authorizationToken, completion: { [weak self] in
             guard let `self` = self else { return }
             completion($0.next(self.openSession))
         })
+    }
+    
+    public func openSessionGuest() -> UserSession {
+        let userSession = UserSession()
+        self.userSession = userSession
+        return userSession
     }
     
     private func openSession(_ sessionInfo: UserSessionInfo) -> Result<UserSession> {
@@ -70,7 +184,7 @@ public final class UserSessionController {
     
     public func closeSession() {
         assert(userSession != nil, "Can`t close nil session")
-        authService.signOut(exchangeToken: userSession?.store.authTokens?.exchangeToken ?? "")
+        //authService.signOut(exchangeToken: userSession?.store.authTokens?.exchangeToken ?? "")
         
         userSession = nil
     }

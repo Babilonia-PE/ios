@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Core
 
 final class MyListingsViewController: UIViewController, AlertApplicable, SpinnerApplicable {
     
@@ -205,6 +206,12 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
             }
             .disposed(by: disposeBag)
         
+        viewModel.showWarning
+            .subscribe(onNext: { [weak self] _ in
+                self?.presentWarning()
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.listingsUpdated
             .drive(onNext: { [weak self] in
                 self?.updateViewState()
@@ -302,16 +309,35 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
                 if self.viewModel.isListingNotPurchased(at: listingId) {
                     self.viewModel.publishListing(with: listingId)
                 } else {
-                    self.presentPublishActionAlert(for: listingId, isPublish: true)
+                    if self.viewModel.isListingRealtor(at: listingId) {
+                        self.presentWarning()
+                    } else {
+                        self.presentPublishActionAlert(for: listingId, isPublish: true)
+                    }
+                    
                 }
             case .unpublish: self.presentPublishActionAlert(for: listingId, isPublish: false)
             case .delete: self.presentDeleteAlert(for: listingId)
+            case .share: self.showShare(for: listingId)
             }
         }
+    }
+    
+    private func showShare(for listingId: ListingId) {
+        let text = L10n.Common.share
+        let url = URL(string: "\(Environment.default.webSiteURL ?? "")listings/\(listingId)")!
+        let items: [Any] = [text, url]
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.airDrop
+        ]
+
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
     private func presentPublishActionAlert(for listingId: ListingId,
                                            isPublish: Bool) {
+        
         let title = isPublish ? nil : L10n.Popups.UnpublishListing.title
         let message = isPublish ? L10n.Popups.PublishListing.text : L10n.Popups.UnpublishListing.text
         let actionTitle = isPublish ? L10n.MyListings.Options.Publish.title : L10n.MyListings.Options.Unpublish.title
@@ -338,6 +364,12 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
                                             self?.viewModel.deleteListing(with: listingId)
                                        })
     }
+    
+    private func presentWarning() {
+        let message = L10n.Errors.actionMustBeDoneFromWeb
+        SystemAlert.present(on: self,
+                            message: message)
+    }
 
 }
 
@@ -358,6 +390,14 @@ extension MyListingsViewController: UITableViewDataSource, UITableViewDelegate {
             )
             self.showOptionsPopup(optionsInfo.0, options: optionsInfo.1)
         }
+//        cell.shareSelected = { [weak self] in
+//            guard let self = self else { return }
+//            let optionsInfo = self.viewModel.listingOptionsSelected(
+//                at: indexPath.row,
+//                isPublished: tableView == self.publishedTableView
+//            )
+//            self.showShare(optionsInfo.0)
+//        }
         
         return cell
     }
@@ -376,12 +416,13 @@ private extension MyListingOptions {
         case .publish: return L10n.MyListings.Options.Publish.title
         case .unpublish: return L10n.MyListings.Options.Unpublish.title
         case .delete: return L10n.MyListings.Options.Delete.title
+        case .share: return L10n.MyListings.Options.Share.title
         }
     }
     
     var style: UIAlertAction.Style {
         switch self {
-        case .open, .edit, .publish: return .default
+        case .open, .edit, .publish, .share: return .default
         case .delete, .unpublish: return .destructive
         }
     }

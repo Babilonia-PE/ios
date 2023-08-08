@@ -8,13 +8,17 @@
 
 public typealias UserId = Int
 
+public extension UserId {
+    static let guest = 0
+}
+
 public struct User: Codable {
     
     public let id: UserId
     public var email: String?
-    public var firstName: String?
-    public var lastName: String?
-    public let phoneNumber: String
+    public var fullName: String?
+    //public var lastName: String?
+    public var phoneNumber: String?
     public let avatar: RemoteImage?
     public var company: Сompany?
     
@@ -22,27 +26,28 @@ public struct User: Codable {
     public init(
         id: UserId,
         email: String?,
-        firstName: String?,
-        lastName: String?,
-        phoneNumber: String,
+        fullName: String?,
+        //lastName: String?,
+        phoneNumber: String?,
         avatar: RemoteImage?) {
         self.id = id
         self.email = email
-        self.firstName = firstName
-        self.lastName = lastName
+        self.fullName = fullName
+        //self.lastName = lastName
         self.phoneNumber = phoneNumber
         self.avatar = avatar
     }
     
 }
 
-extension User {
-    
-    public var fullName: String {
-        return [firstName, lastName].compactMap { $0 }.joined(separator: " ")
-    }
-    
-}
+//extension User {
+//
+//    public var fullName: String {
+//        //return [firstName, lastName].compactMap { $0 }.joined(separator: " ")
+//        return self.firstName ?? ""
+//    }
+//
+//}
 
 public struct Сompany: Codable {
     

@@ -161,15 +161,24 @@ extension ListingsFiltersModel {
 extension ListingsFiltersModel {
 
     func getFilteredListingsCount() {
-        listingsService.getFilteredListingsCount(for: filtersComposer.filterModel) { [weak self] result in
+        var filterModel = filtersComposer.filterModel
+        if let location = RecentLocation.shared.currentLocation {
+            filterModel.searchLocation = location
+        }
+        
+        listingsService.getFilteredListingsCount(for: filterModel) { [weak self] result in
             switch result {
             case .success(let metadata):
                 self?.listingsCount.accept(metadata.listingsCount)
                 self?.filtersComposer.updateRanges(maxBuiltArea: metadata.maxBuiltArea,
                                                    maxTotalArea: metadata.maxTotalArea)
 
-            case .failure:
-                self?.listingsCount.accept(0)
+            case .failure(let error):
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.listingsCount.accept(0)
+                }
             }
         }
     }
@@ -193,12 +202,22 @@ extension ListingsFiltersModel {
             case .success(let facilities):
                 self?.requestState.onNext(.finished)
                 self?.filtersComposer.facilities.accept(facilities.sorted { $0.id < $1.id })
-            case .failure:
-                self?.requestState.onNext(.failed(nil))
-                self?.filtersComposer.facilities.accept([])
+            case .failure(let error):
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(nil))
+                    self?.filtersComposer.facilities.accept([])
+                }
             }
         }
 
     }
 
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }

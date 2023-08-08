@@ -22,18 +22,20 @@ final class LocationSearchViewModel {
     var currentLocationObservable: Observable<String?> {
         model.currentLocation.asObservable()
     }
-    var locationsObservable: Observable<[SearchLocations]> {
+    var locationsObservable: Observable<[SearchLocation]> {
         model.locations.asObservable()
     }
+    
     var recentSearchesObservable: Observable<[RecentSearch]> {
         model.recentSearches.asObservable()
     }
     var requestForLocationPermissionObservable: Observable<Void> {
         model.requestForLocationPermission.asObservable()
     }
-    var locations: [SearchLocations] {
+    var locations: [SearchLocation] {
         model.locations.value
     }
+    
     var recentSearches: [RecentSearch] {
         model.recentSearches.value
     }
@@ -43,6 +45,15 @@ final class LocationSearchViewModel {
         }
         get {
             model.isCurrentLocationSearch
+        }
+    }
+    
+    var isCurrentAutoCompleteLocationSearch: Bool {
+        set {
+            model.isCurrentAutoCompleteLocationSearch = newValue
+        }
+        get {
+            model.isCurrentAutoCompleteLocationSearch
         }
     }
 
@@ -73,14 +84,16 @@ final class LocationSearchViewModel {
     }
 
     func resultRowsCount(isRecentSearches: Bool) -> Int {
+    //    isRecentSearches ? recentSearches.count : locations.count
         isRecentSearches ? recentSearches.count : locations.count
     }
 
     func resultName(isRecentSearches: Bool, index: Int) -> String {
         if isRecentSearches {
-            return recentSearches[index].queryString
+            return recentSearches[index].location?.toSearchLocation().addressField ?? ""
         } else {
-            return locations[index].address
+        //    return locations[index].address
+            return locations[index].addressField
         }
     }
 

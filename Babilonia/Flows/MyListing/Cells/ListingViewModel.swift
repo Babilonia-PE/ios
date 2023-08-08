@@ -35,17 +35,31 @@ final class ListingViewModel {
     }
     
     var isMarkedFavorite: Bool {
-        return listing.favourited
+        return listing.favourited ?? false
     }
 
     var address: String? { return listing.location?.address }
     
+    var fullAddress: String? {
+        let addressArray = (listing.location?.address ?? "").split(separator: ",")
+        var address = addressArray.isEmpty ? "" : String(addressArray[0])
+        if let district = listing.location?.district {
+            address += ", \(district)"
+        }
+        
+        if let department = listing.location?.department {
+            address += ", \(department)"
+        }
+              
+        return address
+    }
+
     var inlinePropertiesInfo: InlinePropertiesInfo {
         return InlinePropertiesConfig.list(listing).info
     }
 
     var imagePath: String? {
-        return listing.primaryImage?.photo.mediumURLString
+        return listing.primaryImage?.photo.renderURLString
     }
 
     var createdAt: String {
@@ -145,7 +159,7 @@ final class ListingViewModel {
         } else {
             return (views: listing.viewsCount,
                     likes: listing.favouritesCount,
-                    contacts: listing.contactViewsCount)
+                    contacts: listing.contactViewsCount ?? 0)
         }
     }
 
@@ -189,7 +203,7 @@ final class ListingViewModel {
         case .sale?:
             result = L10n.ListingDetails.PricePerSquareMeter.text(
                 priceSettings.code,
-                priceSettings.price / (originalArea ?? 1)
+                priceSettings.price / max(originalArea ?? 1, 1)
             )
         case .rent?:
             result = L10n.ListingDetails.PricePerMonth.text

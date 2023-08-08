@@ -43,10 +43,10 @@ extension PaymentsPeriodView {
         titleLabel.font = FontFamily.AvenirLTStd._55Roman.font(size: 14)
         titleLabel.textColor = Asset.Colors.gunmetal.color
         titleLabel.textAlignment = .center
-
+        DispatchQueue.global(qos: .background)
         addSubview(titleLabel)
         titleLabel.layout {
-            $0.top.equal(to: topAnchor, offsetBy: 8)
+            $0.top.equal(to: safeAreaLayoutGuide.topAnchor, offsetBy: 8)
             $0.leading.equal(to: leadingAnchor, offsetBy: 38)
             $0.trailing.equal(to: trailingAnchor, offsetBy: -38)
         }

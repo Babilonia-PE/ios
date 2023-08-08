@@ -17,12 +17,14 @@ extension ListingFilterModel {
         let priceConverter = FilterPriceConverter()
         var infos = [FilterInfo]()
 
-        let listingTypeTitle = (listingType == .sale ? L10n.CreateListing.Common.ListingType.Sale.title
-                                                    : L10n.CreateListing.Common.ListingType.Rent.title)
-            .appliedFilterTitle(isListingType: true)
-        infos.append(FilterInfo(attributedTitle: listingTypeTitle,
-                                mode: .type(listingType),
-                                filterType: .listingType))
+        if listingType != nil {
+            let listingTypeTitle = (listingType == .sale ? L10n.CreateListing.Common.ListingType.Sale.title
+                                                        : L10n.CreateListing.Common.ListingType.Rent.title)
+                .appliedFilterTitle(isListingType: true)
+            infos.append(FilterInfo(attributedTitle: listingTypeTitle,
+                                    mode: .type(listingType!),
+                                    filterType: .listingType))
+        }
 
         if let propertyType = propertyType {
             infos.append(FilterInfo(attributedTitle: propertyType.title.appliedFilterTitle(),
@@ -30,13 +32,15 @@ extension ListingFilterModel {
                                     filterType: .propertyType))
         }
 
-        let isPricesApplied = priceStart != nil || priceEnd != nil
-        let isPricesNotDefault = priceStart != 0 && priceEnd != priceConverter.maxPrice(for: listingType)
-        if isPricesApplied && isPricesNotDefault {
-            let start = "\(priceStart ?? 0)".commaConverted()
-            let end = "\(priceEnd ?? priceConverter.maxPrice(for: listingType))".shortPriceConverting()
-            let title = "$\(start) - $\(end)".appliedFilterTitle()
-            infos.append(FilterInfo(attributedTitle: title, mode: .common, filterType: .priceRange))
+        if listingType != nil {
+            let isPricesApplied = priceStart != nil || priceEnd != nil
+            let isPricesNotDefault = priceStart != 0 && priceEnd != priceConverter.maxPrice(for: listingType!)
+            if isPricesApplied && isPricesNotDefault {
+                let start = "\(priceStart ?? 0)".commaConverted()
+                let end = "\(priceEnd ?? priceConverter.maxPrice(for: listingType!))".shortPriceConverting()
+                let title = "$\(start) - $\(end)".appliedFilterTitle()
+                infos.append(FilterInfo(attributedTitle: title, mode: .common, filterType: .priceRange))
+            }
         }
 
         if let fromArea = totalAreaFrom, let toArea = totalAreaTo {
@@ -118,7 +122,7 @@ extension ListingFilterModel {
     mutating func removeFilter(for filterType: FilterType) {
         switch filterType {
         case .listingType:
-            listingType = .sale
+            listingType = nil
 
         case .propertyType:
             propertyType = nil

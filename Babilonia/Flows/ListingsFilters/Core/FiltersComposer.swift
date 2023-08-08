@@ -24,14 +24,14 @@ class FiltersComposer {
     let listingTypeDidChange = BehaviorRelay(value: ())
     let facilities = BehaviorRelay(value: [Facility]())
     let facilitiesViewModels = BehaviorRelay<[CreateListingFacilityViewModel]>(value: [])
-    let listingTypeChanged = BehaviorRelay<ListingType>(value: .sale)
+    let listingTypeChanged = BehaviorRelay<ListingType?>(value: nil)
 
     let reloadFilters = PublishRelay<Void>()
     let reloadListingCount = PublishRelay<Void>()
     let proceedYearPicker = BehaviorRelay<FilterYearValue>(value: (bound: .toYear, titles: [], startingIndex: 0))
     let proceedPropertyTypePicker = BehaviorRelay<FilterPropertyTypeValue>(value: (titles: [], startingIndex: 0))
 
-    var listingType: ListingType = .sale {
+    var listingType: ListingType? {
         didSet {
             histogramViewModel.resetViewModel(to: listingType)
             filterModel.listingType = listingType
@@ -64,7 +64,7 @@ class FiltersComposer {
     }
 
     lazy var listingTypeViewModel: ListingPropertyTypeViewModel = {
-        let listingTypeChanged = BehaviorRelay<ListingType>(value: .sale)
+        let listingTypeChanged = BehaviorRelay<ListingType?>(value: nil)
         listingTypeChanged
             .bind(onNext: { [weak self] type in self?.listingType = type })
             .disposed(by: disposeBag)
@@ -82,7 +82,9 @@ class FiltersComposer {
     lazy var histogramViewModel: HistogramViewModel = {
         let sliderValue = BehaviorRelay<RangeValue>(value: (min: 0, max: 101))
         sliderValue
-            .map { self.priceConverter.convertPrice(for: self.listingType, values: $0) }
+            .map {
+                self.priceConverter.convertPrice(for: self.listingType, values: $0)
+            }
             .bind(onNext: { [weak self] value in self?.updateHistogram(value) })
             .disposed(by: disposeBag)
 
@@ -133,7 +135,7 @@ class FiltersComposer {
         totalAreaViewModel.setEnablingFilelds(isEnabled: maxTotalArea != nil)
         builtAreaViewModel.setEnablingFilelds(isEnabled: maxBuiltArea != nil)
 
-        if let maxTotalArea = maxTotalArea, totalAreaMaxValue.value != CGFloat(maxTotalArea) {
+        if let maxTotalArea = maxTotalArea, totalAreaMaxValue.value == 0, totalAreaMaxValue.value != CGFloat(maxTotalArea) {
             totalAreaMaxValue.accept(CGFloat(maxTotalArea))
             totalAreaViewModel.maxTextValue.accept("\(Int(maxTotalArea))".commaConverted())
 
@@ -147,7 +149,7 @@ class FiltersComposer {
             }
         }
 
-        if let maxBuiltArea = maxBuiltArea, builtAreaMaxValue.value != CGFloat(maxBuiltArea) {
+        if let maxBuiltArea = maxBuiltArea, builtAreaMaxValue.value == 0, builtAreaMaxValue.value != CGFloat(maxBuiltArea) {
             builtAreaMaxValue.accept(CGFloat(maxBuiltArea))
             builtAreaViewModel.maxTextValue.accept("\(Int(maxBuiltArea))".commaConverted())
 
@@ -200,7 +202,9 @@ class FiltersComposer {
     func setupFiltersModel(_ filtersModel: ListingFilterModel?) {
         if let model = filtersModel {
             filterModel = model
-            listingTypeViewModel.listingType.accept(model.listingType)
+            if model.listingType != nil {
+                listingTypeViewModel.listingType.accept(model.listingType!)
+            }
             listingTypeViewModel.updatePropertyType(model.propertyType)
 
             presetHistogram(model)
@@ -221,9 +225,11 @@ class FiltersComposer {
 extension FiltersComposer {
 
     private func presetHistogram(_ model: ListingFilterModel) {
-        histogramViewModel.presetPrices(to: model.listingType,
-                                        priceStart: model.priceStart,
-                                        priceEnd: model.priceEnd)
+        if model.listingType != nil {
+            histogramViewModel.presetPrices(to: model.listingType!,
+                                            priceStart: model.priceStart,
+                                            priceEnd: model.priceEnd)
+        }
     }
 
     private func presetTotalArea(_ model: ListingFilterModel) {
@@ -304,10 +310,12 @@ extension FiltersComposer {
     private func updateHistogram(_ value: (min: Int?, max: Int?)) {
         guard filterModel.priceStart != value.min || filterModel.priceEnd != value.max else { return }
 
-        let priceEnd = value.max == priceConverter.maxPrice(for: listingType) ? nil : value.max
-        filterModel.priceStart = value.min
-        filterModel.priceEnd = priceEnd
-        reloadListingCount.accept(())
+        if let ltype = listingType {
+            let priceEnd = value.max == priceConverter.maxPrice(for: ltype) ? nil : value.max
+            filterModel.priceStart = value.min
+            filterModel.priceEnd = priceEnd
+            reloadListingCount.accept(())
+        }
     }
 
     private func updateTotalArea(_ value: RangeValue) {

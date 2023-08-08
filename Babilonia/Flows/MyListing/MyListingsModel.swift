@@ -24,7 +24,7 @@ final class MyListingsModel: EventNode {
     var listingsAreEmptyUpdated: Driver<Bool> { return listingsAreEmpty.asDriver().distinctUntilChanged() }
     var publishedListingsCount: Int { return publishedListings.count }
     var notPublishedListingsCount: Int { return notPublishedListings.count }
-
+    let showWarning = PublishSubject<Bool>()
     let requestState = PublishSubject<RequestState>()
     let configsService: ConfigurationsService
     
@@ -58,17 +58,51 @@ final class MyListingsModel: EventNode {
             }
         }
         
-        listingsService.fetchMyListings { [weak self] result in
+        fetchMyPublishedListings {
+            self.fetchMyUnpublishedListings {
+                self.requestState.onNext(.finished)
+                self.listingsAreEmpty.accept(self.allListings.value.isEmpty)
+            }
+        }
+    }
+    
+    private func fetchMyPublishedListings(completion: @escaping () -> Void) {
+        listingsService.fetchMyListings(state: "published") { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
-                self.requestState.onNext(.finished)
-                self.listingsAreEmpty.accept(self.allListings.value.isEmpty)
-                
+                completion()
             case .failure(let error):
-                self.requestState.onNext(.failed(error))
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
             }
         }
+    }
+    
+    private func fetchMyUnpublishedListings(completion: @escaping () -> Void) {
+        listingsService.fetchMyListings(state: "unpublished") { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                completion()
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
+            }
+        }
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
     }
     
     func listingModel(at index: Int, isPublished: Bool) -> Listing {
@@ -79,6 +113,12 @@ final class MyListingsModel: EventNode {
         guard let listing = notPublishedListings.first(where: { $0.id == listingID }) else { return false }
         
         return listing.state == .notPublished || listing.state == .expired
+    }
+    
+    func isListingRealtor(at listingID: Int) -> Bool {
+        guard let listing = (allListings.value.first { $0.id == listingID }) else { return false }
+
+        return listing.role == .realtor
     }
     
     func createListing() {
@@ -110,26 +150,57 @@ final class MyListingsModel: EventNode {
         case .draft:
             raise(event: MyListingsEvent.createListing(listing))
         case .hidden, .visible:
-            raise(event: MyListingsEvent.editListing(listing))
+//            raise(event: MyListingsEvent.editListing(listing))
+            getMyListingDetails(with: listing)
+        }
+    }
+    
+    func getMyListingDetails(with myListing: Listing) {
+        let listingID = myListing.id
+        requestState.onNext(.started)
+        self.listingsService.getMyListingDetails(for: "\(listingID)") { [weak self] result in
+            switch result {
+            case .success(let listing):
+                self?.requestState.onNext(.finished)
+                guard let listing = listing else { return }
+                self?.raise(event: MyListingsEvent.editListing(listing))
+            case .failure(let error):
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.finished)
+                    self?.raise(event: MyListingsEvent.editListing(myListing))
+                }
+            }
         }
     }
     
     func publishListing(with id: ListingId) {
         guard var listing = (allListings.value.first { $0.id == id }) else { return }
 
-        if listing.isPurchased {
-            listing.status = .visible
-            editListing(listing)
+        if listing.role == .realtor {
+            showWarning.onNext(true)
         } else {
-            raise(event: MyListingsEvent.publishListing(listing: listing))
+            if listing.isPurchased {
+                listing.status = .visible
+                editListing(listing)
+            } else {
+                raise(event: MyListingsEvent.publishListing(listing: listing))
+            }
         }
     }
     
     func unpublishListing(with id: ListingId) {
         guard var listing = (allListings.value.first { $0.id == id }) else { return }
-
         listing.status = .hidden
         editListing(listing)
+
+//        if listing.role == .realtor {
+//            showWarning.onNext(true)
+//        } else {
+//            listing.status = .hidden
+//            editListing(listing)
+//        }
     }
 
     private func editListing(_ listing: Listing) {
@@ -146,7 +217,11 @@ final class MyListingsModel: EventNode {
                 self?.fetchListings()
 
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -169,8 +244,8 @@ final class MyListingsModel: EventNode {
         var objects = [Listing]()
         objects.append(contentsOf: listings.filter { $0.status == .draft })
         objects.append(contentsOf: listings.filter { $0.status != .draft })
-        publishedListings = listings.filter { $0.state == .published }
-        notPublishedListings = listings.filter { $0.state != .published }
+        publishedListings = listings.filter { $0.state == .published }.sorted(by: { $0.id > $1.id })
+        notPublishedListings = listings.filter { $0.state != .published }.sorted(by: { $0.id > $1.id })
 
         allListings.accept(objects)
     }

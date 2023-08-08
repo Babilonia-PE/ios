@@ -52,11 +52,11 @@ extension Listing: CoreDataModelConvertible {
         object.area = area.flatMap(Int64.init)
         object.bathroomsCount = bathroomsCount.flatMap(Int16.init)
         object.bedroomsCount = bedroomsCount.flatMap(Int16.init)
-        object.contactViewsCount = Int64(contactViewsCount)
+        object.contactViewsCount = Int64(contactViewsCount ?? 0)
         object.favouritesCount = Int64(favouritesCount)
-        object.favourited = favourited
+        object.favourited = favourited ?? false
         object.id = Int64(id)
-        object.listingDescription = listingDescription
+        object.listingDescription = listingDescription ?? ""
         object.listingType = listingType?.rawValue
         object.parkingSlotsCount = parkingSlotsCount.flatMap(Int16.init)
         object.petFriendly = petFriendly
@@ -81,6 +81,7 @@ extension Listing: CoreDataModelConvertible {
         object.createdAt = createdAt
         object.adPurchasedAt = adPurchasedAt
         object.adPlan = adPlan?.rawValue
+        object.role = role?.rawValue
         object.adExpiresAt = adExpiresAt
         object.user = user
         
@@ -96,6 +97,12 @@ extension Listing: CoreDataModelConvertible {
 
         object.facilities = (facilities.flatMap { upsertFacilities($0, in: context) }).flatMap(Set.init)
         object.advancedDetails = (advancedDetails.flatMap { upsertFacilities($0, in: context) }).flatMap(Set.init)
+        
+        object.contact = contact?.upsertManagedObject(in: context, existedInstance: object.contact) as? ManagedContact
+//        guard let contact = managedContact as? ManagedContact else {
+//            fatalError("Cannot cast \(String(describing: managedContact)) to \(String(describing: managedContact.self))")
+//        }
+//        object.contact = contact
     }
 
     private func upsertFacilities(_ facilities: [Facility],
@@ -118,6 +125,7 @@ extension Listing: CoreDataModelConvertible {
 
     private static func instantiate(_ object: ManagedListing) -> Listing {
         guard let user = User.from(object.user) as? User else { fatalError() }
+        let contact: Contact? = (object.contact != nil) ? Contact.from(object.contact!) as? Contact : nil
         let location = object.location.flatMap(Location.from) as? Location
         let images = object.images?.map { (image: ManagedListingImage) -> ListingImage in
             guard let result = ListingImage.from(image) as? ListingImage else { fatalError() }
@@ -158,6 +166,7 @@ extension Listing: CoreDataModelConvertible {
             adExpiresAt: object.adExpiresAt,
             adPlan: object.adPlan.flatMap(PlanType.init),
             state: state,
+            role: object.role.flatMap(ListingRole.init),
             coveredArea: object.coveredArea.flatMap(Int.init),
             parkingForVisits: object.parkingForVisits,
             totalFloorsCount: object.totalFloorsCount.flatMap(Int.init),
@@ -166,7 +175,8 @@ extension Listing: CoreDataModelConvertible {
             location: location,
             images: images,
             facilities: facilities,
-            advancedDetails: advancedDetails
+            advancedDetails: advancedDetails,
+            contact: contact
         )
     }
 }

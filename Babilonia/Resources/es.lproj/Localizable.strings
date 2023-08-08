@@ -7,17 +7,21 @@
 // MARK: - Common
 
 "common.for.text" = "en %@";
+"common.share" = "Te comparto esta propiedad publicada en Babilonia.";
+"common.all" = "Todos";
 
 // MARK: - HUDs
 
 "hud.alert.error.title" = "Error";
 "hud.alert.success.title" = "Éxito";
 "hud.alert.info.title" = "Información";
+"hud.alert.loading.title" = "Cargando";
 
 // MARK: - Errors
 
 "errors.something_went_wrong" = "¡Lo sentimos! Algo salió mal...";
 "errors.something_went_wrong.long" = "Algo salió mal. Por favor vuelva a intentarlo o comuníquese con nosotros si el problema persiste.";
+"errors.action_must_be_done_from_web" = "Esta acción lo debes de realizar desde la web";
 "errors.network.undefined" = "Apareció un error de red no definido. Por favor inténtelo más tarde.";
 "errors.network.unsatisfied_header" = "Apareció un error de encabezado de red insatisfecho.";
 "errors.network.canceled" = "Request was cancelled by the system.";
@@ -41,6 +45,7 @@
 "buttons.save.title" = "Guardar";
 "buttons.ok_button.title" = "OK";
 "buttons.settings.title" = "Configuración";
+"buttons.login.title" = "Ingresar";
 
 // Popups
 
@@ -54,6 +59,9 @@
 "popups.delete_draft_listing.text" = "¿Está seguro que desea borrar esta información? La acción no se puede deshacer.";
 "popups.listing_deleted.text" = "Aviso eliminado con éxito";
 "popups.camera_access.text" = "Acceso a la cámara denegado. Por favor ingrese a Configuración -> Privacidad -> Cámara y active el acceso a Babilonia para utilizar esta función.";
+"popups.delete_account.title" = "¿Eliminar cuenta?";
+"popups.delete_account.text" = "Tu cuenta será eliminada permanentemente";
+"popups.delete_account.delete_account.title" = "Eliminar cuenta";
 
 // Image picker
 
@@ -71,6 +79,8 @@
 // MARK: - Start
 
 "start.button.title" = "¡COMENCEMOS!";
+"signup.button.title" = "REGISTRARSE";
+"login.button.title" = "YA TENGO CUENTA";
 
 // MARK: - Create listing
 
@@ -86,7 +96,7 @@
 "create_listing.listing_preview.title" = "Vista previa";
 "create_listing.listing_preview.subtitle" = "Ocultar aviso";
 "create_listing.listing_preview.publish.title" = "PUBLICAR";
-"create_listing.common.listing_type.title" = "TIPO DE OPERACION";
+"create_listing.common.listing_type.title" = "TIPO DE OPERACIÓN";
 "create_listing.common.listing_type.sale.title" = "Venta";
 "create_listing.common.listing_type.rent.title" = "Alquiler";
 "create_listing.common.property_type.title" = "Tipo de inmueble";
@@ -96,10 +106,25 @@
 "create_listing.common.property_type.office.title" = "Oficina";
 "create_listing.common.property_type.land.title" = "Terreno";
 "create_listing.common.property_type.room.title" = "Cuarto";
+"create_listing.common.property_type.local_industrial.title" = "Local Industrial";
+"create_listing.common.property_type.land_agricultural.title" = "Terreno Agrícola";
+"create_listing.common.property_type.land_industrial.title" = "Terreno Industrial";
+"create_listing.common.property_type.land_commercial.title" = "Terreno Comercial";
+"create_listing.common.property_type.cottage.title" = "Casa de Campo";
+"create_listing.common.property_type.beach_house.title" = "Casa de Playa";
+"create_listing.common.property_type.building.title" = "Edificio";
+"create_listing.common.property_type.hotel.title" = "Hotel";
+"create_listing.common.property_type.deposit.title" = "Depósito";
+"create_listing.common.property_type.parking.title" = "Estacionamiento";
+"create_listing.common.property_type.airs.title" = "Aires";
 "create_listing.common.property_type.project.title" = "Proyecto";
 "create_listing.common.area.title" = "Área, m²";
 "create_listing.common.area.placeholder" = "Área del inmueble";
 "create_listing.common.address.title" = "Dirección";
+"create_listing.common.country.title" = "País";
+"create_listing.common.department.title" = "Departamento";
+"create_listing.common.province.title" = "Provincia";
+"create_listing.common.district.title" = "Distrito";
 "create_listing.common.address.placeholder" = "Ingrese una dirección";
 "create_listing.common.description.title" = "Descripción (%d/%d)";
 "create_listing.common.description.edit.title" = "Descripción";
@@ -145,6 +170,13 @@
 // MARK: - Sign up
 
 "sign_up.title" = "Crear cuenta";
+"sign_up.first_name.title" = "Nombre";
+"sign_up.last_name.title" = "Apellido";
+"sign_up.full_name.title" = "Nombre completo";
+"sign_up.email.title" = "Email";
+"sign_up.phone.title" = "Teléfono";
+"sign_up.password.title" = "Contraseña";
+"sign_up.contry_list.title" = "Elige un país";
 
 // MARK: - Profile
 
@@ -156,6 +188,7 @@
 "profile.about.terms.title" = "Términos y condiciones";
 "profile.about.privacy.title" = "Política de privacidad";
 "profile.account.sign_out.title" = "Cerrar sesión";
+"profile.account.delete_account.title" = "Eliminar cuenta";
 
 // MARK: - Edit profile
 
@@ -164,7 +197,9 @@
 "edit_profile.buttons.save.title" = "GUARDAR";
 "edit_profile.first_name.title" = "Nombre";
 "edit_profile.last_name.title" = "Apellido";
+"edit_profile.full_name.title" = "Nombre completo";
 "edit_profile.change_email.title" = "Cambiar correo electrónico";
+"edit_profile.change_phone_number.title" = "Cambiar teléfono";
 "edit_profile.update_user.popup.success.text" = "Perfil actualizado con éxito";
 "edit_profile.update_email.popup.success.text" = "Correo actualizado con éxito";
 "edit_profile.update_avatar.popup.success.text" = "Foto cargada correctamente";
@@ -207,11 +242,12 @@
 "my_listings.status.hidden.title" = "Borrador completo";
 "my_listings.status.unpublished.title" = "Despublicado";
 "my_listings.status.draft.title" = "Borrador";
-"my_listings.options.open.title" = "Open";
+"my_listings.options.open.title" = "Abrir";
 "my_listings.options.edit.title" = "Editar detalles";
 "my_listings.options.publish.title" = "Publicar";
 "my_listings.options.unpublish.title" = "Despublicar";
 "my_listings.options.delete.title" = "Eliminar";
+"my_listings.options.share.title" = "Compartir";
 "my_listings.statistics.views" = "Vistas";
 "my_listings.statistics.favorites" = "Favoritos";
 "my_listings.statistics.contacts" = "Interesados";
@@ -253,7 +289,7 @@
 "listing_details.about.show_more.title" = "Mostrar más";
 "listing_details.facilities.title" = "Comodidades";
 "listing_details.advanced.title" = "Características adicionales";
-"listing_details.contact_button.title" = "Contactar";
+"listing_details.contact_button.title" = "Llamar";
 "listing_details.contact_button.description" = "Esta llamada puede incurrir costos adicionales";
 "listing_details.action.more" = "Más";
 "listing_details.action.report" = "Reportar";
@@ -277,8 +313,8 @@
 "listing.list.sorting" = "Ordenando";
 "listing.sort_option.price_low_to_high" = "Precio: Bajo a alto";
 "listing.sort_option.price_high_to_low" = "Precio: Alto a bajo";
-"listing.sort_option.newest_to_oldest" = "Más nuevos";
-"listing.sort_option.oldest_to_newest" = "Más antiguos";
+"listing.sort_option.newest_to_oldest" = "Publicaciones nuevas";
+"listing.sort_option.oldest_to_newest" = "Publicaciones antiguas";
 "listing.sort_option.closest_to_farthest" = "Más cercanos";
 "listing.sort_option.farthest_to_closest" = "Más lejanos";
 "listing.sort_option.area_highest_to_lowest" = "Área: Más amplios";
@@ -287,12 +323,12 @@
 "listing.sort_option.m2_price_lowest_to_highest" = "Precio por m2: Bajo a alto";
 "listing.sort_option.most_relevant" = "Relevancia";
 "listing_search.location_popup.title" = "Porque preguntamos por tu ubicación";
-"listing_search.location_popup.text" = "Para mostrarle inmuebles cerca a usted y ordenarlos por distancia cuando lo desee. Además, podrá ver su ubicación en la vista de mapa...";
+"listing_search.location_popup.text" = "Para mostrarte inmuebles cerca a ti. Además, podrás ver tu ubicación en la vista de mapa.";
 "listing_search.ar_popup.title" = "Busca propiedades\n con Realidad Aumentada";
-"listing_search.ar_popup.text" = "¿Te gusta la zona en donde estas? Explórala con nuestro AR y descubre que inmuebles están en venta o alquiler. Haga click en navegar y lo llevaremos por la ruta mas corta...";
+"listing_search.ar_popup.text" = "¿Te gusta la zona en donde estás? Escanéala con la vista AR y descubre que inmuebles están en venta o alquiler. Haz clic en navegar y te llevaremos al inmueble por la ruta más corta.";
 "listing_search.location_popup.done.title" = "ENTENDIDO";
 "listing_search.location_popup.cancel.title" = "Ahora no";
-"listing_search.search_bar.placeholder" = "Urbanización, distrito o ciudad";
+"listing_search.search_bar.placeholder" = "Distrito, provincia o ciudad";
 "listing_search.top_listings_title" = "Inmuebles Top";
 
 // MARK: - Search by location
@@ -345,9 +381,9 @@
 // MARK: - Payments
 
 "payments.flow.title" = "Publica tu inmueble";
-"payments.profile_selection.description" = "¿Cómo desea publicar?";
-"payments.plan_selection.description" = "Compare y seleccione el tipo de aviso que más le convenga.";
-"payments.period_selection.description" = "Seleccione el periodo de publicación.";
+"payments.profile_selection.description" = "¿Cómo deseas publicar?";
+"payments.plan_selection.description" = "Compara y selecciona la categoría de aviso que más te convenga.";
+"payments.period_selection.description" = "Selecciona el período de publicación";
 "payments.profile_selection.button" = "SELECCIONAR PERFIL";
 "payments.plan_selection.button" = "SELECCIONAR PLAN";
 "payments.period_selection.button" = "COMPRAR";
@@ -371,6 +407,7 @@
 "payments.plan_title.premium" = "Plan Premium";
 "payments.alert.listing_published_success" = "Aviso publicado con éxito";
 "payments.plan.expired.status" = "Expirado";
+"payments.checkout.termsConditions" = "Al hacer clic en 'Pagar', estas aceptando nuestros Términos y Condiciones de Compra";
 
 
 // MARK: - Photo gallery
@@ -381,3 +418,12 @@
 // MARK: - Inbox
 
 "inbox.comming_soon" = "Próximamente...";
+
+// MARK: - GuestUser
+
+"skip.button.title" = "Saltar";
+"guest.welcome.title"= "Ingresa a Babilonia";
+"guest.message.title" = "Inicia sesión o regístrate para poder acceder a todas nuestras funciones\n\n• Ponte en contacto con los anunciantes\n• Agrega inmuebles a tus favoritos\n• Publica y maneja tus inmuebles";
+"sign.button.title" = "Ingresar";
+"notNow.button.title" = "Ahora no";
+

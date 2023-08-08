@@ -55,6 +55,17 @@ public final class UserSession {
         self.store = UserSessionStore(id: id)
     }
     
+    public init() {
+        //let user = User(id: 0, email: nil, firstName: "guest", lastName: "", phoneNumber: "", avatar: nil)
+        let user = User(id: 0, email: nil, fullName: "guest", phoneNumber: "", avatar: nil)
+        let userAuthTokens = UserAuthTokens(authenticationToken: "", exchangeToken: "")
+        let initializationData = UserSessionInfo(user: user, authTokens: userAuthTokens)
+        self.initializationData = initializationData
+        self.id = initializationData.identifier
+        self.rootURL = URL(userSessionID: id)
+        self.store = UserSessionStore(id: id)
+    }
+    
     // MARK: - State Change
     
     func open() {

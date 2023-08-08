@@ -29,7 +29,7 @@ enum ButtonActionType {
 }
 
 final class CreateListingPreviewModel: EventNode {
-    
+    let showWarning = PublishSubject<Bool>()
     let requestState = PublishSubject<RequestState>()
     
     var listingDetailsModel: ListingDetailsModel {
@@ -85,12 +85,13 @@ final class CreateListingPreviewModel: EventNode {
     func exit() {
         switch mode {
         case .create: raise(event: CreateListingPreviewEvent.closeFlow)
-        case .edit: updateListing()
+        case .edit: updateListing(isEdit: true)
         }
     }
     
     func publishListing() {
         let listingCopy = createdListing ?? listing
+        
         guard listingCopy.status != .draft else {
             var listingCopy = listing
             listingCopy.status = .hidden
@@ -103,13 +104,18 @@ final class CreateListingPreviewModel: EventNode {
         switch buttonActionType {
         case .save:
             let shouldCloseAfter = listing.state == .published
-            updateListing(shouldCloseAfter: shouldCloseAfter)
+            updateListing(shouldCloseAfter: shouldCloseAfter, isEdit: true)
 
         case .publish:
             if listingCopy.state == .unpublished {
-                var listingCopy = listing
-                listingCopy.status = .visible
-                updateListing()
+                if listingCopy.role == .realtor { //realtor
+                    warningListing()
+                } else {
+                    var listingCopy = listing
+                    listingCopy.status = .visible
+                    updateListing()
+                }
+                
             } else {
                 presentPublishListingFlow()
             }
@@ -143,9 +149,20 @@ final class CreateListingPreviewModel: EventNode {
                 self.listingsService.removeDraftListing(self.listing)
 
             case .failure(let error):
-                self.requestState.onNext(.failed(error))
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
             }
         }
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
     }
 
     private func presentPublishListingFlow() {
@@ -153,10 +170,12 @@ final class CreateListingPreviewModel: EventNode {
         raise(event: CreateListingPreviewEvent.listingCreated(listing: publishListing))
     }
 
-    private func updateListing(shouldCloseAfter: Bool = true) {
+    private func updateListing(shouldCloseAfter: Bool = true, isEdit: Bool = false) {
+        var listingCopy = listing
+        listingCopy.isEdit = isEdit
         requestState.onNext(.started)
         listingsService.updateListing(
-            listing,
+            listingCopy,
             photosInfo: CreateListingPhotosInfo(photos: photos)
         ) { [weak self] result in
             switch result {
@@ -168,9 +187,17 @@ final class CreateListingPreviewModel: EventNode {
                     self?.changeButtonType()
                 }
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true  {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
+    }
+    
+    private func warningListing() {
+        showWarning.onNext(true)
     }
 
     private func changeButtonType(_ type: ButtonActionType = .publish) {

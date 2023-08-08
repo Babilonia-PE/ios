@@ -50,7 +50,11 @@ final class CreateListingAdvancedModel: EventNode, CreateListingModelUpdatable {
                 self?.details.accept(details.sorted { $0.id < $1.id })
                 self?.detailsAreEmpty.accept(details.isEmpty)
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -66,6 +70,12 @@ final class CreateListingAdvancedModel: EventNode, CreateListingModelUpdatable {
         detailsValuesMap.accept(map)
     }
     
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }
 
 extension CreateListingAdvancedModel {

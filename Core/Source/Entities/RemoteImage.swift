@@ -23,9 +23,12 @@ public struct RemoteImage: Codable {
 
     enum CodingKeys: String, CodingKey {
         case originalURLString = "url"
-        case smallURLString = "thumbMin"
-        case mediumURLString = "thumbMiddle"
-        case largeURLString = "thumbLarge"
+        case smallURLString = "urlMin"
+        case mediumURLString = "urlMiddle"
+        case largeURLString = "urlLarge"
     }
     
+    public var renderURLString: String? {
+        return self.originalURLString
+    }
 }

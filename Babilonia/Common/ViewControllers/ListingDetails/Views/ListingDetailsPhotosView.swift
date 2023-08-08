@@ -115,7 +115,11 @@ final class ListingDetailsPhotosView: UIView {
                     imageView.setImage(with: URL)
                 }
             case .remote(let image):
-                imageView.setImage(with: image.photo.largeURLString.flatMap(URL.init))
+                if let imageUrl = URL(string: image.photo.renderURLString ?? "") {
+                    imageView.setImage(with: imageUrl, placeholder: Asset.MyListings.myListingsDraft.image)
+                } else {
+                    imageView.image = Asset.MyListings.myListingsDraft.image
+                }
             }
             
             photoViews.append(imageView)

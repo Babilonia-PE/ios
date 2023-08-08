@@ -13,7 +13,7 @@ import RxCocoa
 final class ProfileViewModel {
     
     var canRefreshUser: Bool = true
-    
+    var isUserGuest: Bool = false
     var userUpdated: Driver<Void> { return model.userUpdated.map { _ in } }
     
     private(set) var avatarURLString: String?
@@ -25,7 +25,7 @@ final class ProfileViewModel {
     private(set) var accountViewModel = ProfileFieldViewModel(title: L10n.Profile.Account.title)
     private(set) var termsViewModel = ProfileFieldViewModel(title: L10n.Profile.About.Terms.title)
     private(set) var privacyViewModel = ProfileFieldViewModel(title: L10n.Profile.About.Privacy.title)
-    
+    private(set) var loginViewModel = ProfileFieldViewModel(title: "Ingresar")
     private var disposeBag = DisposeBag()
     
     private let phoneFormatter = PhoneNumberTextFormatter()
@@ -52,6 +52,10 @@ final class ProfileViewModel {
         model.editEmail()
     }
     
+    func editPhoneNumber() {
+        model.editPhoneNumber()
+    }
+    
     func openAccount() {
         model.openAccount()
     }
@@ -73,14 +77,17 @@ final class ProfileViewModel {
         model.openPrivacy()
     }
     
+    func openLogin() {
+        model.openLogin()
+    }
     // MARK: - private
     
     private func setupBindings() {
         model.userUpdated
             .drive(onNext: { [weak self] user in
                 guard let self = self else { return }
-                
-                self.avatarURLString = user.avatar?.mediumURLString
+                self.isUserGuest = user.id == .guest
+                self.avatarURLString = user.avatar?.smallURLString
                 self.name = user.fullName
                 self.emailViewModel = ProfileUserDataViewModel(
                     title: L10n.Profile.Email.title,
@@ -89,8 +96,8 @@ final class ProfileViewModel {
                 )
                 self.phoneViewModel = ProfileUserDataViewModel(
                     title: L10n.Profile.Phone.title,
-                    dataValue: self.phoneFormatter.formatted(user.phoneNumber),
-                    isActive: false
+                    dataValue: self.phoneFormatter.formatted(user.phoneNumber ?? ""),
+                    isActive: true
                 )
             })
             .disposed(by: disposeBag)

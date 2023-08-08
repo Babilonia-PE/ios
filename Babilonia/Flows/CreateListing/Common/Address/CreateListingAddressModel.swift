@@ -21,6 +21,7 @@ final class CreateListingAddressModel: EventNode {
     var coordinateShownUpdated: Driver<CLLocationCoordinate2D?> { return coordinateShown.asDriver() }
     
     private let locationManager: LocationManager
+    private let placeSearchManager: PlaceSearchManager
     private let configService: ConfigurationsService
     
     private let updateHandler: (MapAddress) -> Void
@@ -41,7 +42,7 @@ final class CreateListingAddressModel: EventNode {
         self.updateHandler = updateHandler
         self.coordinateShown = BehaviorRelay(value: initialAddress?.coordinate)
         self.address = BehaviorRelay(value: initialAddress)
-        
+        self.placeSearchManager = PlaceSearchManager()
         super.init(parent: parent)
     }
     
@@ -85,11 +86,29 @@ final class CreateListingAddressModel: EventNode {
     }
     
     func updateMapAddress(_ coordinate: CLLocationCoordinate2D, title: String?, showCoordinate: Bool) {
-        if showCoordinate {
-            self.coordinateShown.accept(coordinate)
-        }
-        let address = MapAddress(title: title, coordinate: coordinate)
-        self.address.accept(address)
+        placeSearchManager
+            .reverseGeocodeCoordinateToValues(coordinate) { [weak self] loc, province, admArea, country, postalCode in
+                guard let self = self else { return }
+                if showCoordinate {
+                    self.coordinateShown.accept(coordinate)
+                }
+                var titleMap = title
+                if let oldTitle = title {
+                    if let first = oldTitle.split(separator: ",").first,
+                       let department = admArea,
+                       let district = loc {
+                        titleMap = String(first) + ", \(district), \(department)"
+                    }
+                }
+                let address = MapAddress(title: titleMap,
+                                         coordinate: coordinate,
+                                         country: country,
+                                         department: admArea,
+                                         province: province,
+                                         district: loc,
+                                         zipCode: postalCode)
+                self.address.accept(address)
+            }
     }
     
     // MARK: - private

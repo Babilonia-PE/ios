@@ -39,6 +39,20 @@ final class FavoritesFlowCoordinator: EventNode, FlowCoordinator {
         switch event {
         case .presentListingDetails(let listing):
             presentListingDetail(for: listing)
+        case .alertGuest:
+            guard let window = UIApplication.shared.delegate?.window,
+                  let presentingView = window else { return }
+            let popupView = GuestPopupView(popupViewType: .guest)
+
+            let doneAction = { [weak self, unowned popupView] in
+                popupView.hide()
+                self?.raise(event: MainFlowEvent.logoutAndLogin)
+            }
+            let cancelAction = { [unowned popupView] in
+                popupView.hide()
+            }
+            popupView.setup(with: doneAction, cancelAction: cancelAction)
+            popupView.show(in: presentingView)
         }
     }
 

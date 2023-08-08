@@ -9,6 +9,10 @@ import RxSwift
 import RxCocoa
 import ESTabBarController_swift
 
+protocol MainMenuViewControllerDelegate: AnyObject {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool
+}
+
 final class MainMenuViewController: ESTabBarController {
     
     override var selectedIndex: Int {
@@ -34,12 +38,13 @@ final class MainMenuViewController: ESTabBarController {
     private var shadowLayer: CALayer!
     
     private var edgeViews = [UIView]()
+    public weak var menuDelegate: MainMenuViewControllerDelegate?
     
     init(viewModel: MainMenuViewModel) {
         self.viewModel = viewModel
-        
+        RecentLocation.shared.searchSession = false
         super.init(nibName: nil, bundle: nil)
-        
+        delegate = self
         layout()
         setupViews()
     }
@@ -135,4 +140,11 @@ final class MainMenuViewController: ESTabBarController {
         }
     }
     
+}
+
+extension MainMenuViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
+        return menuDelegate?.tabBarController(tabBarController, shouldSelect: viewController) ?? true
+    }
 }

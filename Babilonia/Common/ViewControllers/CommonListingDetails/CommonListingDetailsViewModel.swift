@@ -15,6 +15,11 @@ final class CommonListingDetailsViewModel {
     var requestState: Observable<RequestState> {
         model.requestState.asObservable().observeOn(MainScheduler.instance)
     }
+    
+    var showWarning: Observable<Bool> {
+        model.showWarning.asObservable().observeOn(MainScheduler.instance)
+    }
+    
     var listingUpdated: Driver<Void> {
         model.listingUpdated.map { _ in }
     }
@@ -29,6 +34,15 @@ final class CommonListingDetailsViewModel {
     var viewState: ListingDetailsViewState {
         model.viewState
     }
+    
+    var listingID: String {
+        model.listingID
+    }
+    
+    var listingURL: String {
+        model.listingURL
+    }
+    
     var phoneNumber: String {
         model.phoneNumber
     }
@@ -49,6 +63,10 @@ final class CommonListingDetailsViewModel {
     }
     var title: String {
         viewState == .owned ? L10n.CreateListing.ListingPreview.title : ""
+    }
+    
+    var role: ListingRole? {
+        model.listingSubject.value?.role
     }
     var statusTitle: String? {
         guard viewState == .owned, !shouldHideEditAction else { return nil }
@@ -90,8 +108,16 @@ final class CommonListingDetailsViewModel {
         model.publishListing()
     }
 
-    func triggerContact() {
+    func triggerContact() -> Bool {
         model.triggerContact()
+    }
+    
+    func triggerWhatsapp() -> Bool {
+        model.triggerWhatsapp()
+    }
+    
+    func triggerView() {
+        model.triggerView()
     }
 
     func openMap() {

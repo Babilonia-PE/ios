@@ -67,6 +67,7 @@ extension Facility: CoreDataModelConvertible {
             key: object.key,
             title: object.title,
             icon: object.icon.flatMap(RemoteImage.instantiate),
+            iconIos: object.icon.flatMap(RemoteImage.instantiate),
             propertyTypes: object.propertyTypes?
                 .components(separatedBy: propertyTypeSeparator)
                 .compactMap { PropertyType(rawValue: $0) }

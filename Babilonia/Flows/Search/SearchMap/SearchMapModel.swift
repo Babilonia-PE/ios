@@ -12,11 +12,13 @@ import RxSwift
 import RxCocoa
 
 final class SearchMapModel: EventNode, ListingsUpdatable {
-    
+    private let defaultRadius: Float = 2000 // 1000 // 5000
     let requestState = PublishSubject<RequestState>()
     
     var coordinateShownUpdated: Driver<CLLocationCoordinate2D?> { return coordinateShown.asDriver() }
     var listingsUpdated: Driver<[Listing]> { return listings.asDriver() }
+    var moveToListingUpdated: Driver<Bool> { return moveToListing.asDriver() }
+
     var searchResultCoordinate: CLLocationCoordinate2D?
     
     let configService: ConfigurationsService
@@ -28,13 +30,15 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
     
     private let listings = BehaviorRelay<[Listing]>(value: [])
     private let sortOption: BehaviorRelay<SortOption>
-    
+    private let moveToListing = BehaviorRelay<Bool>(value: false)
+
     private let locationManager: LocationManager
     private let listingsService: ListingsService
     private let userService: UserService
     private let disposeBag = DisposeBag()
-    private let maxListingsCount = 30
-    
+    private let maxListingsCount = 50
+    private var isCallService = false
+    private var listingByList: Listing?
     // MARK: - lifecycle
     
     deinit {
@@ -89,6 +93,14 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
     func updateRadius(_ radius: CLLocationDistance) {
         radiusShown.accept(radius)
     }
+
+    func currentCoordinateShown() -> CLLocationCoordinate2D? {
+        coordinateShown.value
+    }
+    
+    public func firstListing() -> Listing? {
+        listings.value.first
+    }
     
     func listing(with id: ListingId) -> Listing? {
         return listings.value.first { $0.id == id }
@@ -96,6 +108,14 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
 
     func isUserOwnedListing(with userID: Int) -> Bool {
         userID == userService.userID
+    }
+    
+    func updateListingByList(listing: Listing?) {
+        listingByList = listing
+    }
+    
+    func currentListingByList() -> Listing? {
+        listingByList
     }
 
     func updateListings(areaInfo: FetchListingsAreaInfo,
@@ -112,6 +132,10 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
         self.filters = filters
         fetchListings()
     }
+    
+    func updateListings(searchLocation: SearchLocation, isCurrentLocation: Bool) {
+        fetchListings(searchLocation: searchLocation)
+    }
 
     func presentListingDetails(for listingID: Int) {
         guard let listing = listings.value.first(where: { $0.id == listingID }) else { return }
@@ -119,38 +143,57 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
     }
     
     func setListingFavoriteState(for id: Int) {
-        guard let listing = listings.value.first(where: { $0.id == id }) else { return }
-
-        requestState.onNext(.started)
-        if listing.favourited {
-            deleteListingFromFavorite(listingID: String(id))
+        if userService.userID == .guest {
+            raise(event: ListingDetailsPresentableEvent.alertGuest)
         } else {
-            addListingToFavorite(listingID: String(id))
+            guard let listing = listings.value.first(where: { $0.id == id }) else { return }
+
+            requestState.onNext(.started)
+            let favorited = listing.favourited ?? false
+            if favorited {
+                deleteListingFromFavorite(listingID: String(id))
+            } else {
+                addListingToFavorite(listingID: String(id))
+            }
         }
     }
 
     // MARK: - private
 
     private func addListingToFavorite(listingID: String) {
-        listingsService.addListingToFavorite(listingID: listingID) { [weak self] result in
+        listingsService.addListingToFavorite(listingID: listingID,
+                                             ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                             userAgent: "ios",
+                                             signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
                 self?.fetchListings()
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
 
     private func deleteListingFromFavorite(listingID: String) {
-        listingsService.deleteListingFromFavorite(listingID: listingID) { [weak self] result in
+        listingsService.deleteListingFromFavorite(listingID: listingID,
+                                                  ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                  userAgent: "ios",
+                                                  signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
                 self?.fetchListings()
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -225,6 +268,7 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
     }
     
     func fetchListings(areaInfo: FetchListingsAreaInfo? = nil) {
+    //    RecentLocation.shared.currentLocation = nil 
         requestState.onNext(.started)
 
         var areaInfo: FetchListingsAreaInfo?
@@ -244,17 +288,56 @@ final class SearchMapModel: EventNode, ListingsUpdatable {
             switch result {
             case .success(let listings):
                 self.requestState.onNext(.finished)
+                self.isCallService = true
                 self.listings.accept(listings)
             case .failure(let error):
-                self.requestState.onNext(.failed(error))
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
             }
+        }
+    }
+    
+    func fetchListings(searchLocation: SearchLocation) {
+   //     RecentLocation.shared.currentLocation = searchLocation
+        requestState.onNext(.started)
+        listingsService.fetchAllListings(searchLocation: searchLocation,
+                                         sort: sortOption.value.sortParam,
+                                         direction: sortOption.value.directionParam,
+                                         filters: filters,
+                                         perPage: maxListingsCount) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let listings):
+                
+                self.requestState.onNext(.finished)
+                self.listings.accept(listings)
+                self.moveToListing.accept(true)
+            case .failure(let error):
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
+            }
+            
         }
     }
     
     private func calculateAreaInfo() -> FetchListingsAreaInfo? {
         FetchListingsAreaInfo(latitude: Float(coordinateShown.value?.latitude ?? 0.0),
                               longitude: Float(coordinateShown.value?.longitude ?? 0.0),
-                              radius: Float(radiusShown.value ?? 0.0))
+                              radius: defaultRadius)
+             //                 radius: Float(radiusShown.value ?? 0.0))
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
     }
     
 }

@@ -24,12 +24,14 @@ public final class ConfigurationsService {
 
     private let client: NetworkClient
     private let storage: DBClient
+    private let newClient: NetworkClient
     
     // MARK: - lifecycle
     
-    public init(client: NetworkClient, storage: DBClient, currency: Currency) {
+    public init(client: NetworkClient, storage: DBClient, currency: Currency, newClient: NetworkClient) {
         self.client = client
         self.storage = storage
+        self.newClient = newClient
         
         appConfigs = storage.execute(FetchRequest<AppConfig>()).value?.first
         self.currency = currency
@@ -39,7 +41,7 @@ public final class ConfigurationsService {
     
     public func updateAppConfigs() {
         let request = AppConfigRequest()
-        client.execute(request: request, parser: DecodableParser<AppConfig>(keyPath: "data")) { [weak self] result in
+        newClient.execute(request: request, parser: DecodableParser<AppConfig>(keyPath: "data")) { [weak self] result in
             guard let config = result.value else { return }
             self?.storage.deleteAllObjects(of: AppConfig.self, completion: { _ in
                 self?.appConfigs = config
@@ -63,14 +65,14 @@ public final class ConfigurationsService {
     
     public func getCurrencyRate(fromCurrency: String = "usd", toCurrency: String = "pen") {
         let request = CurrencyRateRequest(fromCurrency: fromCurrency, toCurrency: toCurrency)
-        client.execute(
+        newClient.execute(
             request: request,
-            parser: DecodableParser<[String: Double]>(keyPath: "data")
+            parser: DecodableParser<CurrencyRate>(keyPath: "data")
         ) { [weak self] result in
-            guard let rate = result.value?["rate"], let self = self else { return }
+            guard let currencyRate = result.value, let self = self else { return }
             
-            self.rate = rate
-            self.currency.rate = rate
+            self.rate = currencyRate.tc
+            self.currency.rate = currencyRate.tc
             self.storage.upsert(self.currency) { _ in }
         }
     }

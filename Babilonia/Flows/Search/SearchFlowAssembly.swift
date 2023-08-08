@@ -41,6 +41,7 @@ final class SearchFlowAssembly: Assembly {
                                                 searchTerm: searchTerm,
                                                 locationManager: resolver.autoresolve(),
                                                 userService: container.autoresolve(),
+                                                autoCompleteSearchService: container.autoresolve(),
                                                 isCurrentLocationSearch: isCurrentLocationSearch)
                 let viewModel = LocationSearchViewModel(model: model)
                 let controller = LocationSearchViewController(viewModel: viewModel)
@@ -48,6 +49,7 @@ final class SearchFlowAssembly: Assembly {
                 return controller
             }
             .inObjectScope(.transient)
+        
     }
 
     // MARK: - Listing details
@@ -154,11 +156,20 @@ final class SearchFlowAssembly: Assembly {
     
     private func assembleServices(_ container: Container) {
         container
-            .autoregister(ListingsService.self, initializer: ListingsService.init)
+            .register(ListingsService.self) { (resolver) in
+                return ListingsService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
 
         container
-            .autoregister(FacilitiesService.self, initializer: FacilitiesService.init)
+            .register(FacilitiesService.self) { (resolver) in
+                return FacilitiesService(client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
         
         container
@@ -166,7 +177,20 @@ final class SearchFlowAssembly: Assembly {
             .inObjectScope(.container)
 
         container
-            .autoregister(UserService.self, initializer: UserService.init)
+            .register(UserService.self) { (resolver) in
+                return UserService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
+            .inObjectScope(.container)
+        
+        container
+            .register(AutoCompleteSearchService.self) { (resolver) in
+                return AutoCompleteSearchService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
     }
     

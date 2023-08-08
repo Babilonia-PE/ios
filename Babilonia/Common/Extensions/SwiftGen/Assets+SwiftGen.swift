@@ -81,6 +81,7 @@ internal enum Asset {
     internal static let sliderIndicator = ImageAsset(name: "Common/sliderIndicator")
     internal static let successIcon = ImageAsset(name: "Common/successIcon")
     internal static let userAvatarPlaceholderSmall = ImageAsset(name: "Common/userAvatarPlaceholderSmall")
+    internal static let shareIcon = ImageAsset(name: "Common/ShareIcon")
   }
   internal enum CreateListing {
     internal static let allFacilitiesIcon = ImageAsset(name: "CreateListing/allFacilitiesIcon")
@@ -99,6 +100,7 @@ internal enum Asset {
     internal static let calendarIcon = ImageAsset(name: "ListingDetails/calendarIcon")
     internal static let currentLocationIcon = ImageAsset(name: "ListingDetails/currentLocationIcon")
     internal static let floorNumberIcon = ImageAsset(name: "ListingDetails/floorNumberIcon")
+    internal static let iconWhatsapp = ImageAsset(name: "ListingDetails/iconWhatsapp")
     internal static let listingDetailsCameraSmall = ImageAsset(name: "ListingDetails/listingDetailsCameraSmall")
     internal static let mapPinSmall = ImageAsset(name: "ListingDetails/mapPinSmall")
     internal static let mapRoute = ImageAsset(name: "ListingDetails/mapRoute")

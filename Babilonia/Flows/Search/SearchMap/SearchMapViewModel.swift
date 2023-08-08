@@ -23,6 +23,20 @@ final class SearchMapViewModel {
     var searchResultCoordinate: CLLocationCoordinate2D? {
         model.searchResultCoordinate
     }
+    var currentCoordinateShown: CLLocationCoordinate2D? {
+        model.currentCoordinateShown()
+    }
+    var currentListingByList: Listing? {
+        model.currentListingByList()
+    }
+    
+    func firstListing() -> Listing? {
+        model.firstListing()
+    }
+    
+    func updateListingByList(listing: Listing?) {
+        model.updateListingByList(listing: listing)
+    }
 
     var markerInfosUpdated: Driver<[(SearchMapMarkerInfo, CLLocationCoordinate2D)]> {
         return model.listingsUpdated.map {

@@ -94,8 +94,13 @@ final class CreateListingFacilityView: UIView {
             imageView.image = image
             imageView.contentMode = .scaleAspectFit
         } else {
+            var options: KingfisherOptionsInfo = []
+            if let url = viewModel.imageURL?.absoluteString, url.hasSuffix(".svg") {
+                options.append(.processor(SVGImgProcessor()))
+            }
+            
             imageView.kf.setImage(with: viewModel.imageURL,
-                                  options: [.processor(SVGImgProcessor())],
+                                  options: options,
                                   completionHandler: { [weak self] result in
                                     if case let .success(image) = result {
                                         self?.imageView.image = image.image.withRenderingMode(.alwaysTemplate)

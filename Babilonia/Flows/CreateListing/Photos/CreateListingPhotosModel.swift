@@ -87,10 +87,14 @@ final class CreateListingPhotosModel: EventNode, CreateListingModelUpdatable {
             self.cancellationsMap.removeValue(forKey: photo.id)
             
             switch result {
-            case .success(let image):
-                self.processImageUpload(of: photo, with: image)
+            case .success(let images):
+                self.processImageUpload(of: photo, with: images[0])
             case .failure(let error):
-                self.processImageUpload(of: photo, with: error)
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.processImageUpload(of: photo, with: error)
+                }
             }
         }
         if let cancellable = uploadCancellable {
@@ -163,12 +167,29 @@ final class CreateListingPhotosModel: EventNode, CreateListingModelUpdatable {
                 cancellationsMap.removeValue(forKey: photo.id)
             }
         case .uploaded:
-            imagesService.deleteImage(photo.id) { _ in }
+            imagesService.deleteImage(photo.id) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    if self.isUnauthenticated(error) {
+                        self.raise(event: MainFlowEvent.logout)
+                    }
+                }
+            }
         case .alreadyExists:
             break
         }
     }
     
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }
 
 private extension CreateListingPhoto {
@@ -188,7 +209,7 @@ extension Listing {
     
     var createListingPhotos: [CreateListingPhoto] {
         sortedPhotos.compactMap {
-            guard let URLString = $0.photo.mediumURLString, let URL = URL(string: URLString) else { return nil }
+            guard let URLString = $0.photo.renderURLString, let URL = URL(string: URLString) else { return nil }
             return CreateListingPhoto(
                 id: $0.id,
                 status: BehaviorRelay(value: .alreadyExists(URL)),

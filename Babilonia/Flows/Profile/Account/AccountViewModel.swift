@@ -12,6 +12,8 @@ final class AccountViewModel {
     
     private(set) var signOutViewModel = ProfileFieldViewModel(title: L10n.Profile.Account.SignOut.title)
     
+    private(set) var deleteAccountViewModel = ProfileFieldViewModel(title: L10n.Profile.Account.DeleteAccount.title)
+    
     private let model: AccountModel
     
     init(model: AccountModel) {
@@ -20,6 +22,10 @@ final class AccountViewModel {
     
     func logout() {
         model.logout()
+    }
+    
+    func deleteAccount() {
+        model.deleteAccount()
     }
     
     func close() {

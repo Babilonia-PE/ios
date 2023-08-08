@@ -13,6 +13,7 @@ import RxSwift
 import GoogleMaps
 import GooglePlaces
 import AVFoundation
+import Core
 
 //swiftlint:disable line_length
 final class ARContainerViewController: UIViewController, SlidingContainerPresentable, AlertApplicable, SpinnerApplicable {
@@ -54,6 +55,8 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
     private var gradientLayer: CALayer!
     private let closeARButton: UIButton = .init()
     private let titleLabel: UILabel = .init()
+    private let listingTypeButton: UIButton = .init()
+    private let propertyTypeButton: UIButton = .init()
     private var isNavigationMode = false
     private var shouldLoadARViewController = true
     private var shouldShowListingOnAppear = false
@@ -61,6 +64,8 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
     private var selectedAnnotation: ARAnnotation?
     private var arAnnotations = [ARAnnotation]()
     var isFullscreenMap = false
+    
+    private let arFiltersView: ArFiltersView = .init()
 
     var topMapConstraint: NSLayoutConstraint?
     var heightMapConstraint: NSLayoutConstraint?
@@ -196,6 +201,17 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
                 self?.buildRoute(points: points)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.viewDidChange
+            .subscribe(onNext: { [weak self] viewTypes in
+                guard let self = self else { return }
+
+                self.arFiltersView.setupView(with: viewTypes)
+//                self.customView.updateCheckmarks(with: self.viewModel.checkmarkFileldViewModels)
+//                self.customView.updateCounters(with: self.viewModel.counterViewModels)
+//                self.viewModel.reloadFilters()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupUIBinding() {
@@ -218,6 +234,60 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
                 self.animateMapViewFrame()
             })
             .disposed(by: disposeBag)
+        
+        listingTypeButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                self?.showFilter(for: .listingType)
+            })
+        .disposed(by: disposeBag)
+        
+        propertyTypeButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                self?.showFilter(for: .propertyType)
+            })
+        .disposed(by: disposeBag)
+        
+        arFiltersView.applyButton.button.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.apply()
+                self?.refreshFilterButtons()
+                self?.hideSlidingContainer {
+                }
+                
+            })
+        .disposed(by: disposeBag)
+    }
+    
+    private func refreshFilterButtons() {
+        listingTypeButton.setTitle(L10n.Common.all, for: .normal)
+        propertyTypeButton.setTitle(L10n.Common.all, for: .normal)
+        
+        viewModel.appliedFilterInfos.forEach { info in
+            switch info.filterType {
+            case .listingType:
+                listingTypeButton.setTitle(info.attributedTitle.string, for: .normal)
+            case .propertyType:
+                propertyTypeButton.setTitle(info.attributedTitle.string, for: .normal)
+            default:
+                break
+            }
+        }
+    }
+    
+    private func showFilter(for filterType: FilterType) {
+        arFiltersView.listingTypeView.viewModel = viewModel.listingTypeViewModel
+        arFiltersView.isHidden = false
+        arFiltersView.updateUI(for: filterType)
+        
+        if isSlidingContainerPresenting && selectedAnnotationView != nil {
+            self.applyDefaultAnnotationsState()
+            self.extendedListingPreview = nil
+            self.hideSlidingContainer {
+                self.presentSlidingContainer(with: self.arFiltersView, showingOn: self.view)
+            }
+        } else {
+            self.presentSlidingContainer(with: arFiltersView, showingOn: self.view)
+        }
     }
 
     private func removeMap(completion: (() -> Void)?) {
@@ -239,29 +309,31 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
     // MARK: - ARViewController configuration
 
     private func configureARViewController() {
-        let arViewController = ARViewController()
-        
-        arViewController.dataSource = self
-        arViewController.presenter.distanceOffsetMode = .manual
-        arViewController.presenter.distanceOffsetMultiplier = 0.1 // Pixels per meter
-        arViewController.presenter.distanceOffsetMinThreshold = 500.0
-        arViewController.presenter.maxDistance = 1000.0
-        arViewController.presenter.maxVisibleAnnotations = 500
-        arViewController.presenter.presenterTransform = ARPresenterStackTransform()
-        arViewController.trackingManager.userDistanceFilter = kCLDistanceFilterNone
-        arViewController.trackingManager.reloadDistanceFilter = 25.0
-        arViewController.uiOptions.closeButtonEnabled = false
-        arViewController.uiOptions.simulatorDebugging = false
-        arViewController.uiOptions.setUserLocationToCenterOfAnnotations = false
-        arViewController.interfaceOrientationMask = .portrait
+        if self.arViewController == nil {
+            let arViewController = ARViewController()
+            
+            arViewController.dataSource = self
+            arViewController.presenter.distanceOffsetMode = .manual
+            arViewController.presenter.distanceOffsetMultiplier = 0.1 // Pixels per meter
+            arViewController.presenter.distanceOffsetMinThreshold = 500.0
+            arViewController.presenter.maxDistance = 1000.0
+            arViewController.presenter.maxVisibleAnnotations = 500
+            arViewController.presenter.presenterTransform = ARPresenterStackTransform()
+            arViewController.trackingManager.userDistanceFilter = kCLDistanceFilterNone
+            arViewController.trackingManager.reloadDistanceFilter = 25.0
+            arViewController.uiOptions.closeButtonEnabled = false
+            arViewController.uiOptions.simulatorDebugging = false
+            arViewController.uiOptions.setUserLocationToCenterOfAnnotations = false
+            arViewController.interfaceOrientationMask = .portrait
 
-        arViewController.setAnnotations([])
-        self.arViewController = arViewController
+            arViewController.setAnnotations([])
+            self.arViewController = arViewController
 
-        addChild(arViewController)
-        arViewController.view.frame = UIScreen.main.bounds
-        view.addSubview(arViewController.view)
-        arViewController.didMove(toParent: self)
+            addChild(arViewController)
+            arViewController.view.frame = UIScreen.main.bounds
+            view.addSubview(arViewController.view)
+            arViewController.didMove(toParent: self)
+        }
     }
 
     private func buildListingPreviewContentView(
@@ -328,7 +400,7 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
         listingPreviewView.didToggleContact = { [weak self] _ in
             guard let self = self else { return }
 
-            let phone = listing.user.phoneNumber
+            let phone = listing.user.phoneNumber ?? ""
             self.composerManager.proceedPhone(phone)
         }
 
@@ -449,9 +521,35 @@ extension ARContainerViewController {
 
         arView.addSubview(titleLabel)
         titleLabel.layout {
-            $0.centerX.equal(to: arView.centerXAnchor)
-            $0.top.equal(to: arView.topAnchor, offsetBy: 60)
+            $0.leading.equal(to: closeARButton.trailingAnchor, offsetBy: 12)
+            $0.top.equal(to: arView.topAnchor, offsetBy: 63)
         }
+        
+        propertyTypeButton.setTitle(L10n.Common.all, for: .normal)
+        arView.addSubviews(propertyTypeButton)
+//        filterButton.setImage(Asset.Search.filterIcon.image.withRenderingMode(.alwaysTemplate), for: .normal)
+        propertyTypeButton.setImage(Asset.Common.arrowDownGrey.image.withRenderingMode(.alwaysTemplate), for: .normal)
+        propertyTypeButton.tintColor = UIColor.white
+        propertyTypeButton.layout {
+            $0.trailing.equal(to: arView.trailingAnchor, offsetBy: -14)
+            $0.top.equal(to: arView.topAnchor, offsetBy: 60)
+            $0.height.equal(to: 24)
+        }
+        
+        listingTypeButton.setTitle(L10n.Common.all, for: .normal)
+        arView.addSubviews(listingTypeButton)
+        listingTypeButton.setImage(Asset.Common.arrowDownGrey.image.withRenderingMode(.alwaysTemplate), for: .normal)
+        listingTypeButton.tintColor = UIColor.white
+        listingTypeButton.layout {
+            $0.trailing.equal(to: propertyTypeButton.leadingAnchor, offsetBy: -8)
+            $0.top.equal(to: arView.topAnchor, offsetBy: 60)
+            $0.height.equal(to: 24)
+        }
+        
+        arFiltersView.frame = CGRect(x: 0.0,
+                                          y: 0.0,
+                                          width: view.frame.width,
+                                          height: 204.0 + view.safeAreaInsets.bottom)
     }
 
     private func setupListingPreview(for listingViewModel: ListingViewModel) {
@@ -572,7 +670,7 @@ extension ARContainerViewController: ARDataSource {
             annotationView.backgroundColor = .white
             
             // If user clicks on any AnnotationView, while ListingPreview is shown
-            guard !self.isSlidingContainerPresenting else {
+            guard !(self.isSlidingContainerPresenting && self.selectedAnnotationView != nil) else {
                 let isSameAnnotationViewSelected = self.selectedAnnotationView?.annotation?.identifier ==
                     annotationView.annotation?.identifier
                 
@@ -605,8 +703,14 @@ extension ARContainerViewController: ARDataSource {
             let listingPreviewView = self.buildListingPreviewContentView(by: listing, for: annotation)
 
             guard let optionalWindow = UIApplication.shared.delegate?.window, let window = optionalWindow else { return }
-
-            self.presentSlidingContainer(with: listingPreviewView, showingOn: window)
+            
+            if self.isSlidingContainerPresenting {
+                self.hideSlidingContainer {
+                    self.presentSlidingContainer(with: listingPreviewView, showingOn: window)
+                }
+            } else {
+                self.presentSlidingContainer(with: listingPreviewView, showingOn: window)
+            }
         }
 
         return annotationView

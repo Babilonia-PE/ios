@@ -16,6 +16,8 @@ protocol SearchUpdatable: class {
     func updateListings(areaInfo: FetchListingsAreaInfo,
                         placeInfo: FetchListingsPlaceInfo,
                         isCurrentLocation: Bool)
+    func updateListings(searchLocation: SearchLocation,
+                        isCurrentLocation: Bool)
 }
 
 enum SearchEvent: Event {
@@ -145,7 +147,8 @@ final class SearchModel: EventNode {
                                         listingsService: listingsService,
                                         userService: userService,
                                         updateDefaulLocation: { [weak self] in self?.updateDefaultLocation() },
-                                        sortOption: sortOption)
+                                        sortOption: sortOption,
+                                        updateFoundListingsCount: updateFoundListingsCount)
             case .map:
                 model = SearchMapModel(parent: self,
                                        locationManager: locationManager,
@@ -168,7 +171,8 @@ final class SearchModel: EventNode {
                                            listingsService: listingsService,
                                            userService: userService,
                                            updateDefaulLocation: { [weak self] in self?.updateDefaultLocation() },
-                                           sortOption: sortOption)
+                                           sortOption: sortOption,
+                                           updateFoundListingsCount: updateFoundListingsCount)
         modelsMap[.map] = SearchMapModel(parent: self,
                                          locationManager: locationManager,
                                          configService: configService,
@@ -191,18 +195,31 @@ final class SearchModel: EventNode {
     }
 
     func getFilteredListingsCount(_ model: ListingFilterModel? = nil) {
-        guard let filtersModel = model ?? filtersModel else { return }
+        guard var filtersModel = model ?? filtersModel else { return }
+        if let location = RecentLocation.shared.currentLocation {
+            filtersModel.searchLocation = location
+        }
         listingsService.getFilteredListingsCount(for: filtersModel) { [weak self] result in
             switch result {
             case .success(let metadata):
                 self?.listingsFoundCount.accept(metadata.listingsCount)
 
-            case .failure:
-                self?.listingsFoundCount.accept(0)
+            case .failure(let error):
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.listingsFoundCount.accept(0)
+                }
             }
         }
     }
 
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }
 
 extension SearchModel: SearchUpdatable {
@@ -224,14 +241,28 @@ extension SearchModel: SearchUpdatable {
     }
 
     func updateListings(filters: ListingFilterModel) {
+        let filterInfos = filters.convertToFilterInfo()
         filtersModel = filters
-        filtersApplied.accept(true)
-        appliedFilters.accept(filters.convertToFilterInfo())
+        filtersApplied.accept(!filterInfos.isEmpty)
+        appliedFilters.accept(filterInfos)
         getFilteredListingsCount()
         
         modelsMap.forEach { _, value in
             guard let listingsUpdatable = value as? ListingsUpdatable else { return }
             listingsUpdatable.updateListings(filters: filters)
+        }
+    }
+    
+    func updateListings(searchLocation: SearchLocation, isCurrentLocation: Bool) {
+        isCurrentLocationSearch = isCurrentLocation
+        let searchPlace: String = { searchLocation.addressField }()
+        searchAddress.accept(searchPlace)
+        getFilteredListingsCount()
+
+        modelsMap.forEach { _, value in
+            guard let listingsUpdatable = value as? ListingsUpdatable else { return }
+            listingsUpdatable.updateListings(searchLocation: searchLocation,
+                                             isCurrentLocation: isCurrentLocation)
         }
     }
 

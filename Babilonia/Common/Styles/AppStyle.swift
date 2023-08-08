@@ -30,7 +30,7 @@ extension UINavigationBar: StyleApplicable {
         applySettings()
         
         switch style {
-        case .default, .action: 
+        case .default, .action:
             shadowImage = UIImage()
         case .shadowed:
             makeShadow(Asset.Colors.vulcan.color.withAlphaComponent(0.15),
@@ -49,8 +49,8 @@ extension UINavigationBar: StyleApplicable {
             .font: FontFamily.SamsungSharpSans.bold.font(size: 16.0),
             .kern: 0.5
         ]
-        setBackgroundImage(UIImage(), for: .default)
-        isTranslucent = false
+//        setBackgroundImage(UIImage(), for: .default)
+     //   isTranslucent = false
         tintColor = .black
     }
     

@@ -17,7 +17,7 @@ struct FetchFacilitiesRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
     var path: String {
-        "listing_amenities/\(type.rawValue)"
+        "public/listing_amenities/\(type.rawValue)"
     }
     let authRequired: Bool = true
     private(set) var parameters: [String: Any]?

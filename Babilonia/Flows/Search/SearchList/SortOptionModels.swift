@@ -17,8 +17,8 @@ enum SortOption: Int, CaseIterable {
     case m2PriceLowestToHighest
     case areaHighestToLowest
     case areaLowestToHighest
-    case closestToFarthest
-    case farthestToClosest
+   // case closestToFarthest //osemy
+   // case farthestToClosest
     case mostRelevant
 }
 
@@ -28,7 +28,7 @@ extension SortOption {
         switch self {
         case .priceLowToHigh, .priceHighToLow: return "price"
         case .newestToOldest, .oldestToNewest: return "created_at"
-        case .closestToFarthest, .farthestToClosest: return "distance"
+     //   case .closestToFarthest, .farthestToClosest: return "distance" //osemy
         case .areaHighestToLowest, .areaLowestToHighest: return "area"
         case .m2PriceHighestToLowest, .m2PriceLowestToHighest: return "m2price"
         case .mostRelevant: return "relevant_position"
@@ -38,11 +38,18 @@ extension SortOption {
     var directionParam: String {
         switch self {
         case .priceLowToHigh, .oldestToNewest,
-             .closestToFarthest, .areaLowestToHighest,
+             .areaLowestToHighest,
              .m2PriceLowestToHighest: return "asc"
         case .priceHighToLow, .newestToOldest,
-             .farthestToClosest, .areaHighestToLowest,
+             .areaHighestToLowest,
              .m2PriceHighestToLowest, .mostRelevant: return "desc"
+            
+//        case .priceLowToHigh, .oldestToNewest,
+//             .closestToFarthest, .areaLowestToHighest,
+//             .m2PriceLowestToHighest: return "asc"
+//        case .priceHighToLow, .newestToOldest,
+//             .farthestToClosest, .areaHighestToLowest,
+//             .m2PriceHighestToLowest, .mostRelevant: return "desc"
         }
     }
 
@@ -52,8 +59,8 @@ extension SortOption {
         case .priceHighToLow: return L10n.Listing.SortOption.priceHighToLow
         case .newestToOldest: return L10n.Listing.SortOption.newestToOldest
         case .oldestToNewest: return L10n.Listing.SortOption.oldestToNewest
-        case .closestToFarthest: return L10n.Listing.SortOption.closestToFarthest
-        case .farthestToClosest: return L10n.Listing.SortOption.farthestToClosest
+    //    case .closestToFarthest: return L10n.Listing.SortOption.closestToFarthest
+    //    case .farthestToClosest: return L10n.Listing.SortOption.farthestToClosest
         case .areaHighestToLowest: return L10n.Listing.SortOption.areaHighestToLowest
         case .areaLowestToHighest: return L10n.Listing.SortOption.areaLowestToHighest
         case .m2PriceHighestToLowest: return L10n.Listing.SortOption.m2PriceHighestToLowest

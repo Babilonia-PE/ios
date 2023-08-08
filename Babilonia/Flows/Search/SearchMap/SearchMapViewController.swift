@@ -10,11 +10,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import GoogleMaps
+import Core
 
 final class SearchMapViewController: UIViewController, AlertApplicable, SlidingContainerPresentable {
     
     let alert = ApplicationAlert()
-    
+    var zoomBounds = false
     var slidingContainerView: SlidingContainerView! {
         didSet {
             guard slidingContainerView != nil else { return }
@@ -26,7 +27,7 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
         }
     }
     var isSlidingContainerPresenting = false
-    
+    private var searchBar: UISearchBar?
     private var mapView: GMSMapView!
     private var myLocationButton: UIButton!
     private var myLocationShadowView: UIView!
@@ -79,6 +80,7 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
         super.viewDidAppear(animated)
 
         if viewModel.shouldReloadOnAppear {
+            loadMapFromList()
             viewModel.fetchListings()
         }
         viewModel.shouldReloadOnAppear = true
@@ -128,6 +130,10 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
             $0.leading == view.leadingAnchor + 16.0
             $0.trailing == view.trailingAnchor - 16.0
         }
+    }
+    
+    public func setSearchBar(searchBar: UISearchBar) {
+        self.searchBar = searchBar
     }
     
     private func setupViews() {
@@ -201,13 +207,40 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
         }
     }
     
+    private func loadMapFromList() {
+        
+        if let location = viewModel.currentListingByList?.location {
+            
+            let coordinate = CLLocationCoordinate2D(latitude: Double(location.latitude),
+                                                       longitude: Double(location.longitude))
+            let camera = GMSCameraPosition.camera(
+                withLatitude: coordinate.latitude,
+                longitude: coordinate.longitude,
+                zoom: mapView.camera.zoom
+            )
+            
+            if mapView != nil {
+                mapView.camera = camera
+            }
+        }
+    }
     private func loadMap(with coordinate: CLLocationCoordinate2D) {
         guard mapView == nil else { return }
-        let camera = GMSCameraPosition.camera(
+        var camera = GMSCameraPosition.camera(
             withLatitude: coordinate.latitude,
             longitude: coordinate.longitude,
             zoom: 15.0
         )
+        if let location = viewModel.currentListingByList?.location {
+            let coordinate = CLLocationCoordinate2D(latitude: Double(location.latitude),
+                                                       longitude: Double(location.longitude))
+            camera = GMSCameraPosition.camera(
+                withLatitude: coordinate.latitude,
+                longitude: coordinate.longitude,
+                zoom: 15.0
+            )
+        }
+        
         mapView = GMSMapView.map(withFrame: .zero, camera: camera)
         mapView.isMyLocationEnabled = true
         mapView.padding = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 20.0, right: 0.0)
@@ -243,11 +276,12 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
         
         let existingIDs = existingInfos.map { $0.0.listingId }
         var existingCoordinates = existingInfos.map { $0.1 }
-        
+        let coordinateBounds = GMSCoordinateBounds()
         infos
             .filter { !existingIDs.contains($0.0.listingId) }
             .forEach { info in
                 // preventing of showing pins with same coordinate
+                coordinateBounds.contains(info.1)
                 guard !existingCoordinates
                     .contains(where: { $0.latitude == info.1.latitude && $0.longitude == info.1.longitude }) else {
                         return
@@ -263,6 +297,25 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
                 
                 markers.append(marker)
             }
+    
+        if let info = infos.first, RecentLocation.shared.currentLocation != nil, !RecentLocation.shared.mapCenter {
+            //searchBar?.text = ""
+            //RecentLocation.shared.currentLocation = nil
+            RecentLocation.shared.mapCenter = true
+            viewModel.updateListingByList(listing: viewModel.firstListing())
+            let camera = GMSCameraPosition.camera(
+                withLatitude: info.1.latitude,
+                longitude: info.1.longitude,
+                zoom: self.mapView.camera.zoom
+            )
+            self.mapView.animate(to: camera)
+        }
+        
+        if !zoomBounds {
+            let cameraUpdate = GMSCameraUpdate.fit(coordinateBounds)
+            self.mapView.animate(with: cameraUpdate)
+            zoomBounds = true
+        }
     }
     
     private func handleMarkerSelection(_ marker: GMSMarker) {
@@ -348,6 +401,17 @@ extension SearchMapViewController: GMSMapViewDelegate {
         let coordinate = position.target
         let radius = mapView.getRadius()
         
+        if let location = viewModel.currentListingByList?.location {
+           if location.latitude != Float(coordinate.latitude)
+               || location.longitude != Float(coordinate.longitude) {
+                searchBar?.text = ""
+            RecentLocation.shared.currentLocation = nil            
+           }
+        } else {
+            searchBar?.text = ""
+            RecentLocation.shared.currentLocation = nil  
+        }
+        viewModel.updateListingByList(listing: nil)
         viewModel.updateCoordinate(coordinate)
         viewModel.updateRadius(radius)
     }

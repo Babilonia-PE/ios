@@ -12,20 +12,24 @@ import YALAPIClient
 final public class ImagesService {
     
     private let client: NetworkClient
+    private let newClient: NetworkClient
     
-    public init(client: NetworkClient) {
+    public init(client: NetworkClient, newClient: NetworkClient) {
         self.client = client
+        self.newClient = newClient
     }
     
     @discardableResult
-    public func uploadImage(_ image: UIImage, completion: @escaping (Result<ListingImage>) -> Void) -> Cancelable? {
+    public func uploadImage(_ image: UIImage,
+                            type: String = "listing",
+                            completion: @escaping (Result<[ListingImage]>) -> Void) -> Cancelable? {
         switch ImageCompressor.prepareForUpload(image) {
         case .success(let compressedData):
-            let request = UploadImageRequest(jpegData: compressedData.data)
+            let request = UploadImageRequest(jpegData: compressedData.data, type: type)
             
-            return client.execute(
+            return newClient.execute(
                 request: request,
-                parser: DecodableParser<ListingImage>(keyPath: "data"), completion: completion
+                parser: DecodableParser<[ListingImage]>(keyPath: "data.ids"), completion: completion
             )
         case .failure(let error):
             completion(.failure(error))
@@ -36,7 +40,7 @@ final public class ImagesService {
     public func deleteImage(_ imageID: Int, completion: @escaping (Result<Bool>) -> Void) {
         let request = DeleteImageRequest(imageID: imageID)
         
-        client.execute(request: request, parser: EmptyParser(), completion: completion)
+        newClient.execute(request: request, parser: EmptyParser(), completion: completion)
     }
     
 }

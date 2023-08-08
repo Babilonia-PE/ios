@@ -202,6 +202,12 @@ final class CreateListingPreviewViewController: UIViewController, AlertApplicabl
                 self?.updateLoadingState(value)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.showWarning
+            .subscribe(onNext: { [weak self] _ in
+                self?.presentWarning()
+            })
+            .disposed(by: disposeBag)
 
         viewModel.buttonActionUpdated
             .map { $0.title }
@@ -217,6 +223,12 @@ final class CreateListingPreviewViewController: UIViewController, AlertApplicabl
         } else {
             spinner.hide(from: view)
         }
+    }
+    
+    private func presentWarning() {
+        let message = L10n.Errors.actionMustBeDoneFromWeb
+        SystemAlert.present(on: self,
+                            message: message)
     }
     
 }

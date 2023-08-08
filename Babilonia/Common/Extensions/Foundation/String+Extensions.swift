@@ -62,6 +62,29 @@ extension String {
         }
     }
 
+    func cardRaiseFormatted() -> String {
+        switch self.count {
+        case 5, 10, 15, 20:
+            guard let lastCharacter = self.last else {
+                return self
+            }
+            let formattedText = String(self.dropLast())
+            return "\(formattedText) \(lastCharacter)"
+        default:
+            return self
+        }
+    }
+    
+    func cardReduceFormatted() -> String {
+        switch self.count {
+        case 5, 10, 15, 20:
+            let formattedText = String(self.dropLast())
+            return formattedText
+        default:
+            return self
+        }
+    }
+    
     func expirationMonth() -> String {
         self.components(separatedBy: " / ").first ?? ""
     }

@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import Core
+import YALAPIClient
 
 typealias User = Core.User
 
@@ -36,8 +37,9 @@ final class EditProfileModel: EventNode {
     
     let requestState = PublishSubject<RequestState>()
     var profileDidChange: Bool {
-        return firstName.value != userSession.user.firstName ?? "" ||
-            lastName.value != userSession.user.lastName ?? ""
+        return fullName.value != userSession.user.fullName ?? ""
+//        return firstName.value != userSession.user.firstName ?? "" ||
+//            lastName.value != userSession.user.lastName ?? ""
     }
     var shouldShowCameraAlert: Bool {
         get { appSettingsStore.cameraAlertDidShow }
@@ -47,31 +49,41 @@ final class EditProfileModel: EventNode {
     private var avatar: UIImage?
     private var avatarUploadAtOnce = false
     
-    private let firstName: BehaviorRelay<String>
-    private let lastName: BehaviorRelay<String>
+    private let fullName: BehaviorRelay<String>
+    //private let lastName: BehaviorRelay<String>
     private let avatarURLString: BehaviorRelay<String?>
     private let avatarImage: BehaviorRelay<UIImage?>
     private let email: BehaviorRelay<String>
+    private let photoId: BehaviorRelay<Int?>
+    private let phoneNumber: BehaviorRelay<String>
     
     private let userService: UserService
     private let userSession: UserSession
     private let appSettingsStore: AppSettingsStore = UserDefaults()
+    
+    private let imagesService: ImagesService
+    
+    private var cancellationsMap = [Int: YALAPIClient.Cancelable]()
     
     // MARK: - lifecycle
     
     init(parent: EventNode,
          userSession: UserSession,
          userService: UserService,
+         imagesService: ImagesService,
          screenType: EditProfileType) {
+        self.imagesService = imagesService
         self.userService = userService
         self.userSession = userSession
         self.screenType = screenType
         
-        firstName = BehaviorRelay(value: userSession.user.firstName ?? "")
-        lastName = BehaviorRelay(value: userSession.user.lastName ?? "")
-        avatarURLString = BehaviorRelay(value: userSession.user.avatar?.mediumURLString)
+        fullName = BehaviorRelay(value: userSession.user.fullName ?? "")
+        //lastName = BehaviorRelay(value: userSession.user.lastName ?? "")
+        avatarURLString = BehaviorRelay(value: userSession.user.avatar?.renderURLString)
         avatarImage = BehaviorRelay(value: userSession.user.avatar == nil ? Asset.Profile.userPlaceholder.image : nil)
         email = BehaviorRelay(value: userSession.user.email ?? "")
+        photoId = BehaviorRelay(value: nil)
+        phoneNumber = BehaviorRelay(value: userSession.user.phoneNumber ?? "")
         
         super.init(parent: parent)
     }
@@ -94,21 +106,21 @@ final class EditProfileModel: EventNode {
         }
     }
     
-    func initialFirstName() -> String {
-        return firstName.value
+    func initialFullName() -> String {
+        return fullName.value
     }
     
-    func updateFirstName(_ firstName: String) {
-        self.firstName.accept(firstName)
+    func updateFullName(_ fullName: String) {
+        self.fullName.accept(fullName)
     }
     
-    func initialLastName() -> String {
-        return lastName.value
-    }
-    
-    func updateLastName(_ lastName: String) {
-        self.lastName.accept(lastName)
-    }
+//    func initialLastName() -> String {
+//        return lastName.value
+//    }
+//
+//    func updateLastName(_ lastName: String) {
+//        self.lastName.accept(lastName)
+//    }
     
     func updateAvatarImage(_ image: UIImage?) {
         avatar = image
@@ -127,19 +139,27 @@ final class EditProfileModel: EventNode {
         self.email.accept(email)
     }
     
+    func initialPhoneNumber() -> String {
+        return phoneNumber.value
+    }
+    
+    func updatePhoneNumber(_ phoneNumber: String) {
+        self.phoneNumber.accept(phoneNumber)
+    }
+    
     func createProfile() {
         requestState.onNext(.started)
         
         var user = userSession.user!
-        user.firstName = firstName.value
-        user.lastName = lastName.value
+        user.fullName = fullName.value
+        //user.lastName = lastName.value
         user.email = email.value
         
         userService.updateProfile(
-            firstName: firstName.value.trimmingCharacters(in: .whitespacesAndNewlines),
-            lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
-            email: email.value,
-            image: avatar
+            fullName: fullName.value.trimmingCharacters(in: .whitespacesAndNewlines),
+            //lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
+            email: email.value
+            //image: avatar
         ) { [weak self] result in
             guard let self = self else { return }
             
@@ -150,12 +170,13 @@ final class EditProfileModel: EventNode {
             case .failure(let error):
                 if self.isEmailAlreadyTaken(error) {
                     self.emailCustomError.accept(error.localizedDescription)
+                } else if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
                 } else {
                     self.requestState.onNext(.failed(error))
                 }
             }
         }
-        
     }
     
     func cancelCreating() {
@@ -167,16 +188,19 @@ final class EditProfileModel: EventNode {
         raise(event: EditProfileEvent.updateRefreshMode(isOn: false))
         
         var user = userSession.user!
-        user.firstName = firstName.value
-        user.lastName = lastName.value
+        user.fullName = fullName.value
+        //user.lastName = lastName.value
         user.email = email.value
+        user.phoneNumber = phoneNumber.value
         
         refresh(user: user)
         
         userService.updateProfile(
-            firstName: firstName.value.trimmingCharacters(in: .whitespacesAndNewlines),
-            lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
-            email: email.value
+            fullName: fullName.value.trimmingCharacters(in: .whitespacesAndNewlines),
+            //lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
+            email: email.value,
+            photoId: photoId.value,
+            phoneNumber: phoneNumber.value
         ) { result in
             self.raise(event: EditProfileEvent.updateRefreshMode(isOn: true))
             
@@ -194,6 +218,8 @@ final class EditProfileModel: EventNode {
                 self.refresh(user: self.userSession.user)
                 if isEmailUpdated {
                     self.emailCustomError.accept(error.localizedDescription)
+                } else if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
                 } else {
                     self.requestState.onNext(.failed(error))
                 }
@@ -206,23 +232,51 @@ final class EditProfileModel: EventNode {
         setupProgressHandler()
         requestState.onNext(.started)
         raise(event: EditProfileEvent.updateRefreshMode(isOn: false))
-
-        let user = userSession.user!
-        userService.updateProfile(firstName: user.firstName,
-                                  lastName: user.lastName,
-                                  email: user.email,
-                                  image: avatar,
-                                  progressHandler: progressHandler) { result in
-            self.raise(event: EditProfileEvent.updateRefreshMode(isOn: true))
-
-            switch result {
-            case .success:
-                self.requestState.onNext(.success(L10n.EditProfile.UpdateAvatar.Popup.Success.text))
-            case .failure(let error):
-                self.refresh(user: self.userSession.user)
-                self.requestState.onNext(.failed(error))
+        
+        if let image = avatar {
+            let user = userSession.user!
+            let uploadCancellable = imagesService.uploadImage(image, type: "profile") { [weak self] result in
+                guard let self = self else { return }
+                
+                self.cancellationsMap.removeValue(forKey: user.id)
+                
+                switch result {
+                case .success(let images):
+                    self.photoId.accept(images[0].id)
+                    self.requestState.onNext(.success(L10n.EditProfile.UpdateAvatar.Popup.Success.text))
+                case .failure(let error):
+                    if self.isUnauthenticated(error) {
+                        self.raise(event: MainFlowEvent.logout)
+                    }
+                    self.requestState.onNext(.failed(error))
+                }
+                
+            }
+            if let cancellable = uploadCancellable {
+                cancellationsMap[user.id] = cancellable
             }
         }
+
+//        let user = userSession.user!
+//        userService.updateProfile(firstName: user.firstName,
+//                                  lastName: user.lastName,
+//                                  email: user.email,
+//                                  image: avatar,
+//                                  progressHandler: progressHandler) { result in
+//            self.raise(event: EditProfileEvent.updateRefreshMode(isOn: true))
+//
+//            switch result {
+//            case .success:
+//                self.requestState.onNext(.success(L10n.EditProfile.UpdateAvatar.Popup.Success.text))
+//            case .failure(let error):
+//                if self.isUnauthenticated(error) {
+//                    self.raise(event: MainFlowEvent.logout)
+//                } else {
+//                    self.refresh(user: self.userSession.user)
+//                    self.requestState.onNext(.failed(error))
+//                }
+//            }
+//        }
     }
     
     func refresh(user: User) {
@@ -233,6 +287,8 @@ final class EditProfileModel: EventNode {
         raise(event: EditProfileEvent.close)
     }
 
+    // MARK: - private
+    
     private func isEmailAlreadyTaken(_ error: Error?) -> Bool {
         guard let serverError = error as? CompositeServerError,
               let code = serverError.errors.first?.code else { return false }
@@ -240,4 +296,10 @@ final class EditProfileModel: EventNode {
         return code == .alreadyExist
     }
     
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
 }

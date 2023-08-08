@@ -14,20 +14,22 @@ final public class UserService {
     private let userSession: UserSession
     private let client: NetworkClient
     private let storage: DBClient
+    private let newClient: NetworkClient
 
     public var userID: Int {
         userSession.user.id
     }
     
-    public init(userSession: UserSession, client: NetworkClient, storage: DBClient) {
+    public init(userSession: UserSession, client: NetworkClient, storage: DBClient, newClient: NetworkClient) {
         self.userSession = userSession
         self.client = client
         self.storage = storage
+        self.newClient = newClient
     }
     
     public func getProfile(completion: @escaping (Result<User>) -> Void) {
         let request = ProfileInfoRequest()
-        client.execute(request: request, parser: DecodableParser<User>(keyPath: "data")) { [weak self] result in
+        newClient.execute(request: request, parser: DecodableParser<User>(keyPath: "data")) { [weak self] result in
             switch result {
             case .success(let user):
                 self?.userSession.updateSession(with: user)
@@ -39,29 +41,31 @@ final public class UserService {
     }
     
     public func updateProfile(
-        firstName: String? = nil,
-        lastName: String? = nil,
+        fullName: String? = nil,
+        //lastName: String? = nil,
         email: String? = nil,
-        image: UIImage? = nil,
-        progressHandler: ProgressHandler? = nil,
+        //image: UIImage? = nil,
+        //progressHandler: ProgressHandler? = nil,
+        photoId: Int? = nil,
+        phoneNumber: String? = nil,
         completion: @escaping (Result<Bool>) -> Void
     ) {
-        var imageData: Data?
-        if let image = image {
-            switch ImageCompressor.prepareForUpload(image) {
-            case .success(let compressedData):
-                imageData = compressedData.data
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+//        var imageData: Data?
+//        if let image = image {
+//            switch ImageCompressor.prepareForUpload(image) {
+//            case .success(let compressedData):
+//                imageData = compressedData.data
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
         
-        let request = UpdateProfileRequest(firstName: firstName,
-                                           lastName: lastName,
+        let request = UpdateProfileRequest(fullName: fullName,
+                                           //lastName: lastName,
                                            email: email,
-                                           jpegData: imageData,
-                                           progressHandler: progressHandler)
-        client.execute(
+                                           photoId: photoId,
+                                           phoneNumber: phoneNumber)
+        newClient.execute(
             request: request,
             parser: DecodableParser<User>(keyPath: "data")
         ) { [weak self] result in
@@ -76,12 +80,24 @@ final public class UserService {
             }
         }
     }
+    
+    public func deleteAccount(completion: @escaping (Result<Bool>) -> Void) {
+        let request = ProfileDeleteRequest()
+        newClient.execute(request: request, parser: DecodableParser<UserDelete>(keyPath: "data")) { [weak self] result in
+            switch result {
+            case .success(_):
+                completion(.success(true))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 
     public func fetchRecentSearches(completion: @escaping (Result<[RecentSearch]>) -> Void) {
         let request = RecentSearchesRequest()
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
 
-        client.execute(
+        newClient.execute(
             request: request,
             parser: DecodableParser<[RecentSearch]>(keyPath: "data.records", decoder: decoder),
             completion: completion

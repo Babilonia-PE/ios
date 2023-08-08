@@ -68,12 +68,20 @@ final class ARContainerModel: EventNode {
     private var isListingsPreloaded = false
     private var prefetchedListings = [Listing]()
     
+    private let filtersComposer = FiltersComposer()
+    private let bag = DisposeBag()
+    
+    var viewDidChange: BehaviorRelay<[FilterViewType]> {
+        filtersComposer.viewDidChange
+    }
+    
     init(
         parent: EventNode,
         listingsService: ListingsService,
         locationManager: LocationManager,
         configsService: ConfigurationsService,
-        userService: UserService
+        userService: UserService,
+        filtersModel: ListingFilterModel?
     ) {
         self.listingsService = listingsService
         self.locationManager = locationManager
@@ -81,8 +89,11 @@ final class ARContainerModel: EventNode {
         self.userService = userService
 
         super.init(parent: parent)
-
+        
         setupLocationManager()
+        
+        filtersComposer.setupFiltersModel(filtersModel)
+        setupBinding()
     }
     
     ///
@@ -100,6 +111,7 @@ final class ARContainerModel: EventNode {
     }
     
     func fetchListings() {
+        let filters = filtersComposer.filterModel
         guard let centerCoordinate = currentLocation?.coordinate else { return }
 
         let areaInfo = FetchListingsAreaInfo(
@@ -111,7 +123,7 @@ final class ARContainerModel: EventNode {
         if isListingsPreloaded { listings.accept(prefetchedListings) }
 
         requestState.onNext(.started)
-        listingsService.fetchAllListings(areaInfo: areaInfo, sort: nil, direction: nil) { [weak self] result in
+        listingsService.fetchAllListings(areaInfo: areaInfo, sort: nil, direction: nil, filters: filters) { [weak self] result in
             guard let self = self else { return }
 
             switch result {
@@ -128,7 +140,11 @@ final class ARContainerModel: EventNode {
                 self.isListingsPreloaded = true
 
             case .failure(let error):
-                self.requestState.onNext(.failed(error))
+                if self.isUnauthenticated(error) {
+                    self.raise(event: MainFlowEvent.logout)
+                } else {
+                    self.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -182,26 +198,40 @@ final class ARContainerModel: EventNode {
 
     func addListingToFavorites(listingID: String) {
         requestState.onNext(.started)
-        listingsService.addListingToFavorite(listingID: listingID) { [weak self] result in
+        listingsService.addListingToFavorite(listingID: listingID,
+                                             ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                             userAgent: "ios",
+                                             signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
 
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
 
     func removeListingFromFavorites(listingID: String) {
         requestState.onNext(.started)
-        listingsService.deleteListingFromFavorite(listingID: listingID) { [weak self] result in
+        listingsService.deleteListingFromFavorite(listingID: listingID,
+                                                  ipAddress: NetworkUtil.getWiFiAddress() ?? "",
+                                                  userAgent: "ios",
+                                                  signProvider: "email") { [weak self] result in
             switch result {
             case .success:
                 self?.requestState.onNext(.finished)
 
             case .failure(let error):
-                self?.requestState.onNext(.failed(error))
+                if self?.isUnauthenticated(error) == true {
+                    self?.raise(event: MainFlowEvent.logout)
+                } else {
+                    self?.requestState.onNext(.failed(error))
+                }
             }
         }
     }
@@ -255,5 +285,79 @@ final class ARContainerModel: EventNode {
             self?.heading.accept(heading)
         }
     }
+    
+    var listingTypeViewModel: ListingPropertyTypeViewModel {
+        filtersComposer.listingTypeViewModel
+    }
+    
+    var appliedFilterInfos: [FilterInfo] {
+        filtersComposer.filterModel.convertToFilterInfo()
+    }
+    
+    func apply() {
+        fetchListings()
+    }
+    
+    private func isUnauthenticated(_ error: Error?) -> Bool {
+        guard let serverError = error as? CompositeServerError,
+              let code = serverError.errors.first?.code else { return false }
+        
+        return code == .unauthenticated
+    }
+}
 
+extension ARContainerModel {
+    private func setupBinding() {
+        filtersComposer.listingTypeDidChange
+            .skip(1)
+            .subscribe(onNext: { _ in
+                print("listingTypeDidChange")
+//                self?.getFilteredListingsCount()
+//                self?.getHistogramSlots()
+            })
+            .disposed(by: bag)
+
+//        filtersComposer.reloadFilters
+//            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+//            .skip(1)
+//            .subscribe(onNext: { [weak self] in
+//                self?.getFilteredListingsCount()
+//                self?.getHistogramSlots()
+//            })
+//            .disposed(by: bag)
+//
+//        filtersComposer.reloadListingCount
+//            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] in
+//                self?.getFilteredListingsCount()
+//            })
+//            .disposed(by: bag)
+//
+//        filtersComposer.proceedYearPicker
+//            .skip(1)
+//            .subscribe(onNext: { [weak self] values in
+//                self?.proceedWithYearSelection(for: values.bound,
+//                                               titles: values.titles,
+//                                               startingIndex: values.startingIndex)
+//            })
+//            .disposed(by: bag)
+//
+        filtersComposer.proceedPropertyTypePicker
+            .skip(1)
+            .subscribe(onNext: { [weak self] values in
+                self?.proceedWithPropertySelection(titles: values.titles,
+                                                   startingIndex: values.startingIndex)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func proceedWithPropertySelection(titles: [String], startingIndex: Int) {
+        let updateBlock = { [unowned self] (index: Int) in
+            self.filtersComposer.updatePropertyType(for: index)
+        }
+        raise(event: CreateListingCommonEvent.pickPropertyType(from: titles,
+                                                               updateHandler: updateBlock,
+                                                               title: L10n.CreateListing.Common.PropertyType.title,
+                                                               startingIndex: startingIndex))
+    }
 }

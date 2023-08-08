@@ -24,6 +24,36 @@ final class AuthFlowAssembly: Assembly {
             }
             .inObjectScope(.transient)
         
+        container
+            .autoregister(AuthSignUpModel.self, argument: EventNode.self, initializer: AuthSignUpModel.init)
+            .inObjectScope(.transient)
+        container
+            .register(AuthSignUpViewController.self) { (resolver, eventNode: EventNode) in
+                let model = AuthSignUpModel(
+                    parent: eventNode,
+                    userSessionController: resolver.autoresolve()
+                )
+                return AuthSignUpViewController(
+                    viewModel: AuthSignUpViewModel(model: model)
+                )
+            }
+            .inObjectScope(.transient)
+        
+        container
+            .autoregister(AuthLogInModel.self, argument: EventNode.self, initializer: AuthLogInModel.init)
+            .inObjectScope(.transient)
+        container
+            .register(AuthLogInViewController.self) { (resolver, eventNode: EventNode) in
+                let model = AuthLogInModel(
+                    parent: eventNode,
+                    userSessionController: resolver.autoresolve()
+                )
+                return AuthLogInViewController(
+                    viewModel: AuthLogInViewModel(model: model)
+                )
+            }
+            .inObjectScope(.transient)
+        
         assembleServices(in: container)
     }
     
@@ -60,6 +90,6 @@ final class AuthFlowAssembly: Assembly {
         container
             .autoregister(ConfigurationsService.self, initializer: ConfigurationsService.init)
             .inObjectScope(.container)
+        print("AuthAssembleServices container = \(container)")
     }
-    
 }

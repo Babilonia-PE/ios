@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 enum EditProfileType {
-    case editProfile, editEmail, signUp
+    case editProfile, editEmail, editPhoneNumber, signUp
 }
 
 final class EditProfileViewModel {
@@ -32,6 +32,8 @@ final class EditProfileViewModel {
             return L10n.EditProfile.title
         case .editEmail:
             return L10n.EditProfile.ChangeEmail.title
+        case .editPhoneNumber:
+            return L10n.EditProfile.ChangePhoneNumber.title
         case .signUp:
             return L10n.SignUp.title
         }
@@ -41,7 +43,7 @@ final class EditProfileViewModel {
         set { model.shouldShowCameraAlert = newValue }
     }
     
-    var isAvatarViewNeeded: Bool { screenType != .editEmail }
+    var isAvatarViewNeeded: Bool { screenType != .editEmail && screenType != .editPhoneNumber }
     
     var avatarUpdated: Driver<String?> { model.avatarUpdated }
     var avatarImageUpdated: Driver<UIImage?> { model.avatarImageUpdated }
@@ -55,17 +57,17 @@ final class EditProfileViewModel {
     private let disposeBag = DisposeBag()
     private(set) var inputFieldViewModels = [InputFieldViewModel]()
     
-    private lazy var firstNameViewModel: InputFieldViewModel = {
-        let firstName = BehaviorRelay(value: model.initialFirstName())
-        firstName.bind(onNext: model.updateFirstName)
+    private lazy var fullNameViewModel: InputFieldViewModel = {
+        let fullName = BehaviorRelay(value: model.initialFullName())
+        fullName.bind(onNext: model.updateFullName)
             .disposed(by: disposeBag)
-        var title = L10n.EditProfile.FirstName.title
+        var title = L10n.EditProfile.FullName.title
         if screenType == .signUp {
             title += "*"
         }
         let viewiewModel = InputFieldViewModel(
             title: BehaviorRelay(value: title),
-            text: firstName,
+            text: fullName,
             validator: ProfileNameValidator(),
             editingMode: .text,
             image: nil,
@@ -77,27 +79,27 @@ final class EditProfileViewModel {
         return viewiewModel
     }()
     
-    private lazy var lastNameViewModel: InputFieldViewModel = {
-        let lastName = BehaviorRelay(value: model.initialLastName())
-        lastName.bind(onNext: model.updateLastName)
-            .disposed(by: disposeBag)
-        var title = L10n.EditProfile.LastName.title
-        if screenType == .signUp {
-            title += "*"
-        }
-        let viewModel = InputFieldViewModel(
-            title: BehaviorRelay(value: title),
-            text: lastName,
-            validator: ProfileNameValidator(),
-            editingMode: .text,
-            image: nil,
-            placeholder: nil,
-            keyboardType: .default,
-            autocorrectionType: .no
-        )
-        
-        return viewModel
-    }()
+//    private lazy var lastNameViewModel: InputFieldViewModel = {
+//        let lastName = BehaviorRelay(value: model.initialLastName())
+//        lastName.bind(onNext: model.updateLastName)
+//            .disposed(by: disposeBag)
+//        var title = L10n.EditProfile.LastName.title
+//        if screenType == .signUp {
+//            title += "*"
+//        }
+//        let viewModel = InputFieldViewModel(
+//            title: BehaviorRelay(value: title),
+//            text: lastName,
+//            validator: ProfileNameValidator(),
+//            editingMode: .text,
+//            image: nil,
+//            placeholder: nil,
+//            keyboardType: .default,
+//            autocorrectionType: .no
+//        )
+//
+//        return viewModel
+//    }()
     
     private lazy var emailViewModel: InputFieldViewModel = {
         let email = BehaviorRelay(value: model.initialEmail())
@@ -122,6 +124,29 @@ final class EditProfileViewModel {
         return viewModel
     }()
     
+    private lazy var phoneNumberViewModel: InputFieldViewModel = {
+        let phoneNumber = BehaviorRelay(value: model.initialPhoneNumber())
+        phoneNumber.bind(onNext: model.updatePhoneNumber)
+            .disposed(by: disposeBag)
+        var title = L10n.Profile.Phone.title
+        if screenType == .signUp {
+            title += "*"
+        }
+        let viewModel = InputFieldViewModel(
+            title: BehaviorRelay(value: title),
+            text: phoneNumber,
+            validator: EmptyPhoneNumberValidator(),
+            editingMode: .text,
+            image: nil,
+            placeholder: nil,
+            keyboardType: .phonePad,
+            autocapitalizationType: .none,
+            autocorrectionType: .no
+        )
+        
+        return viewModel
+    }()
+    
     // MARK: - lifecycle
     
     init(model: EditProfileModel) {
@@ -136,6 +161,8 @@ final class EditProfileViewModel {
             model.saveProfile(isEmailUpdated: false)
         case .editEmail:
             model.saveProfile(isEmailUpdated: true)
+        case .editPhoneNumber:
+            model.saveProfile(isEmailUpdated: false)
         case .signUp:
             model.createProfile()
         }
@@ -147,7 +174,7 @@ final class EditProfileViewModel {
     
     func close() {
         switch screenType {
-        case .editProfile, .editEmail:
+        case .editProfile, .editEmail, .editPhoneNumber:
             model.close()
         case .signUp:
             model.cancelCreating()
@@ -160,11 +187,13 @@ final class EditProfileViewModel {
         
         switch screenType {
         case .editProfile:
-            inputFieldViewModels = [firstNameViewModel, lastNameViewModel]
+            inputFieldViewModels = [fullNameViewModel]
         case .editEmail:
             inputFieldViewModels = [emailViewModel]
+        case .editPhoneNumber:
+            inputFieldViewModels = [phoneNumberViewModel]
         case .signUp:
-            inputFieldViewModels = [firstNameViewModel, lastNameViewModel, emailViewModel]
+            inputFieldViewModels = [fullNameViewModel, emailViewModel]
         }
 
         emailCustomError

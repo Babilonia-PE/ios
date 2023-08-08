@@ -85,6 +85,8 @@ final class CreateListingFlowCoordinator: EventNode, FlowCoordinator {
     
     private func handle(_ event: CreateListingCommonEvent) {
         switch event {
+        case .pickGeoValue(let titles, let handler, let title, let startingIndex):
+            presentPickerPopup(with: titles, updateHandler: handler, title: title, startingIndex: startingIndex)
         case .pickPropertyType(let titles, let handler, let title, let startingIndex):
             presentPickerPopup(with: titles, updateHandler: handler, title: title, startingIndex: startingIndex)
         case .editDescription(let updateHandler, let initialText, let maxSymbolsCount):

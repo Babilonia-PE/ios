@@ -107,7 +107,7 @@ final class FiltersView: UIView {
                 button.backgroundColor = Asset.Colors.solitude.color
                 button.contentEdgeInsets = UIEdgeInsets(top: 2.0, left: 8.0, bottom: 0.0, right: 9.0)
             case .type(let listingType):
-                button.isEnabled = false
+//                button.isEnabled = false
                 button.contentEdgeInsets = UIEdgeInsets(top: 2.0, left: 11.0, bottom: 0.0, right: 10.0)
                 switch listingType {
                 case .sale:

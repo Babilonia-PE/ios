@@ -99,6 +99,32 @@ extension CharactersCountValidator {
     
 }
 
+protocol EmptyCharactersCountValidator: Validator {
+    
+    var minimumCount: UInt { get }
+    var maximumCount: UInt { get }
+    var minimumCountFailureString: String { get }
+    var maximumCountFailureString: String { get }
+    
+}
+
+extension EmptyCharactersCountValidator {
+    
+    func check(_ string: String) -> ValidationCheckResult {
+        guard !string.isEmpty else { return .success }
+        
+        let count = string.trimmingCharacters(in: .whitespacesAndNewlines).count
+        if count < minimumCount {
+            return .failure(minimumCountFailureString)
+        } else if count > maximumCount {
+            return .failure(maximumCountFailureString)
+        }
+        
+        return .success
+    }
+    
+}
+
 struct ListingDescriptionValidator: CharactersCountValidator {
     
     var minimumCount: UInt { return 1 }
@@ -143,6 +169,22 @@ struct CVCValidator: Validator {
 
     func check(_ string: String) -> ValidationCheckResult {
         if cvcTest.evaluate(with: string) {
+            return .success
+        }
+
+        return .failure(L10n.Validation.Email.Error.text)
+    }
+
+}
+
+struct CardValueValidator: Validator {
+
+    let cardNameTest = NSPredicate(
+        format: "SELF MATCHES %@", "[0-9 ]+"
+    )
+
+    func check(_ string: String) -> ValidationCheckResult {
+        if cardNameTest.evaluate(with: string) {
             return .success
         }
 
@@ -215,8 +257,17 @@ struct CardExpirationDateValidator: Validator {
 
 struct ProfileNameValidator: CharactersCountValidator {
     
-    var minimumCount: UInt { return 1 }
+    var minimumCount: UInt { return 2 }
     var maximumCount: UInt { return 20 }
+    var minimumCountFailureString: String { return L10n.Validation.Empty.Error.text }
+    var maximumCountFailureString: String {
+        return L10n.Validation.LargeError.text(Int(maximumCount))
+    }
+}
+
+struct EmptyPhoneNumberValidator: EmptyCharactersCountValidator {
+    var minimumCount: UInt { return 6 }
+    var maximumCount: UInt { return 15 }
     var minimumCountFailureString: String { return L10n.Validation.Empty.Error.text }
     var maximumCountFailureString: String {
         return L10n.Validation.LargeError.text(Int(maximumCount))

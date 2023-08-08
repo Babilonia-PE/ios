@@ -32,7 +32,8 @@ final class TopNavigationListingPreview: NiblessView {
         addressLabel.text = listingViewModel.address
 
         if let image = listingViewModel.coverImage {
-            photoImageView.setImage(with: image.photo.largeURLString.flatMap(URL.init))
+            let imageURL = URL(string: image.photo.originalURLString ?? "")
+            photoImageView.setImage(with: imageURL)
         }
 
         listingViewModel.priceUpdated

@@ -37,7 +37,6 @@ final class ListingPreviewContentView: UIView {
     private var inlinePropertiesView: InlinePropertiesView!
     private let paymentPlanBackground: UIView = .init()
     private let paymentPlanImageView: UIImageView = .init()
-    
     private var viewModel: ListingPreviewViewModel!
     private var disposeBag = DisposeBag()
     private var isSelectedLikeButton = false
@@ -61,7 +60,7 @@ final class ListingPreviewContentView: UIView {
         listingTypeView.setup(with: viewModel.listingTypeViewModel)
         photosView.setup(photos: viewModel.photos)
         inlinePropertiesView.setup(with: viewModel.listingViewModel.inlinePropertiesInfo)
-        addressLabel.text = viewModel.listingViewModel.address
+        addressLabel.text = viewModel.listingViewModel.fullAddress
         bottomContainer.isHidden = viewModel.isBottomButtonsHidden
         likeButton.isHidden = viewModel.listingViewModel.isUserOwnedListing
 

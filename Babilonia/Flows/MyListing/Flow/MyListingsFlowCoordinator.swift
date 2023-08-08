@@ -109,7 +109,7 @@ final class MyListingsFlowCoordinator: EventNode, FlowCoordinator {
 
 }
 
-// MARK:- Handlers
+// MARK: - Handlers
 
 extension MyListingsFlowCoordinator {
 
@@ -169,7 +169,22 @@ extension MyListingsFlowCoordinator {
         switch event {
         case .editListing(let listing):
             showCreateListingFlow(listing, mode: .edit)
+        case .alertGuest:
+            guard let window = UIApplication.shared.delegate?.window,
+                  let presentingView = window else { return }
+            let popupView = GuestPopupView(popupViewType: .guest)
+
+            let doneAction = { [weak self, unowned popupView] in
+                popupView.hide()
+                self?.containerViewController?.dismiss(animated: false, completion: {
+                    self?.raise(event: MainFlowEvent.logoutAndLogin)
+                })
+            }
+            let cancelAction = { [unowned popupView] in
+                popupView.hide()
+            }
+            popupView.setup(with: doneAction, cancelAction: cancelAction)
+            popupView.show(in: presentingView)
         }
     }
-
 }

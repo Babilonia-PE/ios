@@ -30,16 +30,18 @@ final class HistogramViewModel {
                                           value: sliderValue)
     }
 
-    func resetViewModel(to listingType: ListingType) {
-        self.listingType = listingType
-        let maxPrice = prices.maxPrice(for: listingType)
-        let priceStep = prices.slotPrice(for: listingType)
-        let sliderMaxValue = 101
+    func resetViewModel(to listingType: ListingType?) {
+        if let ltype = listingType {
+            self.listingType = ltype
+            let maxPrice = prices.maxPrice(for: ltype)
+            let priceStep = prices.slotPrice(for: ltype)
+            let sliderMaxValue = 101
 
-        self.maxPrice.accept(maxPrice)
-        self.priceStep = priceStep
-        sliderViewModel.sliderValue.accept((min: 0, max: sliderMaxValue))
-        sliderViewModel.reset(with: CGFloat(sliderMaxValue))
+            self.maxPrice.accept(maxPrice)
+            self.priceStep = priceStep
+            sliderViewModel.sliderValue.accept((min: 0, max: sliderMaxValue))
+            sliderViewModel.reset(with: CGFloat(sliderMaxValue))
+        }
     }
 
     func convertPrice(for values: RangeValue) -> (min: Int?, max: Int?) {
@@ -70,13 +72,17 @@ struct FilterPriceConverter {
         listingType == .sale ? saleSlotPrice : rentSlotPrice
     }
 
-    func convertPrice(for listingType: ListingType,
+    func convertPrice(for listingType: ListingType?,
                       values: RangeValue) -> (min: Int?, max: Int?) {
-        let slotPrice = self.slotPrice(for: listingType)
-        let minValue = values.min == 0 ? nil : slotPrice * values.min
-        let maxValue = values.max == 101 ? nil : slotPrice * values.max
+        if let ltype = listingType {
+            let slotPrice = self.slotPrice(for: ltype)
+            let minValue = values.min == 0 ? nil : slotPrice * values.min
+            let maxValue = values.max == 101 ? nil : slotPrice * values.max
 
-        return (min: minValue, max: maxValue)
+            return (min: minValue, max: maxValue)
+        } else {
+            return (min: 0, max: 0)
+        }
     }
 
     func convertValue(for listingType: ListingType,

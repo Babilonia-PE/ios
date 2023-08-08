@@ -7,17 +7,21 @@
 // MARK: - Common
 
 "common.for.text" = "for %@";
+"common.share" = "I share with you this property published in Babylon.";
+"common.all" = "All";
 
 // MARK: - HUDs
 
 "hud.alert.error.title" = "Error";
 "hud.alert.success.title" = "Success";
 "hud.alert.info.title" = "Information";
+"hud.alert.loading.title" = "Loading";
 
 // MARK: - Errors
 
 "errors.something_went_wrong" = "Something went wrong.";
 "errors.something_went_wrong.long" = "Something went wrong. Please try again or contact us if the issue will still remain";
+"errors.action_must_be_done_from_web" = "This action must be done from web";
 "errors.network.undefined" = "Undefined network error appeared. Please try again a little bit later.";
 "errors.network.unsatisfied_header" = "Unsatisfied header network error appeared.";
 "errors.network.canceled" = "Request was cancelled by the system.";
@@ -41,6 +45,7 @@
 "buttons.save.title" = "Save";
 "buttons.ok_button.title" = "OK";
 "buttons.settings.title" = "Settings";
+"buttons.login.title" = "Login";
 
 // Popups
 
@@ -54,6 +59,9 @@
 "popups.delete_draft_listing.text" = "Are you sure you want to delete this information? The action can not be undone.";
 "popups.listing_deleted.text" = "Listing has been successfully deleted";
 "popups.camera_access.text" = "Access to the camera is denied. Open Settings -> Privacy -> Camera and enable Babilonia access to use this feature";
+"popups.delete_account.title" = "Delete account?";
+"popups.delete_account.text" = "Your account will be permanently deleted";
+"popups.delete_account.delete_account.title" = "Delete account";
 
 // Image picker
 
@@ -71,6 +79,8 @@
 // MARK: - Start
 
 "start.button.title" = "LET'S START";
+"signup.button.title" = "SIGN UP";
+"login.button.title" = "LOGIN";
 
 // MARK: - Create listing
 
@@ -96,10 +106,25 @@
 "create_listing.common.property_type.office.title" = "Office";
 "create_listing.common.property_type.land.title" = "Land";
 "create_listing.common.property_type.room.title" = "Room";
+"create_listing.common.property_type.local_industrial.title" = "Local Industrial";
+"create_listing.common.property_type.land_agricultural.title" = "Land Agricultural";
+"create_listing.common.property_type.land_industrial.title" = "Land Industrial";
+"create_listing.common.property_type.land_commercial.title" = "Land Commercial";
+"create_listing.common.property_type.cottage.title" = "Cottage";
+"create_listing.common.property_type.beach_house.title" = "Beach House";
+"create_listing.common.property_type.building.title" = "Building";
+"create_listing.common.property_type.hotel.title" = "Hotel";
+"create_listing.common.property_type.deposit.title" = "Deposit";
+"create_listing.common.property_type.parking.title" = "Parking";
+"create_listing.common.property_type.airs.title" = "Airs";
 "create_listing.common.property_type.project.title" = "Project";
 "create_listing.common.area.title" = "Area, m²";
 "create_listing.common.area.placeholder" = "Property area";
 "create_listing.common.address.title" = "Address";
+"create_listing.common.country.title" = "Country";
+"create_listing.common.department.title" = "Department";
+"create_listing.common.province.title" = "Province";
+"create_listing.common.district.title" = "District";
 "create_listing.common.address.placeholder" = "Provide your address";
 "create_listing.common.description.title" = "Description (%d/%d)";
 "create_listing.common.description.edit.title" = "Description";
@@ -145,6 +170,13 @@
 // MARK: - Sign up
 
 "sign_up.title" = "Create profile";
+"sign_up.first_name.title" = "First name";
+"sign_up.last_name.title" = "Last name";
+"sign_up.full_name.title" = "Full name";
+"sign_up.email.title" = "Email";
+"sign_up.phone.title" = "Phone";
+"sign_up.password.title" = "Password";
+"sign_up.contry_list.title" = "Choose a country";
 
 // MARK: - Profile
 
@@ -156,6 +188,7 @@
 "profile.about.terms.title" = "Terms and Conditions";
 "profile.about.privacy.title" = "Privacy Policy";
 "profile.account.sign_out.title" = "Sign out";
+"profile.account.delete_account.title" = "Delete account";
 
 // MARK: - Edit profile
 
@@ -164,7 +197,9 @@
 "edit_profile.buttons.save.title" = "SAVE";
 "edit_profile.first_name.title" = "First name";
 "edit_profile.last_name.title" = "Last name";
+"edit_profile.full_name.title" = "Full name";
 "edit_profile.change_email.title" = "Change email";
+"edit_profile.change_phone_number.title" = "Change phone";
 "edit_profile.update_user.popup.success.text" = "User updated";
 "edit_profile.update_email.popup.success.text" = "Email changed";
 "edit_profile.update_avatar.popup.success.text" = "Photo successfully uploaded";
@@ -212,6 +247,7 @@
 "my_listings.options.publish.title" = "Publish";
 "my_listings.options.unpublish.title" = "Unpublish";
 "my_listings.options.delete.title" = "Delete";
+"my_listings.options.share.title" = "Share";
 "my_listings.statistics.views" = "Views";
 "my_listings.statistics.favorites" = "Favorites";
 "my_listings.statistics.contacts" = "Contacts";
@@ -292,7 +328,7 @@
 "listing_search.ar_popup.text" = "Are you interested in the area where you are? Explore it with our AR and discover which properties are for sale or rent. Click on navigate and we will take you by the shortest route ...";
 "listing_search.location_popup.done.title" = "GOT IT";
 "listing_search.location_popup.cancel.title" = "Not now";
-"listing_search.search_bar.placeholder" = "Address, city, etc.";
+"listing_search.search_bar.placeholder" = "District, province or city.";
 "listing_search.top_listings_title" = "Top Listings";
 
 // MARK: - Search by location
@@ -372,6 +408,7 @@
 "payments.plan_title.premium" = "Premium plan";
 "payments.alert.listing_published_success" = "Listing published successfully";
 "payments.plan.expired.status" = "Expired";
+"payments.checkout.termsConditions" = "By clicking on Pay, you are accepting our 'Terms and Conditions of Advertising'";
 
 // MARK: - Photo gallery
 
@@ -379,5 +416,15 @@
 "photo_gallery.photos_count" = "%i photos";
 
 // MARK: - Inbox
-
 "inbox.comming_soon" = "Coming soon…";
+
+// MARK: - GuestUser
+
+"skip.button.title" = "Skip";
+"guest.welcome.title"= "Welcome to Babilonia";
+"guest.message.title" = "Register or sign-in to access all of our features\n\n• Contact listing owners or agent’s\n• Save listings to your favorites\n• Publish and manage all your listings";
+"sign.button.title" = "Sign-in";
+"notNow.button.title" = "Not now";
+
+
+

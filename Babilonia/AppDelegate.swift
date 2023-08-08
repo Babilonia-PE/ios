@@ -10,7 +10,8 @@ import Swinject
 import GoogleMaps
 import GooglePlaces
 import Firebase
-import Stripe
+//import Stripe
+import FBSDKCoreKit
 
 #if canImport(BuildInfo)
 import BuildInfo
@@ -35,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
 
-        Stripe.setDefaultPublishableKey(Environment.default.stripePublishableKey)
+//        Stripe.setDefaultPublishableKey(Environment.default.stripePublishableKey)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -48,6 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userSessionController: userSessionController
         )
         applicationFlowCoordinator.execute()
+        
+        ApplicationDelegate.shared.application(
+                    application,
+                    didFinishLaunchingWithOptions: launchOptions)
         
         return true
     }
@@ -66,4 +71,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return handled
     }
 
+    func application(
+            _ app: UIApplication,
+            open url: URL,
+            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+            ApplicationDelegate.shared.application(
+                app,
+                open: url,
+                sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+                annotation: options[UIApplication.OpenURLOptionsKey.annotation]
+            )
+        }
 }

@@ -13,11 +13,13 @@ import RxCocoa
 enum PopupViewType {
     case location
     case arView
+    case guest
 
     var title: String {
         switch self {
         case .location: return L10n.ListingSearch.LocationPopup.title
         case .arView: return L10n.ListingSearch.ArPopup.title
+        case .guest: return L10n.Guest.Welcome.title
         }
     }
 
@@ -25,6 +27,7 @@ enum PopupViewType {
         switch self {
         case .location: return L10n.ListingSearch.LocationPopup.text
         case .arView: return L10n.ListingSearch.ArPopup.text
+        case .guest: return L10n.Guest.Message.title
         }
     }
 
@@ -32,6 +35,7 @@ enum PopupViewType {
         switch self {
         case .location: return Asset.Search.Map.popupLocationIcon.image
         case .arView: return Asset.Search.Map.popupARIcon.image
+        case .guest: return Asset.MyListings.myListingsEmpty.image
         }
     }
 }
@@ -137,8 +141,10 @@ final class LocationPermissionPopupView: FadeInPopupView {
         
         cancelButton = UIButton()
         containerView.addSubview(cancelButton)
-        cancelButton.isHidden = popupViewType == .arView
-        let bottomConstant: CGFloat = popupViewType == .arView ? 20 : -17.0
+     //   cancelButton.isHidden = popupViewType == .arView
+        cancelButton.isHidden = true
+     //   let bottomConstant: CGFloat = popupViewType == .arView ? 20 : -17.0
+        let bottomConstant: CGFloat = 20
         cancelButton.layout {
             $0.top == doneButton.bottomAnchor + 15.0
             $0.leading == containerView.leadingAnchor + 64.0

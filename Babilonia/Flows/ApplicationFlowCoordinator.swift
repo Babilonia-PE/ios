@@ -44,9 +44,24 @@ final class ApplicationFlowCoordinator: EventNode {
     
     func execute() {
         if let session = userSessionController.restorePreviousSession() {
-            startFlow(with: session)
+            //startFlow(with: session)
+            self.verifyToken(session)
         } else {
             presentAuthFlow()
+        }
+    }
+    
+    private func verifyToken(_ userSession: UserSession) {
+        userSessionController.verifyToken(
+            userSession: userSession
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            if result {
+                self.startFlow(with: userSession)
+            } else {
+                self.presentAuthFlow()
+            }
         }
     }
 
@@ -63,9 +78,11 @@ final class ApplicationFlowCoordinator: EventNode {
         setWindowRootViewController(with: controller)
     }
     
-    private func presentAuthFlow() {
+    private func presentAuthFlow(autoPhoneAuth: Bool = false) {
         let authFlowCoordinator: AuthFlowCoordinator = container.autoresolve(argument: self)
-        let authNavigationController = UINavigationController(rootViewController: authFlowCoordinator.createFlow())
+        guard let authViewController = authFlowCoordinator.createFlow() as? AuthViewController else { return }
+        authViewController.autoPhoneAuth = autoPhoneAuth
+        let authNavigationController = UINavigationController(rootViewController: authViewController)
         authNavigationController.navigationBar.isTranslucent = true
         authFlowCoordinator.containerViewController = authNavigationController
         setWindowRootViewController(with: authNavigationController)
@@ -98,6 +115,8 @@ final class ApplicationFlowCoordinator: EventNode {
         switch event {
         case .logout:
             logout()
+        case .logoutAndLogin:
+            logoutAndLogin()
         }
     }
     
@@ -119,10 +138,16 @@ final class ApplicationFlowCoordinator: EventNode {
     }
     
     private func startFlow(with userSession: UserSession) {
-        if userSession.user.firstName == nil && userSession.user.lastName == nil {
-            presentCreateProfileFlow(userSession: userSession)
-        } else {
+        print("startFlow userSession = \(userSession)")
+        if userSession.id == "0" {
             presentMainFlow(userSession: userSession)
+        } else {
+            //if userSession.user.firstName == nil && userSession.user.lastName == nil {
+            if userSession.user.fullName == nil {
+                presentCreateProfileFlow(userSession: userSession)
+            } else {
+                presentMainFlow(userSession: userSession)
+            }
         }
     }
     
@@ -130,6 +155,13 @@ final class ApplicationFlowCoordinator: EventNode {
         userSessionController.closeSession()
         try? Auth.auth().signOut()
         presentAuthFlow()
+    }
+    
+    private func logoutAndLogin() {
+        userSessionController.closeSession()
+        try? Auth.auth().signOut()
+        presentAuthFlow(autoPhoneAuth: true)
+        
     }
 }
 

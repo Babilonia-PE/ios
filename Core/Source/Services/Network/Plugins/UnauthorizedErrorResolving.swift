@@ -10,10 +10,16 @@ import Foundation
 import YALAPIClient
 
 let unauthorizedErrorResolving = { (error: Error) -> Bool in
+    print("unauthorizedErrorResolving = \(error)")
+    
     if let error = error as? ServerError, case .unauthenticated = error.code {
+        print("ServerError unauthenticated")
         return true
     }
+    
     if let error = error as? CompositeServerError, !error.errors.filter({ $0.code == .unauthenticated }).isEmpty {
+        print("CompositeServerError unauthenticated")
+        
         return true
     }
     

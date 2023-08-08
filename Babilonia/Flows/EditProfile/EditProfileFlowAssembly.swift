@@ -20,6 +20,7 @@ final class EditProfileFlowAssembly: Assembly {
                 let model = EditProfileModel(parent: eventNode,
                                              userSession: resolver.autoresolve(),
                                              userService: resolver.autoresolve(),
+                                             imagesService: resolver.autoresolve(),
                                              screenType: screenType)
                 return EditProfileViewController(
                     viewModel: EditProfileViewModel(model: model)
@@ -30,7 +31,19 @@ final class EditProfileFlowAssembly: Assembly {
     
     private func assembleServices(_ container: Container) {
         container
-            .autoregister(UserService.self, initializer: UserService.init)
+            .register(UserService.self) { (resolver) in
+                return UserService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
+            .inObjectScope(.container)
+        container
+            //.autoregister(ImagesService.self, initializer: ImagesService.init)
+            .register(ImagesService.self) { (resolver) in
+                return ImagesService(client: resolver.autoresolve(),
+                                     newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
     }
     

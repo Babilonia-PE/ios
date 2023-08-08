@@ -47,6 +47,10 @@ final class ARContainerViewModel {
         get { model.shouldShowCameraAlert }
         set { model.shouldShowCameraAlert = newValue }
     }
+    
+    var viewDidChange: Observable<[FilterViewType]> {
+        model.viewDidChange.asObservable()
+    }
 
     private let model: ARContainerModel
     
@@ -94,6 +98,18 @@ final class ARContainerViewModel {
                        destinationCoordinate: CLLocationCoordinate2D) {
         model.getDirections(sourceCoordinate: sourceCoordinate,
                                    destinationCoordinate: destinationCoordinate)
+    }
+    
+    var listingTypeViewModel: ListingPropertyTypeViewModel {
+        model.listingTypeViewModel
+    }
+    
+    var appliedFilterInfos: [FilterInfo] {
+        model.appliedFilterInfos
+    }
+    
+    func apply() {
+        model.apply()
     }
 
 }

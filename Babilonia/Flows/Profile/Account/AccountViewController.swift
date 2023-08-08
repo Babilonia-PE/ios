@@ -13,7 +13,8 @@ import RxCocoa
 final class AccountViewController: UIViewController {
     
     private var signOutView: ProfileFieldView!
-    private var separatorView: UIView!
+    private var deleteAccountView: ProfileFieldView!
+    //private var separatorView: UIView!
     private var backButton: UIBarButtonItem!
     
     private var shadowApplied: Bool = false
@@ -56,10 +57,29 @@ final class AccountViewController: UIViewController {
             $0.trailing == view.trailingAnchor
         }
         
-        separatorView = UIView()
+        var separatorView = UIView()
+        separatorView.backgroundColor = Asset.Colors.whiteLilac.color
         view.addSubview(separatorView)
         separatorView.layout {
             $0.top == signOutView.bottomAnchor
+            $0.leading == view.leadingAnchor
+            $0.trailing == view.trailingAnchor
+            $0.height == 1.0
+        }
+        
+        deleteAccountView = ProfileFieldView(viewModel: viewModel.deleteAccountViewModel)
+        view.addSubview(deleteAccountView)
+        deleteAccountView.layout {
+            $0.top == separatorView.bottomAnchor
+            $0.leading == view.leadingAnchor
+            $0.trailing == view.trailingAnchor
+        }
+        
+        separatorView = UIView()
+        separatorView.backgroundColor = Asset.Colors.whiteLilac.color
+        view.addSubview(separatorView)
+        separatorView.layout {
+            $0.top == deleteAccountView.bottomAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
             $0.height == 1.0
@@ -68,7 +88,7 @@ final class AccountViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
-        separatorView.backgroundColor = Asset.Colors.whiteLilac.color
+        //separatorView.backgroundColor = Asset.Colors.whiteLilac.color
     }
     
     private func setupNavigationBar() {
@@ -91,6 +111,12 @@ final class AccountViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        deleteAccountView.selectButtonTap
+            .bind { [weak self] in
+                self?.presentDeleteAccount()
+            }
+            .disposed(by: disposeBag)
+        
         backButton.rx.tap
             .bind { [weak self] in
                 self?.viewModel.close()
@@ -105,6 +131,16 @@ final class AccountViewController: UIViewController {
                             confirmTitle: L10n.Popups.SignOut.SignOut.title,
                             confirm: { [weak self] in
                                 self?.viewModel.logout()
+                            })
+    }
+    
+    private func presentDeleteAccount() {
+        SystemAlert.present(on: self,
+                            title: L10n.Popups.DeleteAccount.title,
+                            message: L10n.Popups.DeleteAccount.text,
+                            confirmTitle: L10n.Popups.DeleteAccount.DeleteAccount.title,
+                            confirm: { [weak self] in
+                                self?.viewModel.deleteAccount()
                             })
     }
 }

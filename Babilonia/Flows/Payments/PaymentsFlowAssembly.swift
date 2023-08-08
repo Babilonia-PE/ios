@@ -54,7 +54,7 @@ final class PaymentsFlowAssembly: Assembly {
                 let model = CheckoutModel(parent: eventNode,
                                           model: model,
                                           paymentService: resolver.autoresolve(),
-                                          listingsService: resolver.autoresolve())
+                                          listingsService: resolver.autoresolve(), userService: resolver.autoresolve())
                 let viewModel = CheckoutViewModel(model: model)
 
                 return CheckoutViewController(viewModel: viewModel)
@@ -66,10 +66,26 @@ final class PaymentsFlowAssembly: Assembly {
 
     private func assembleServices(_ container: Container) {
         container
-            .autoregister(PaymentService.self, initializer: PaymentService.init)
+            .register(PaymentService.self) { (resolver) in
+                return PaymentService(client: resolver.autoresolve(),
+                                      clientPayment: resolver.autoresolve(name: "clientPayment"))
+            }
             .inObjectScope(.container)
         container
-            .autoregister(ListingsService.self, initializer: ListingsService.init)
+            .register(ListingsService.self) { (resolver) in
+                return ListingsService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
+            .inObjectScope(.container)
+        container
+            .register(UserService.self) { (resolver) in
+                return UserService(userSession: resolver.autoresolve(),
+                                       client: resolver.autoresolve(),
+                                       storage: resolver.autoresolve(),
+                                       newClient: resolver.autoresolve(name: "newClient"))
+            }
             .inObjectScope(.container)
     }
 }

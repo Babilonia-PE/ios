@@ -13,6 +13,7 @@ import RxCocoa
 class MyListingTableViewCell: UITableViewCell {
     
     var optionsSelected: (() -> Void)?
+//    var shareSelected: (() -> Void)?
     
     private var containerView: UIView!
     private var primaryImageView: UIImageView!
@@ -28,6 +29,7 @@ class MyListingTableViewCell: UITableViewCell {
     private var statusView: UIView!
     private var statusLabel: UILabel!
     private var moreButton: UIButton!
+//    private var shareButton: UIButton!
     private var priceLabel: UILabel!
     private var addressLabel: UILabel!
     private var inlinePropertiesView: InlinePropertiesView!
@@ -64,6 +66,8 @@ class MyListingTableViewCell: UITableViewCell {
     func setup(with listingViewModel: ListingViewModel) {
         if let imageUrl = URL(string: listingViewModel.imagePath ?? "") {
             primaryImageView.setImage(with: imageUrl, placeholder: Asset.MyListings.myListingsDraft.image)
+        } else {
+            primaryImageView.image = Asset.MyListings.myListingsDraft.image
         }
         
         if listingViewModel.listingTypeSettings.title != nil && listingViewModel.propertyTypeSettings.title != nil {
@@ -238,6 +242,13 @@ class MyListingTableViewCell: UITableViewCell {
             $0.height == 32.0
         }
         
+//        shareButton = UIButton()
+//        containerView.addSubview(shareButton)
+//        shareButton.layout {
+//            $0.top.equal(to: moreButton.bottomAnchor, offsetBy: 6)
+//            $0.trailing.equal(to: containerView.trailingAnchor, offsetBy: -12)
+//        }
+        
         priceLabel = UILabel()
         containerView.addSubview(priceLabel)
         priceLabel.layout {
@@ -340,6 +351,12 @@ class MyListingTableViewCell: UITableViewCell {
         moreButton.backgroundColor = Asset.Colors.antiFlashWhite.color
         moreButton.layer.cornerRadius = 6.0
         
+//        shareButton.setImage(Asset.Common.shareIcon.image.withRenderingMode(.alwaysTemplate), for: .normal)
+//        shareButton.tintColor = .black
+//        shareButton.backgroundColor = Asset.Colors.antiFlashWhite.color
+//        shareButton.layer.cornerRadius = 6.0
+//        shareButton.contentEdgeInsets = UIEdgeInsets(top: 3.0, left: 4.0, bottom: 3.0, right: 4.0)
+        
         priceLabel.textColor = Asset.Colors.vulcan.color
         priceLabel.font = FontFamily.SamsungSharpSans.bold.font(size: 20.0)
         
@@ -368,6 +385,12 @@ class MyListingTableViewCell: UITableViewCell {
                 self?.optionsSelected?()
             }
             .disposed(by: disposeBag)
+        
+//        shareButton.rx.tap
+//            .bind { [weak self] in
+//                self?.shareSelected?()
+//            }
+//            .disposed(by: disposeBag)
     }
     
 }

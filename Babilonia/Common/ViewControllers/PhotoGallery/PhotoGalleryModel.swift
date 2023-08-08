@@ -43,12 +43,12 @@ final class PhotoGalleryModel: EventNode {
     private func procceedPhotos() {
         switch config {
         case .local(let listing, _):
-            let photos = listing.sortedPhotos.compactMap { PhotoType(urlString: $0.photo.mediumURLString) }
+            let photos = listing.sortedPhotos.compactMap { PhotoType(urlString: $0.photo.renderURLString) }
             self.photos = photos
 
         case .remote(_, let cachedListing):
             if let listing = cachedListing {
-                let photos = listing.sortedPhotos.compactMap { PhotoType(urlString: $0.photo.mediumURLString) }
+                let photos = listing.sortedPhotos.compactMap { PhotoType(urlString: $0.photo.renderURLString) }
                 self.photos = photos
             }
         }

@@ -28,11 +28,16 @@ final class AuthorizationPlugin: PluginType {
         var headers = request.headers ?? [:]
         
         if applyAuthorization {
-            var prefix = ""
-            if let authPrefix = provider.authorizationType.valuePrefix {
-                prefix = authPrefix + " "
+            if !provider.authorizationToken.isEmpty {
+                var prefix = ""
+                if let authPrefix = provider.authorizationType.valuePrefix {
+                    prefix = authPrefix + ""
+                }
+                headers[provider.authorizationType.key] = prefix + provider.authorizationToken
+#if DEBUG
+                print("authorizationToken=", headers[provider.authorizationType.key] ?? "")
+#endif
             }
-            headers[provider.authorizationType.key] = prefix + provider.authorizationToken
         }
         
         request.headers = headers

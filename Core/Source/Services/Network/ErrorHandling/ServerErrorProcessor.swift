@@ -14,6 +14,8 @@ public struct ServerErrorProcessor: ErrorProcessing {
     public init() { }
     
     public func processError(using response: APIClient.HTTPResponse) -> Error? {
+        print(response.httpResponse.statusCode)
+        print(String(decoding: response.data, as: UTF8.self))
         if
             let responseJSON = deserializer.deserialize(
                 response.httpResponse,
@@ -30,6 +32,10 @@ public struct ServerErrorProcessor: ErrorProcessing {
 
                 if response.httpResponse.statusCode == 422 {
                     code = .alreadyExist
+                }
+                
+                if response.httpResponse.statusCode == 401 {
+                    code = .unauthenticated
                 }
                 
                 let message = dictionary["message"] as? String

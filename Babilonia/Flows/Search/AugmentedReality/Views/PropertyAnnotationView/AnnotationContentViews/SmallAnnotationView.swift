@@ -69,6 +69,8 @@ final class SmallAnnotationView: UIView, AnnotationView {
         coverImageView.addCornerRadius(4.0)
         if let imageUrl = URL(string: viewModel.coverImage?.photo.smallURLString ?? "") {
             coverImageView.setImage(with: imageUrl)
+        } else {
+            coverImageView.image = Asset.MyListings.myListingsDraft.image
         }
 
         priceLabel.textColor = Asset.Colors.vulcan.color

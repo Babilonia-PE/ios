@@ -37,14 +37,16 @@ class FadeInPopupView: UIView {
     }
     
     func show(in view: UIView, completion: (() -> Void)? = nil) {
-        frame = view.bounds
-        autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        translatesAutoresizingMaskIntoConstraints = true
-        view.addSubview(self)
-        
-        animateDimView(isFadeIn: true)
-        self.animateContainerView(isShowing: true, withDelay: true) {
-            completion?()
+        if !(view.subviews.last is FadeInPopupView) {
+            frame = view.bounds
+            autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            translatesAutoresizingMaskIntoConstraints = true
+            view.addSubview(self)
+            
+            animateDimView(isFadeIn: true)
+            self.animateContainerView(isShowing: true, withDelay: true) {
+                completion?()
+            }
         }
     }
     

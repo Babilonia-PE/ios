@@ -320,6 +320,7 @@ internal class ManagedListing: NSManagedObject {
     }
   }
   @NSManaged internal var propertyType: String?
+  @NSManaged internal var role: String?
   @NSManaged internal var state: String
   @NSManaged internal var status: String
   internal var totalFloorsCount: Int16? {
@@ -361,6 +362,7 @@ internal class ManagedListing: NSManagedObject {
   @NSManaged internal var images: Set<ManagedListingImage>?
   @NSManaged internal var location: ManagedLocation?
   @NSManaged internal var user: ManagedUser
+  @NSManaged internal var contact: ManagedContact?
   // swiftlint:enable discouraged_optional_boolean discouraged_optional_collection
 }
 
@@ -462,9 +464,14 @@ internal class ManagedLocation: NSManagedObject {
 
   // swiftlint:disable discouraged_optional_boolean discouraged_optional_collection
   @NSManaged internal var address: String?
+  @NSManaged internal var country: String?
+  @NSManaged internal var department: String?
+  @NSManaged internal var district: String?
   @NSManaged internal var id: String
   @NSManaged internal var latitude: Float
   @NSManaged internal var longitude: Float
+  @NSManaged internal var province: String?
+  @NSManaged internal var zipCode: String?
   @NSManaged internal var config: ManagedAppConfig?
   @NSManaged internal var listing: ManagedListing?
   // swiftlint:enable discouraged_optional_boolean discouraged_optional_collection
@@ -523,9 +530,9 @@ internal class ManagedUser: NSManagedObject {
 
   // swiftlint:disable discouraged_optional_boolean discouraged_optional_collection
   @NSManaged internal var email: String?
-  @NSManaged internal var firstName: String?
+  @NSManaged internal var fullName: String?
   @NSManaged internal var id: Int64
-  @NSManaged internal var lastName: String?
+  //@NSManaged internal var lastName: String?
   @NSManaged internal var phoneNumber: String
   @NSManaged internal var avatar: ManagedRemoteImage?
   @NSManaged internal var listings: Set<ManagedListing>?
@@ -549,3 +556,30 @@ extension ManagedUser {
 }
 
 // swiftlint:enable identifier_name line_length type_body_length
+
+// MARK: - Contact
+
+internal class ManagedContact: NSManagedObject {
+  internal class var entityName: String {
+    return "Contact"
+  }
+
+  internal class func entity(in managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    return NSEntityDescription.entity(forEntityName: entityName, in: managedObjectContext)
+  }
+
+  @available(*, deprecated, renamed: "makeFetchRequest", message: "To avoid collisions with the less concrete method in `NSManagedObject`, please use `makeFetchRequest()` instead.")
+  @nonobjc internal class func fetchRequest() -> NSFetchRequest<ManagedContact> {
+    return NSFetchRequest<ManagedContact>(entityName: entityName)
+  }
+
+  @nonobjc internal class func makeFetchRequest() -> NSFetchRequest<ManagedContact> {
+    return NSFetchRequest<ManagedContact>(entityName: entityName)
+  }
+
+  // swiftlint:disable discouraged_optional_boolean discouraged_optional_collection
+  @NSManaged internal var contactName: String?
+  @NSManaged internal var contactEmail: String?
+  @NSManaged internal var contactPhone: String?
+  // swiftlint:enable discouraged_optional_boolean discouraged_optional_collection
+}
