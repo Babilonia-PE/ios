@@ -33,5 +33,5 @@ All screens (`UIViewController`s) and views (`UIView`s) are **code-based**. Ther
 
 Make sure the script is executable. You can do this from the Terminal at your project's location:
 
-chmod +x `scripts/scripts/run-swiftlint.sh`
-chmod +x `scripts/scripts/copy-config.sh`
+- chmod +x `scripts/scripts/run-swiftlint.sh`
+- chmod +x `scripts/scripts/copy-config.sh`
