@@ -28,3 +28,10 @@ To add templates to your Xcode just go to `~/Library/Developer/Xcode/Templates/`
 ## UI development
 
 All screens (`UIViewController`s) and views (`UIView`s) are **code-based**. There is **NO nib files (`.storyboard`s or `.xib`s)** in the project! UI is done via code.
+
+## Ensure Permissions
+
+Make sure the script is executable. You can do this from the Terminal at your project's location:
+
+chmod +x `scripts/scripts/run-swiftlint.sh`
+chmod +x `scripts/scripts/copy-config.sh`
