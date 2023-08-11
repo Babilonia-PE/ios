@@ -87,7 +87,7 @@ public struct Listing: Codable {
     public var images: [ListingImage]?
     public var facilities: [Facility]?
     public var advancedDetails: [Facility]?
-    public var url: String?
+    public var url: Url?
     
     public var isEdit: Bool = false
 
@@ -124,7 +124,7 @@ public struct Listing: Codable {
                 facilities: [Facility]?,
                 advancedDetails: [Facility]?,
                 contact: Contact? = nil,
-                url: String? = nil
+                url: Url? = nil
         ) {
         self.area = area
         self.bathroomsCount = bathroomsCount

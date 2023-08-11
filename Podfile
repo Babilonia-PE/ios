@@ -31,7 +31,7 @@ abstract_target 'Shared' do
     
     target 'Core' do
         # db client component
-        pod 'DBClient/CoreData', '~> 1.4.2'
+        pod 'DBClient/CoreData', :git => 'https://github.com/Yalantis/DBClient.git', :branch => 'fetch-hotfix'
     end
     
     target 'Babilonia' do
