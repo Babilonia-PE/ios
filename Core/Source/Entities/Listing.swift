@@ -82,7 +82,7 @@ public struct Listing: Codable {
     public var floorNumber: Int?
 
     public var user: User
-    public var contact: Contact?
+    public var contacts: [Contact]?
     public var location: Location?
     public var images: [ListingImage]?
     public var facilities: [Facility]?
@@ -123,7 +123,7 @@ public struct Listing: Codable {
                 images: [ListingImage]?,
                 facilities: [Facility]?,
                 advancedDetails: [Facility]?,
-                contact: Contact? = nil,
+                contacts: [Contact]?,
                 url: Url? = nil
         ) {
         self.area = area
@@ -158,7 +158,7 @@ public struct Listing: Codable {
         self.facilities = facilities
         self.advancedDetails = advancedDetails
         self.price = price
-        self.contact = contact
+        self.contacts = contacts
         self.url = url
     }
     
@@ -181,14 +181,14 @@ public struct Listing: Codable {
         case viewsCount
         case yearOfConstruction
         case user
-        case contact
+        case contacts
         case location
         case images
         case facilities
         case createdAt
         case adPurchasedAt
         case adExpiresAt
-        case adPlan
+        case adPlan = "ad_plan"
         case state
         case role = "publisherRole"
         case coveredArea = "builtArea"

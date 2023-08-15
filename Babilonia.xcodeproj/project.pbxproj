@@ -58,9 +58,7 @@
 		18F4503722EAE21A0039B9B3 /* ListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503622EAE21A0039B9B3 /* ListingTableViewCell.swift */; };
 		18F4503D22EB27E50039B9B3 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503C22EB27E50039B9B3 /* EmptySearchView.swift */; };
 		18F4503F22EB2D440039B9B3 /* SearchListingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503E22EB2D440039B9B3 /* SearchListingEmptyView.swift */; };
-		2E2EAE1F3FD96E0D9CE5F1DA /* Pods_Shared_Babilonia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1848A3680DA7F7601D32CE /* Pods_Shared_Babilonia.framework */; };
 		35C86B7E2A86E7DD0000D48D /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C86B7D2A86E7DD0000D48D /* Url.swift */; };
-		3AED5ADA2E92F7745ACD6327 /* Pods_Shared_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBD13145C3EF1C7AA2BDAE /* Pods_Shared_Core.framework */; };
 		505FCBEC2052E68E006CF982 /* Notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505FCBEB2052E68E006CF982 /* Notes.txt */; };
 		530B06AA29BAB3B0003072CF /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530B06A929BAB3B0003072CF /* CurrencyRate.swift */; };
 		532C9B782938782400F00206 /* AuthLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9B772938782400F00206 /* AuthLogInViewController.swift */; };
@@ -109,6 +107,7 @@
 		59EEF0FE22DDB3C600D556E2 /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF0FD22DDB3C600D556E2 /* UIView+Fading.swift */; };
 		59EEF10022DDB3E300D556E2 /* UIView+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF0FF22DDB3E300D556E2 /* UIView+CornerRadius.swift */; };
 		59EEF10322DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF10222DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift */; };
+		6A1F9BA76615C7EDE65CA2AD /* Pods_Shared_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4FB85AECBE41E8D80D55D62 /* Pods_Shared_Core.framework */; };
 		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
 		70BF67B52045A6AD00803C08 /* ApplicationFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67582045A6AD00803C08 /* ApplicationFlowAssembly.swift */; };
 		70BF67B62045A6AD00803C08 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67592045A6AD00803C08 /* MainFlowAssembly.swift */; };
@@ -341,6 +340,7 @@
 		E8CBE411202228FD00186010 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E8CBE3FB202228FD00186010 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E8CBE41F20222A9500186010 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE7250A1DBF47A600F874E1 /* KeyValueStorage.swift */; };
 		E8CBE42020222A9500186010 /* DecoratableRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8306527201889E900FF574C /* DecoratableRequest.swift */; };
+		F53E34E2992108219567E2A5 /* Pods_Shared_Babilonia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C51A53D2BF250880A8BC9C /* Pods_Shared_Babilonia.framework */; };
 		FE02E007251B6DB800D55DD6 /* UserActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE02E006251B6DB800D55DD6 /* UserActions.swift */; };
 		FE039E40253D851C00CD3F86 /* ListingFilterModel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE039E3F253D851C00CD3F86 /* ListingFilterModel+Helpers.swift */; };
 		FE077943255D27F4009A055B /* PagesDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE077942255D27F4009A055B /* PagesDotsView.swift */; };
@@ -499,7 +499,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0F21A3DDE99413764699A625 /* Pods-Shared-Babilonia.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-release.xcconfig"; sourceTree = "<group>"; };
 		1803A18722E1EC760040ABF5 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		1803A18822E1EC760040ABF5 /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		1803A18922E1EC760040ABF5 /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
@@ -551,11 +550,11 @@
 		18F4503622EAE21A0039B9B3 /* ListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingTableViewCell.swift; sourceTree = "<group>"; };
 		18F4503C22EB27E50039B9B3 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
 		18F4503E22EB2D440039B9B3 /* SearchListingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListingEmptyView.swift; sourceTree = "<group>"; };
-		1A5CA4569FB9CAB969767A61 /* Pods-Shared-Core.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-debug.xcconfig"; sourceTree = "<group>"; };
+		1A063B1A32069C7B48C7BA93 /* Pods-Shared-Babilonia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.release.xcconfig"; sourceTree = "<group>"; };
+		26BFE41CB589A485F24A455F /* Pods-Shared-Core.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-debug.xcconfig"; sourceTree = "<group>"; };
+		29C51A53D2BF250880A8BC9C /* Pods_Shared_Babilonia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Babilonia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29E05713FF7AC7E66C2328FE /* Pods-Shared-Babilonia.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-release.xcconfig"; sourceTree = "<group>"; };
 		35C86B7D2A86E7DD0000D48D /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
-		3D1068BE36A7AF64E25830AB /* Pods-Shared-Babilonia.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-release.xcconfig"; sourceTree = "<group>"; };
-		42EBD13145C3EF1C7AA2BDAE /* Pods_Shared_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		45433920DF0E69EB7E23CA77 /* Pods-Shared-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.release.xcconfig"; sourceTree = "<group>"; };
 		505FCBEB2052E68E006CF982 /* Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5305E2FF27731AD3009B40FB /* SanIsidro.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = SanIsidro.gpx; path = "/Users/owson/Projects/evolbit/git/babilonia-ios/Babilonia/Resources/SanIsidro.gpx"; sourceTree = "<absolute>"; };
@@ -609,7 +608,8 @@
 		59EEF0FD22DDB3C600D556E2 /* UIView+Fading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		59EEF0FF22DDB3E300D556E2 /* UIView+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+CornerRadius.swift"; sourceTree = "<group>"; };
 		59EEF10222DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableType+HandyFunctions.swift"; sourceTree = "<group>"; };
-		5E1848A3680DA7F7601D32CE /* Pods_Shared_Babilonia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Babilonia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF12C2714C74D7D86F99394 /* Pods-Shared-Core.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-release.xcconfig"; sourceTree = "<group>"; };
+		6400BB07331B6FA7D56115C0 /* Pods-Shared-Babilonia.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		6AE7250A1DBF47A600F874E1 /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
 		70BF67552045A6AD00803C08 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70BF67582045A6AD00803C08 /* ApplicationFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowAssembly.swift; sourceTree = "<group>"; };
@@ -642,10 +642,8 @@
 		70BF679B2045A6AD00803C08 /* MainMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		70BF67AF2045A6AD00803C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70BF67B32045A6AD00803C08 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		7252824A10105A9D4A29C66E /* Pods-Shared-Babilonia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.debug.xcconfig"; sourceTree = "<group>"; };
-		759CBB2359F84E8685986C11 /* Pods-Shared-Babilonia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.release.xcconfig"; sourceTree = "<group>"; };
-		7D83A3E5C4F3520A3E79F05D /* Pods-Shared-Babilonia.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		863E5FD87DA438DE55713925 /* Pods-Shared-Core.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-release.xcconfig"; sourceTree = "<group>"; };
+		7203038EBCEEB8AAFB900873 /* Pods-Shared-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		84C6AD7436FE22563DB90852 /* Pods-Shared-Babilonia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.debug.xcconfig"; sourceTree = "<group>"; };
 		880A4E65240EA80E000E638B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		880A4E672410FCD5000E638B /* Babilonia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Babilonia.entitlements; sourceTree = "<group>"; };
 		880A4E6824128F79000E638B /* Environment.qa.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Environment.qa.plist; sourceTree = "<group>"; };
@@ -814,7 +812,6 @@
 		924EA0F022A1547E000AD5FA /* CreateListingPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingPagingView.swift; sourceTree = "<group>"; };
 		924EA0F222A159BF000AD5FA /* CreateListingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingPageView.swift; sourceTree = "<group>"; };
 		9270853F2296ED9F00C695AE /* Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
-		92867A0AC43C1A20FFF8F2F3 /* Pods-Shared-Core.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-release.xcconfig"; sourceTree = "<group>"; };
 		928A38A822DE31C600EB4EC7 /* ListingDetailsDescriptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailsDescriptionModel.swift; sourceTree = "<group>"; };
 		928A38AA22DE4E2000EB4EC7 /* ListingDetailsFacilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailsFacilitiesView.swift; sourceTree = "<group>"; };
 		928A38AD22DE52C200EB4EC7 /* ListingDetailsFacilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailsFacilityCell.swift; sourceTree = "<group>"; };
@@ -859,11 +856,17 @@
 		92F63EEC22C11B5D00A65EEE /* ListingImage+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListingImage+CoreData.swift"; sourceTree = "<group>"; };
 		92F63EEE22C11EDA00A65EEE /* Location+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreData.swift"; sourceTree = "<group>"; };
 		92F63EF022C122DE00A65EEE /* Listing+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Listing+CoreData.swift"; sourceTree = "<group>"; };
-		9C13FCC652F997FF5506303B /* Pods-Shared-Babilonia.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-debug.xcconfig"; sourceTree = "<group>"; };
-		AF1283C8F708E7249AB3F3E5 /* Pods-Shared-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		B64B7B58FD9C95552F99D3D1 /* Pods-Shared-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
+		9649C540265BDB21330EAD6A /* Pods-Shared-Babilonia.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-debug.xcconfig"; sourceTree = "<group>"; };
+		9BC3E529185A1672DB472FB8 /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
+		9DE2407BBE46FA70BF2CF7AC /* Pods-Shared-Babilonia.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-release.xcconfig"; sourceTree = "<group>"; };
+		A4FB85AECBE41E8D80D55D62 /* Pods_Shared_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8306527201889E900FF574C /* DecoratableRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratableRequest.swift; sourceTree = "<group>"; };
+		B96EE7D273296E256E23F734 /* Pods-Shared-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.release.xcconfig"; sourceTree = "<group>"; };
+		C1D0C79BA70F2E46CA6DDDF7 /* Pods-Shared-Babilonia.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-release.xcconfig"; sourceTree = "<group>"; };
+		C1D426ABB9D8DA6B520BE18E /* Pods-Shared-Babilonia.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-debug.xcconfig"; sourceTree = "<group>"; };
 		C521102A1DAB85BC006CEBCE /* Babilonia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Babilonia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE46CD380DAE94B827E468EF /* Pods-Shared-Core.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-release.xcconfig"; sourceTree = "<group>"; };
+		D5C4EAB3CA4A4943C8AC1223 /* Pods-Shared-Core.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-release.xcconfig"; sourceTree = "<group>"; };
 		E879B2562022368C009FEC51 /* Resolver+Autoresolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Resolver+Autoresolve.swift"; sourceTree = "<group>"; };
 		E879B258202245B9009FEC51 /* Container+Autoregistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Autoregistration.swift"; sourceTree = "<group>"; };
 		E8CBE3FB202228FD00186010 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -872,9 +875,7 @@
 		E8CBE403202228FD00186010 /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8CBE40A202228FD00186010 /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		E8CBE40C202228FD00186010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F4F452F6593CC603EC35D5F3 /* Pods-Shared-Babilonia.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-release.xcconfig"; sourceTree = "<group>"; };
-		F57D5A9BD180046A07054D23 /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
-		F7C6212B729C0869BA83E0E7 /* Pods-Shared-Core.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-release.xcconfig"; sourceTree = "<group>"; };
+		F0B9B00CA6A3877AE66DBEF4 /* Pods-Shared-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
 		FE02E006251B6DB800D55DD6 /* UserActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActions.swift; sourceTree = "<group>"; };
 		FE039E3F253D851C00CD3F86 /* ListingFilterModel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListingFilterModel+Helpers.swift"; sourceTree = "<group>"; };
 		FE077942255D27F4009A055B /* PagesDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesDotsView.swift; sourceTree = "<group>"; };
@@ -987,7 +988,6 @@
 		FEEE6820253436F700273E1C /* ListingStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingStatisticsView.swift; sourceTree = "<group>"; };
 		FEFE2D9F25147C0F00C4D3DA /* LocationSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
 		FEFE2DA32514B79900C4D3DA /* PlaceSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchManager.swift; sourceTree = "<group>"; };
-		FF67AB639B468B29AD74CE0D /* Pods-Shared-Babilonia.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1004,7 +1004,7 @@
 			files = (
 				E8CBE410202228FD00186010 /* Core.framework in Frameworks */,
 				59169C8522DF1FA000178A1D /* ARKitLocation.framework in Frameworks */,
-				2E2EAE1F3FD96E0D9CE5F1DA /* Pods_Shared_Babilonia.framework in Frameworks */,
+				F53E34E2992108219567E2A5 /* Pods_Shared_Babilonia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,7 +1012,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AED5ADA2E92F7745ACD6327 /* Pods_Shared_Core.framework in Frameworks */,
+				6A1F9BA76615C7EDE65CA2AD /* Pods_Shared_Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,6 +1027,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		157E8849EAA1B10A53301B3C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29C51A53D2BF250880A8BC9C /* Pods_Shared_Babilonia.framework */,
+				A4FB85AECBE41E8D80D55D62 /* Pods_Shared_Core.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1803A18622E1EC380040ABF5 /* Currency */ = {
 			isa = PBXGroup;
 			children = (
@@ -2331,15 +2340,6 @@
 			path = ErrorsLocalization;
 			sourceTree = "<group>";
 		};
-		9CFF4E98D4D986E45130507D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5E1848A3680DA7F7601D32CE /* Pods_Shared_Babilonia.framework */,
-				42EBD13145C3EF1C7AA2BDAE /* Pods_Shared_Core.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		C52110211DAB85BC006CEBCE = {
 			isa = PBXGroup;
 			children = (
@@ -2351,7 +2351,7 @@
 				59169C7F22DF1FA000178A1D /* ARKitLocation */,
 				C521102B1DAB85BC006CEBCE /* Products */,
 				E467860E0C2AABEF560E271D /* Pods */,
-				9CFF4E98D4D986E45130507D /* Frameworks */,
+				157E8849EAA1B10A53301B3C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2418,22 +2418,22 @@
 		E467860E0C2AABEF560E271D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7252824A10105A9D4A29C66E /* Pods-Shared-Babilonia.debug.xcconfig */,
-				9C13FCC652F997FF5506303B /* Pods-Shared-Babilonia.qa-debug.xcconfig */,
-				FF67AB639B468B29AD74CE0D /* Pods-Shared-Babilonia.production-debug.xcconfig */,
-				7D83A3E5C4F3520A3E79F05D /* Pods-Shared-Babilonia.staging-debug.xcconfig */,
-				759CBB2359F84E8685986C11 /* Pods-Shared-Babilonia.release.xcconfig */,
-				3D1068BE36A7AF64E25830AB /* Pods-Shared-Babilonia.qa-release.xcconfig */,
-				0F21A3DDE99413764699A625 /* Pods-Shared-Babilonia.production-release.xcconfig */,
-				F4F452F6593CC603EC35D5F3 /* Pods-Shared-Babilonia.staging-release.xcconfig */,
-				F57D5A9BD180046A07054D23 /* Pods-Shared-Core.debug.xcconfig */,
-				1A5CA4569FB9CAB969767A61 /* Pods-Shared-Core.qa-debug.xcconfig */,
-				B64B7B58FD9C95552F99D3D1 /* Pods-Shared-Core.production-debug.xcconfig */,
-				AF1283C8F708E7249AB3F3E5 /* Pods-Shared-Core.staging-debug.xcconfig */,
-				45433920DF0E69EB7E23CA77 /* Pods-Shared-Core.release.xcconfig */,
-				863E5FD87DA438DE55713925 /* Pods-Shared-Core.qa-release.xcconfig */,
-				92867A0AC43C1A20FFF8F2F3 /* Pods-Shared-Core.production-release.xcconfig */,
-				F7C6212B729C0869BA83E0E7 /* Pods-Shared-Core.staging-release.xcconfig */,
+				84C6AD7436FE22563DB90852 /* Pods-Shared-Babilonia.debug.xcconfig */,
+				C1D426ABB9D8DA6B520BE18E /* Pods-Shared-Babilonia.qa-debug.xcconfig */,
+				9649C540265BDB21330EAD6A /* Pods-Shared-Babilonia.production-debug.xcconfig */,
+				6400BB07331B6FA7D56115C0 /* Pods-Shared-Babilonia.staging-debug.xcconfig */,
+				1A063B1A32069C7B48C7BA93 /* Pods-Shared-Babilonia.release.xcconfig */,
+				29E05713FF7AC7E66C2328FE /* Pods-Shared-Babilonia.qa-release.xcconfig */,
+				9DE2407BBE46FA70BF2CF7AC /* Pods-Shared-Babilonia.production-release.xcconfig */,
+				C1D0C79BA70F2E46CA6DDDF7 /* Pods-Shared-Babilonia.staging-release.xcconfig */,
+				9BC3E529185A1672DB472FB8 /* Pods-Shared-Core.debug.xcconfig */,
+				26BFE41CB589A485F24A455F /* Pods-Shared-Core.qa-debug.xcconfig */,
+				F0B9B00CA6A3877AE66DBEF4 /* Pods-Shared-Core.production-debug.xcconfig */,
+				7203038EBCEEB8AAFB900873 /* Pods-Shared-Core.staging-debug.xcconfig */,
+				B96EE7D273296E256E23F734 /* Pods-Shared-Core.release.xcconfig */,
+				D5C4EAB3CA4A4943C8AC1223 /* Pods-Shared-Core.qa-release.xcconfig */,
+				CE46CD380DAE94B827E468EF /* Pods-Shared-Core.production-release.xcconfig */,
+				5CF12C2714C74D7D86F99394 /* Pods-Shared-Core.staging-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2891,7 +2891,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C521103C1DAB85BC006CEBCE /* Build configuration list for PBXNativeTarget "Babilonia" */;
 			buildPhases = (
-				D90AD4492F17758CD40E9035 /* [CP] Check Pods Manifest.lock */,
+				3A46477D5FF56C9B27428908 /* [CP] Check Pods Manifest.lock */,
 				C52110261DAB85BC006CEBCE /* Sources */,
 				C52110271DAB85BC006CEBCE /* Frameworks */,
 				C52110281DAB85BC006CEBCE /* Resources */,
@@ -2899,8 +2899,8 @@
 				E8CBE417202228FD00186010 /* Embed Frameworks */,
 				920CD16822BA5CAB00400FAA /* Copy Config */,
 				920CD16D22BA61B600400FAA /* Fabric */,
-				0C65E86AFBE1916F0C630A03 /* [CP] Embed Pods Frameworks */,
-				EC68E0EF49CDE4BA056142E2 /* [CP] Copy Pods Resources */,
+				5F0A51A1B5D70DDA7CE78913 /* [CP] Embed Pods Frameworks */,
+				2DD40E2F565DFBA69DEB9005 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2917,7 +2917,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8CBE416202228FD00186010 /* Build configuration list for PBXNativeTarget "Core" */;
 			buildPhases = (
-				2CB532002390B52BBF205987 /* [CP] Check Pods Manifest.lock */,
+				7212FB314E80D7907958A577 /* [CP] Check Pods Manifest.lock */,
 				E8CBE3F6202228FD00186010 /* Sources */,
 				E8CBE3F7202228FD00186010 /* Frameworks */,
 				E8CBE3F8202228FD00186010 /* Headers */,
@@ -3059,7 +3059,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C65E86AFBE1916F0C630A03 /* [CP] Embed Pods Frameworks */ = {
+		2DD40E2F565DFBA69DEB9005 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A46477D5FF56C9B27428908 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Shared-Babilonia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5F0A51A1B5D70DDA7CE78913 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3161,7 +3203,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2CB532002390B52BBF205987 /* [CP] Check Pods Manifest.lock */ = {
+		7212FB314E80D7907958A577 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3234,48 +3276,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${SRCROOT}/scripts/run-swiftlint.sh\n";
-		};
-		D90AD4492F17758CD40E9035 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Shared-Babilonia-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC68E0EF49CDE4BA056142E2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4027,7 +4027,7 @@
 		};
 		880A4E6D24129269000E638B /* QA-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C13FCC652F997FF5506303B /* Pods-Shared-Babilonia.qa-debug.xcconfig */;
+			baseConfigurationReference = C1D426ABB9D8DA6B520BE18E /* Pods-Shared-Babilonia.qa-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4052,7 +4052,7 @@
 		};
 		880A4E6E24129269000E638B /* QA-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A5CA4569FB9CAB969767A61 /* Pods-Shared-Core.qa-debug.xcconfig */;
+			baseConfigurationReference = 26BFE41CB589A485F24A455F /* Pods-Shared-Core.qa-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4196,7 +4196,7 @@
 		};
 		880A4E7224129284000E638B /* QA-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D1068BE36A7AF64E25830AB /* Pods-Shared-Babilonia.qa-release.xcconfig */;
+			baseConfigurationReference = 29E05713FF7AC7E66C2328FE /* Pods-Shared-Babilonia.qa-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4221,7 +4221,7 @@
 		};
 		880A4E7324129284000E638B /* QA-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 863E5FD87DA438DE55713925 /* Pods-Shared-Core.qa-release.xcconfig */;
+			baseConfigurationReference = D5C4EAB3CA4A4943C8AC1223 /* Pods-Shared-Core.qa-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4371,7 +4371,7 @@
 		};
 		920CD15922BA5B2800400FAA /* Staging-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D83A3E5C4F3520A3E79F05D /* Pods-Shared-Babilonia.staging-debug.xcconfig */;
+			baseConfigurationReference = 6400BB07331B6FA7D56115C0 /* Pods-Shared-Babilonia.staging-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4395,7 +4395,7 @@
 		};
 		920CD15A22BA5B2800400FAA /* Staging-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF1283C8F708E7249AB3F3E5 /* Pods-Shared-Core.staging-debug.xcconfig */;
+			baseConfigurationReference = 7203038EBCEEB8AAFB900873 /* Pods-Shared-Core.staging-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4512,7 +4512,7 @@
 		};
 		920CD15D22BA5B3500400FAA /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF67AB639B468B29AD74CE0D /* Pods-Shared-Babilonia.production-debug.xcconfig */;
+			baseConfigurationReference = 9649C540265BDB21330EAD6A /* Pods-Shared-Babilonia.production-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4536,7 +4536,7 @@
 		};
 		920CD15E22BA5B3500400FAA /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B64B7B58FD9C95552F99D3D1 /* Pods-Shared-Core.production-debug.xcconfig */;
+			baseConfigurationReference = F0B9B00CA6A3877AE66DBEF4 /* Pods-Shared-Core.production-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4644,7 +4644,7 @@
 		};
 		920CD16122BA5B3E00400FAA /* Staging-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F4F452F6593CC603EC35D5F3 /* Pods-Shared-Babilonia.staging-release.xcconfig */;
+			baseConfigurationReference = C1D0C79BA70F2E46CA6DDDF7 /* Pods-Shared-Babilonia.staging-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4668,7 +4668,7 @@
 		};
 		920CD16222BA5B3E00400FAA /* Staging-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7C6212B729C0869BA83E0E7 /* Pods-Shared-Core.staging-release.xcconfig */;
+			baseConfigurationReference = 5CF12C2714C74D7D86F99394 /* Pods-Shared-Core.staging-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4776,7 +4776,7 @@
 		};
 		920CD16522BA5B4500400FAA /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F21A3DDE99413764699A625 /* Pods-Shared-Babilonia.production-release.xcconfig */;
+			baseConfigurationReference = 9DE2407BBE46FA70BF2CF7AC /* Pods-Shared-Babilonia.production-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4800,7 +4800,7 @@
 		};
 		920CD16622BA5B4500400FAA /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92867A0AC43C1A20FFF8F2F3 /* Pods-Shared-Core.production-release.xcconfig */;
+			baseConfigurationReference = CE46CD380DAE94B827E468EF /* Pods-Shared-Core.production-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4970,7 +4970,7 @@
 		};
 		C521103D1DAB85BC006CEBCE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7252824A10105A9D4A29C66E /* Pods-Shared-Babilonia.debug.xcconfig */;
+			baseConfigurationReference = 84C6AD7436FE22563DB90852 /* Pods-Shared-Babilonia.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4996,7 +4996,7 @@
 		};
 		C521103E1DAB85BC006CEBCE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 759CBB2359F84E8685986C11 /* Pods-Shared-Babilonia.release.xcconfig */;
+			baseConfigurationReference = 1A063B1A32069C7B48C7BA93 /* Pods-Shared-Babilonia.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -5020,7 +5020,7 @@
 		};
 		E8CBE412202228FD00186010 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F57D5A9BD180046A07054D23 /* Pods-Shared-Core.debug.xcconfig */;
+			baseConfigurationReference = 9BC3E529185A1672DB472FB8 /* Pods-Shared-Core.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -5051,7 +5051,7 @@
 		};
 		E8CBE413202228FD00186010 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 45433920DF0E69EB7E23CA77 /* Pods-Shared-Core.release.xcconfig */;
+			baseConfigurationReference = B96EE7D273296E256E23F734 /* Pods-Shared-Core.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

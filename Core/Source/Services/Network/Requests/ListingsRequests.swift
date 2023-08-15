@@ -13,7 +13,7 @@ import Alamofire
 struct FetchMyListingsRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    var path = "me/listings"
+    var path = "me/listing/listings"
     let authRequired: Bool = true
     private(set) var parameters: [String: Any]?
     
@@ -332,10 +332,10 @@ private extension Listing {
         dataJSON["image_ids"] = photosInfo.imageIDs
         
         // Contact
-        if let contact = contact {
-            dataJSON["contact_name"] = contact.contactName
-            dataJSON["contact_email"] = contact.contactEmail
-            dataJSON["contact_phone"] = contact.contactPhone
+        if let contacts = contacts {
+            dataJSON["contact_name"] = contacts.first?.contactName
+            dataJSON["contact_email"] = contacts.first?.contactEmail
+            dataJSON["contact_phone"] = contacts.first?.contactPhone
         }
         
 #if DEBUG

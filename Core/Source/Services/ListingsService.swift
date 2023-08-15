@@ -202,7 +202,7 @@ final public class ListingsService {
 
         newClient.execute(
             request: request,
-            parser: DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder),
+            parser: DecodableParser<[Listing]>(keyPath: "data.records.listings", decoder: decoder),
             completion: completion
         )
     }
@@ -468,7 +468,8 @@ private extension Listing {
             location: nil,
             images: nil,
             facilities: nil,
-            advancedDetails: nil
+            advancedDetails: nil,
+            contacts: nil
         )
     }
     
