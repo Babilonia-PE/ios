@@ -33,7 +33,7 @@ struct GetMyListingRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
     var path: String {
-        "me/listing_detail?id=\(listingID)"
+        "me/listing/detail?id=\(listingID)"
     }
     let authRequired = true
 
@@ -178,7 +178,7 @@ struct ListingDetailsRequest: APIRequest, DecoratableRequest {
 
     let method: APIRequestMethod = .get
     var path: String {
-        "public/listing_detail?id=\(listingID)"
+        "public/listing/detail?id=\(listingID)"
     }
     let authRequired = true
 
