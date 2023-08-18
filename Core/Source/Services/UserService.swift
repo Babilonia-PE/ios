@@ -20,6 +20,10 @@ final public class UserService {
         userSession.user.id
     }
     
+    public var userIsLoggedIn: Bool {
+        userSession.state == .opened
+    }
+    
     public init(userSession: UserSession, client: NetworkClient, storage: DBClient, newClient: NetworkClient) {
         self.userSession = userSession
         self.client = client

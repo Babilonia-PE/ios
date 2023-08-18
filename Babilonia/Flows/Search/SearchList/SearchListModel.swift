@@ -49,7 +49,11 @@ final class SearchListModel: EventNode {
     }
     
     var isGuest: Bool {
-        userService.userID == .guest
+        if userService.userIsLoggedIn {
+            return userService.userID == .guest
+        } else {
+            return false
+        }
     }
     var sortOptionValue: SortOption { return sortOption.value }
     var sortOptionTitle: Driver<String> { return sortOption.map { $0.title }.asDriver(onErrorJustReturn: "") }
@@ -155,9 +159,12 @@ final class SearchListModel: EventNode {
     }
 
     func isUserOwnedListing(at index: Int, isTopListing: Bool) -> Bool {
-        let listing = isTopListing ? topListings.value[index] : listings.value[index]
-
-        return listing.user.id == userService.userID
+        if userService.userIsLoggedIn {
+            let listing = isTopListing ? topListings.value[index] : listings.value[index]
+            return listing.user.id == userService.userID
+        } else {
+            return false
+        }
     }
     
     func listingImages(at index: Int, isTopListing: Bool) -> [ListingDetailsImage] {
