@@ -9,7 +9,7 @@
 public struct Url: Codable {
     
     public let main: String?
-    public var share: String?
+    public let share: String?
     
     public init(main: String? = nil, share: String? = nil) {
         self.main = main

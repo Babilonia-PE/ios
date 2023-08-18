@@ -40,7 +40,7 @@ final class CommonListingDetailsModel: EventNode {
         }
     }
     var listingURL: String {
-        String(listing.url?.main ?? "")
+        String(listing.url?.share ?? "")
     }
     var listingState: ListingState {
         listing.state
