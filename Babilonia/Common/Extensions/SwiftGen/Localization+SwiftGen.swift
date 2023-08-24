@@ -1185,6 +1185,16 @@ internal enum L10n {
       /// ¿Desea despublicar el aviso?
       internal static let title = L10n.tr("Localizable", "popups.unpublish_listing.title")
     }
+      internal enum ForceUpdate {
+        /// Tenemos una actualización disponible
+        internal static let text = L10n.tr("Localizable", "popups.force_update.text")
+        /// Aviso
+        internal static let title = L10n.tr("Localizable", "popups.force_update.title")
+        internal enum ForceUpdate {
+          /// Descargar
+          internal static let title = L10n.tr("Localizable", "popups.force_update.force_update.title")
+        }
+      }
   }
 
   internal enum Profile {

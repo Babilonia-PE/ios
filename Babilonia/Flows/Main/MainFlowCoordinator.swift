@@ -134,7 +134,8 @@ final class MainFlowCoordinator: EventNode, FlowCoordinator {
     
     private func updateConfigs() {
         let configsService: ConfigurationsService = container.autoresolve()
-        configsService.updateAppConfigs()
+        let version = Bundle.main.buildVersionNumber
+        configsService.updateAppConfigs(version)
         configsService.getCurrencyRate()
     }
     

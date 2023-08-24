@@ -427,3 +427,8 @@
 "sign.button.title" = "Ingresar";
 "notNow.button.title" = "Ahora no";
 
+// MARK: - Force update pop up
+
+"popups.force_update.title" = "Aviso";
+"popups.force_update.text" = "Tenemos una actualización disponible";
+"popups.force_update.force_update.title" = "Descargar";

@@ -13,6 +13,10 @@ public protocol CurrencyObserver: class {
     func currencyChanged(_ currency: Currency)
 }
 
+public protocol NewVersionObserver: class {
+    func newVersionChanged(_ newVersion: NewVersion)
+}
+
 public final class ConfigurationsService {
     
     public private(set) var appConfigs: AppConfig?
@@ -39,13 +43,14 @@ public final class ConfigurationsService {
     
     // MARK: - app configs
     
-    public func updateAppConfigs() {
-        let request = AppConfigRequest()
+    public func updateAppConfigs(_ version: Int) {
+        let request = AppConfigRequest(version: version)
         newClient.execute(request: request, parser: DecodableParser<AppConfig>(keyPath: "data")) { [weak self] result in
             guard let config = result.value else { return }
             self?.storage.deleteAllObjects(of: AppConfig.self, completion: { _ in
                 self?.appConfigs = config
                 self?.storage.upsert(config)
+                self?.notifyNewVersionObservers()
             })
         }
     }
@@ -59,7 +64,7 @@ public final class ConfigurationsService {
             self.currency = currency
             self.currency.rate = self.rate
             self.storage.upsert(self.currency)
-            self.notifyObservers()
+            self.notifyCurrencyObservers()
         }
     }
     
@@ -94,10 +99,22 @@ public final class ConfigurationsService {
         observers.remove(observer)
     }
     
+    public func addObserver(_ observer: NewVersionObserver) {
+        observers.add(observer)
+    }
+    
+    public func removeObserver(_ observer: NewVersionObserver) {
+        observers.remove(observer)
+    }
+    
     // MARK: - private
     
-    private func notifyObservers() {
+    private func notifyCurrencyObservers() {
         observers.allObjects.forEach { ($0 as? CurrencyObserver)?.currencyChanged(currency) }
+    }
+    
+    private func notifyNewVersionObservers() {
+        observers.allObjects.forEach { ($0 as? NewVersionObserver)?.newVersionChanged(appConfigs?.newVersion ?? NewVersion(update: false)) }
     }
     
 }

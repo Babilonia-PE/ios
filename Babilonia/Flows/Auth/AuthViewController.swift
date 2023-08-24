@@ -29,6 +29,12 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
     private var logInButton: UIButton = .init()
     private var guestButton: UIButton = .init()
     
+    private var bindingsSet = false
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
     // MARK: - lifecycle
     
     init(viewModel: AuthViewModel) {
@@ -39,6 +45,7 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
         layout()
         setupViews()
         setupBindings()
+        initObservers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -160,6 +167,14 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
     private func setupBindings() {
         bind(requestState: viewModel.requestState)
         
+        viewModel.newVersionUpdated
+            .drive(onNext: { [weak self] value in
+                if value.update ?? false {
+                    self?.presentSignOut()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.requestState.isLoading
             .bind { [weak self] value in
                 self?.updateLoadingState(value)
@@ -205,6 +220,30 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
     
     private func loginAsGuest() {
         viewModel.loginGuest()
+    }
+    
+    private func presentSignOut() {
+        SystemAlert.present(on: self,
+                            title: L10n.Popups.ForceUpdate.title,
+                            message: L10n.Popups.ForceUpdate.text,
+                            confirmTitle: L10n.Popups.ForceUpdate.ForceUpdate.title,
+                            confirm: { [weak self] in
+                                self?.openAppStore()
+                            })
+    }
+    
+    private func openAppStore() {
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1472174345") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func initObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func willEnterForeground() {
+        viewModel.viewWillAppear()
     }
 }
 

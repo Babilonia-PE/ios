@@ -58,7 +58,10 @@
 		18F4503722EAE21A0039B9B3 /* ListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503622EAE21A0039B9B3 /* ListingTableViewCell.swift */; };
 		18F4503D22EB27E50039B9B3 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503C22EB27E50039B9B3 /* EmptySearchView.swift */; };
 		18F4503F22EB2D440039B9B3 /* SearchListingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503E22EB2D440039B9B3 /* SearchListingEmptyView.swift */; };
+		35590DE62A96E1EE0059BAC0 /* SanIsidro.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 35590DE52A96E1EE0059BAC0 /* SanIsidro.gpx */; };
 		35C86B7E2A86E7DD0000D48D /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C86B7D2A86E7DD0000D48D /* Url.swift */; };
+		35F9B0252A96C2A700A7BDC3 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F9B0242A96C2A700A7BDC3 /* Bundle+Extensions.swift */; };
+		35F9B0272A96C5FA00A7BDC3 /* NewVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F9B0262A96C5FA00A7BDC3 /* NewVersion.swift */; };
 		505FCBEC2052E68E006CF982 /* Notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505FCBEB2052E68E006CF982 /* Notes.txt */; };
 		530B06AA29BAB3B0003072CF /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530B06A929BAB3B0003072CF /* CurrencyRate.swift */; };
 		532C9B782938782400F00206 /* AuthLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9B772938782400F00206 /* AuthLogInViewController.swift */; };
@@ -554,10 +557,12 @@
 		26BFE41CB589A485F24A455F /* Pods-Shared-Core.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-debug.xcconfig"; sourceTree = "<group>"; };
 		29C51A53D2BF250880A8BC9C /* Pods_Shared_Babilonia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Babilonia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E05713FF7AC7E66C2328FE /* Pods-Shared-Babilonia.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-release.xcconfig"; sourceTree = "<group>"; };
+		35590DE52A96E1EE0059BAC0 /* SanIsidro.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SanIsidro.gpx; sourceTree = "<group>"; };
 		35C86B7D2A86E7DD0000D48D /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
+		35F9B0242A96C2A700A7BDC3 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		35F9B0262A96C5FA00A7BDC3 /* NewVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVersion.swift; sourceTree = "<group>"; };
 		505FCBEB2052E68E006CF982 /* Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5305E2FF27731AD3009B40FB /* SanIsidro.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = SanIsidro.gpx; path = "/Users/owson/Projects/evolbit/git/babilonia-ios/Babilonia/Resources/SanIsidro.gpx"; sourceTree = "<absolute>"; };
 		530B06A929BAB3B0003072CF /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		532C9B772938782400F00206 /* AuthLogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLogInViewController.swift; sourceTree = "<group>"; };
 		532C9B792938787100F00206 /* AuthLogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLogInViewModel.swift; sourceTree = "<group>"; };
@@ -1508,7 +1513,7 @@
 		70BF67AE2045A6AD00803C08 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5305E2FF27731AD3009B40FB /* SanIsidro.gpx */,
+				35590DE52A96E1EE0059BAC0 /* SanIsidro.gpx */,
 				53B6604F2846A4F700604068 /* Magdalena.gpx */,
 				70BF67AF2045A6AD00803C08 /* Assets.xcassets */,
 				FE1DC3DC25ADD23200BD7E1F /* Localizable.strings */,
@@ -1893,6 +1898,7 @@
 				185D1E3D22CB4D1F00D1FEAB /* NumberFormatter+Common.swift */,
 				FE3FBFE7252CCF6900AFA79F /* String+Extensions.swift */,
 				FEAD86DE256EB47700A276B7 /* DateFormatter.swift */,
+				35F9B0242A96C2A700A7BDC3 /* Bundle+Extensions.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -2033,6 +2039,7 @@
 				887864A0273B7D9C00FC064B /* Contact.swift */,
 				530B06A929BAB3B0003072CF /* CurrencyRate.swift */,
 				35C86B7D2A86E7DD0000D48D /* Url.swift */,
+				35F9B0262A96C5FA00A7BDC3 /* NewVersion.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -3029,6 +3036,7 @@
 				923A3EEA22A56680008D6A42 /* AvenirLTStd-Medium.otf in Resources */,
 				70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */,
 				923A3EEF22A56680008D6A42 /* AvenirLTStd-Heavy.otf in Resources */,
+				35590DE62A96E1EE0059BAC0 /* SanIsidro.gpx in Resources */,
 				923A3EE922A56680008D6A42 /* AvenirLTStd-BookOblique.otf in Resources */,
 				70BF67F22045A6AE00803C08 /* LaunchScreen.storyboard in Resources */,
 				923A3ED722A56673008D6A42 /* samsungsharpsans-medium.otf in Resources */,
@@ -3482,6 +3490,7 @@
 				532C9B782938782400F00206 /* AuthLogInViewController.swift in Sources */,
 				924EA078229C1E35000AD5FA /* HUD.swift in Sources */,
 				88D7466326AE50D8006C0747 /* RecentLocation.swift in Sources */,
+				35F9B0252A96C2A700A7BDC3 /* Bundle+Extensions.swift in Sources */,
 				1896A7CE22DF112500FB95EE /* EditProfileModel.swift in Sources */,
 				9219CE1522B14F4E00BCD7CC /* SwitchFieldViewModel.swift in Sources */,
 				FEED064F2548226500CD1F86 /* PaymentsPlanModel.swift in Sources */,
@@ -3675,6 +3684,7 @@
 				92EFF4EA22CB663F007DBCEE /* Constants.swift in Sources */,
 				920CD12F22B3C3F000400FAA /* Facility+CoreData.swift in Sources */,
 				886340022725C71500659B7A /* GeneralRespose.swift in Sources */,
+				35F9B0272A96C5FA00A7BDC3 /* NewVersion.swift in Sources */,
 				FE14A90A251B205A00C4B6D9 /* UserDefaults+Extensions.swift in Sources */,
 				530B06AA29BAB3B0003072CF /* CurrencyRate.swift in Sources */,
 				FEE24295255A7A1300CEB318 /* MapDirectionsService.swift in Sources */,
@@ -4035,7 +4045,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4204,7 +4214,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Babilonia/BabiloniaQA-Release.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4378,7 +4388,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4519,7 +4529,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4651,7 +4661,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4783,7 +4793,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4978,7 +4988,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
@@ -5003,7 +5013,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

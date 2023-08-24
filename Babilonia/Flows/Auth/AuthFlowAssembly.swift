@@ -20,7 +20,11 @@ final class AuthFlowAssembly: Assembly {
             .inObjectScope(.transient)
         container
             .register(AuthViewController.self) { (resolver, eventNode: EventNode) in
-                AuthViewController(viewModel: AuthViewModel(model: resolver.autoresolve(argument: eventNode)))
+                AuthViewController(
+                    viewModel: AuthViewModel(
+                        model: resolver.autoresolve(argument: eventNode)
+                    )
+                )
             }
             .inObjectScope(.transient)
         

@@ -169,7 +169,7 @@ extension TopListingPreviewCell {
             $0.width.equal(to: 24.0)
         }
 
-        setupPlanView()
+        //setupPlanView()
     }
 
     private func setupTypeView() {

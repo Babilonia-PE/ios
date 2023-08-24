@@ -21,13 +21,23 @@ enum AuthEvent: Event {
 final class AuthModel: EventNode {
     
     let requestState = PublishSubject<RequestState>()
+    var newVersionUpdated: Driver<NewVersion> { return newVersion.asDriver() }
+    private let newVersion: BehaviorRelay<NewVersion>
     
     private let userSessionController: UserSessionController
+    private let configService: ConfigurationsService
     
-    init(parent: EventNode, userSessionController: UserSessionController) {
+    deinit {
+        configService.removeObserver(self)
+    }
+    
+    init(parent: EventNode, userSessionController: UserSessionController, configService: ConfigurationsService) {
         self.userSessionController = userSessionController
+        self.configService = configService
+        self.newVersion = BehaviorRelay(value: configService.appConfigs?.newVersion ?? NewVersion(update: false))
         
         super.init(parent: parent)
+        configService.addObserver(self)
     }
     
 //    func login(with token: String) {
@@ -58,5 +68,17 @@ final class AuthModel: EventNode {
     
     func signUp() {
         raise(event: AuthEvent.signUp(""))
+    }
+    
+    func validateVersion() {
+        guard let version = configService.appConfigs?.newVersion else { return }
+        newVersion.accept(version)
+    }
+}
+
+extension AuthModel: NewVersionObserver {
+    
+    func newVersionChanged(_ newVersion: NewVersion) {
+        self.newVersion.accept(newVersion)
     }
 }

@@ -9,15 +9,21 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import Core
 
 final class AuthViewModel {
     
     var requestState: Observable<RequestState> { return model.requestState.asObservable() }
+    var newVersionUpdated: Driver<NewVersion> { return model.newVersionUpdated }
     
     private let model: AuthModel
     
     init(model: AuthModel) {
         self.model = model
+    }
+    
+    func viewWillAppear() {
+        model.validateVersion()
     }
     
 //    func login(with token: String) {

@@ -67,7 +67,8 @@ extension AppConfig: CoreDataModelConvertible {
         return AppConfig(
             termsURLString: object.termsURLString,
             privacyURLString: object.privacyURLString,
-            location: location
+            location: location,
+            newVersion: NewVersion(update: false)
         )
     }
 }
