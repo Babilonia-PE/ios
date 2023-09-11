@@ -60,6 +60,7 @@ public struct Listing: Codable {
     public var favouritesCount: Int
     public var favourited: Bool?
     public var id: ListingId
+    public var ids: [ListingId]?
     public var listingDescription: String?
     public var listingType: ListingType?
     public var parkingSlotsCount: Int?
@@ -98,7 +99,9 @@ public struct Listing: Codable {
                 bedroomsCount: Int?,
                 contactViewsCount: Int?,
                 favouritesCount: Int,
-                favourited: Bool = false, id: ListingId,
+                favourited: Bool = false,
+                id: ListingId,
+                ids: [ListingId]?,
                 listingDescription: String?,
                 listingType: ListingType?,
                 parkingSlotsCount: Int?,
@@ -133,6 +136,7 @@ public struct Listing: Codable {
         self.favouritesCount = favouritesCount
         self.favourited = favourited
         self.id = id
+        self.ids = ids
         self.listingDescription = listingDescription
         self.listingType = listingType
         self.parkingSlotsCount = parkingSlotsCount
@@ -170,6 +174,7 @@ public struct Listing: Codable {
         case favouritesCount
         case favourited
         case id
+        case ids
         case listingDescription = "description"
         case listingType
         case parkingSlotsCount

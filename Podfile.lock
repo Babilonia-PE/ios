@@ -162,9 +162,7 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (3.1.1)
   - JGProgressHUD (2.2)
-  - Kingfisher (5.13.4):
-    - Kingfisher/Core (= 5.13.4)
-  - Kingfisher/Core (5.13.4)
+  - Kingfisher (7.9.0)
   - MultiSlider (1.10.13):
     - AvailableHapticFeedback
     - SweeterSwift
@@ -190,6 +188,9 @@ PODS:
   - RxRelay (5.1.3):
     - RxSwift (~> 5)
   - RxSwift (5.1.3)
+  - SDWebImage/Core (5.17.0)
+  - SDWebImageSVGCoder (1.7.0):
+    - SDWebImage/Core (~> 5.6)
   - SVGKit (3.0.0):
     - CocoaLumberjack (~> 3.0)
   - SweeterSwift (1.2.1)
@@ -223,11 +224,12 @@ DEPENDENCIES:
   - GoogleMaps (~> 3.10.0)
   - GooglePlaces (~> 3.10.0)
   - JGProgressHUD (~> 2.1)
-  - Kingfisher (~> 5.13.4)
+  - Kingfisher
   - MultiSlider (~> 1.10.12)
   - "NSObject+Rx (~> 5.1.0)"
   - PhoneNumberKit (~> 3.2.0)
   - RxCocoa (= 5.1.1)
+  - SDWebImageSVGCoder
   - SVGKit
   - SwiftGen (~> 6.4.0)
   - SwiftLint (~> 0.39.2)
@@ -279,6 +281,8 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - SDWebImage
+    - SDWebImageSVGCoder
     - SVGKit
     - SweeterSwift
     - SwiftGen
@@ -336,7 +340,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
-  Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
+  Kingfisher: 59f908b6d2f403b0a3e539debb0eec05cb27002c
   MultiSlider: 6e711a3338090fcd9847a120771b957597414449
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   "NSObject+Rx": fa6bbcc1ab1faa06b01466bc09b1e0692bbc5946
@@ -346,6 +350,8 @@ SPEC CHECKSUMS:
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
+  SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
   SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
   SweeterSwift: 61baeda1c0c27d1dc57c8112c3d6a82e5aff3139
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
@@ -356,6 +362,6 @@ SPEC CHECKSUMS:
   YALAPIClient: 85485a86e22d2df8467548626f7ae01261373c68
   YALResult: 26915691cdd19269936336d6f28e1a015c64175e
 
-PODFILE CHECKSUM: 2d2296423d0cf9b39ae9febe5e9290a4c2eefd61
+PODFILE CHECKSUM: 2f32c6ca447989bcae6e4b29d4b421628fe88030
 
 COCOAPODS: 1.12.1

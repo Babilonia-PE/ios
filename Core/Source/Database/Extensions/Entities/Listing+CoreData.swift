@@ -155,6 +155,7 @@ extension Listing: CoreDataModelConvertible {
             favouritesCount: Int(object.favouritesCount),
             favourited: object.favourited,
             id: ListingId(object.id),
+            ids: [ListingId(object.id)],
             listingDescription: object.listingDescription,
             listingType: object.listingType.flatMap(ListingType.init),
             parkingSlotsCount: object.parkingSlotsCount.flatMap(Int.init),

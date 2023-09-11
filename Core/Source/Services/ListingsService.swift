@@ -444,6 +444,7 @@ private extension Listing {
             contactViewsCount: 0,
             favouritesCount: 0,
             id: -UUID().hashValue,
+            ids: [-UUID().hashValue],
             listingDescription: "",
             listingType: nil,
             parkingSlotsCount: nil,

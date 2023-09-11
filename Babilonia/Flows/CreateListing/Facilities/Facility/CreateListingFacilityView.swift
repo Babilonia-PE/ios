@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import SDWebImageSVGCoder
 
 final class CreateListingFacilityView: UIView {
     
@@ -98,15 +99,9 @@ final class CreateListingFacilityView: UIView {
             if let url = viewModel.imageURL?.absoluteString, url.hasSuffix(".svg") {
                 options.append(.processor(SVGImgProcessor()))
             }
-            
-            imageView.kf.setImage(with: viewModel.imageURL,
-                                  options: options,
-                                  completionHandler: { [weak self] result in
-                                    if case let .success(image) = result {
-                                        self?.imageView.image = image.image.withRenderingMode(.alwaysTemplate)
-                                    }
-                                  })
-
+            let SVGCoder = SDImageSVGCoder.shared
+            SDImageCodersManager.shared.addCoder(SVGCoder)
+            imageView.sd_setImage(with: viewModel.imageURL)
             imageView.contentMode = .scaleAspectFill
         }
         

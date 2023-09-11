@@ -113,6 +113,7 @@ struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
         }
         params["per_page"] = perPage
         params["page"] = page
+        params["platform"] = "ios"
         
         parameters = params
     }
@@ -249,6 +250,10 @@ private extension Listing {
         }
         dataJSON["source"] = "ios"
         dataJSON["id"] = id
+        
+        dataJSON["ids"] = [id]
+        dataJSON["type"] = "listing"
+        
         dataJSON["listing_type"] = (listingType ?? .sale).rawValue
         dataJSON["property_type"] = (propertyType ?? .apartment).rawValue
 

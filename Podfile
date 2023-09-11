@@ -49,8 +49,9 @@ abstract_target 'Shared' do
         pod 'FBSDKShareKit'
         
         # Image fetching
-        pod 'Kingfisher', '~> 5.13.4'
+        pod 'Kingfisher'
         pod 'SVGKit'
+        pod 'SDWebImageSVGCoder'
         
         # Tools
         pod 'SwiftGen', '~> 6.4.0'
