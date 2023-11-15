@@ -192,7 +192,7 @@ PODS:
 
 DEPENDENCIES:
   - CountryPickerView (~> 3.3.0)
-  - DBClient/CoreData (~> 1.4.2)
+  - DBClient/CoreData (from `https://github.com/Yalantis/DBClient`, branch `fetch-hotfix`)
   - ESTabBarController-swift (~> 2)
   - FBSDKCoreKit (~> 11.1.0)
   - FBSDKLoginKit
@@ -223,7 +223,6 @@ SPEC REPOS:
     - AvailableHapticFeedback
     - CocoaLumberjack
     - CountryPickerView
-    - DBClient
     - ESTabBarController-swift
     - FBAEMKit
     - FBSDKCoreKit
@@ -267,10 +266,16 @@ SPEC REPOS:
     - YALResult
 
 EXTERNAL SOURCES:
+  DBClient:
+    :branch: fetch-hotfix
+    :git: https://github.com/Yalantis/DBClient
   YALAPIClient:
     :git: https://gitlab.com/babilonia-public/babilonia-public.git
 
 CHECKOUT OPTIONS:
+  DBClient:
+    :commit: 7832f78df332c4598b97ad432fa643c2da98d672
+    :git: https://github.com/Yalantis/DBClient
   YALAPIClient:
     :commit: f0acf6ceaf09dc051610a5129c7e5186e1477b8f
     :git: https://gitlab.com/babilonia-public/babilonia-public.git
@@ -324,6 +329,6 @@ SPEC CHECKSUMS:
   YALAPIClient: 85485a86e22d2df8467548626f7ae01261373c68
   YALResult: 26915691cdd19269936336d6f28e1a015c64175e
 
-PODFILE CHECKSUM: 188c938a640e60e3d36cea1c3dd1253f5bdcd6ca
+PODFILE CHECKSUM: 780c5778db41af677e6161b095d33465999c0e1f
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.12.1
