@@ -642,9 +642,6 @@
 		70BF67B32045A6AD00803C08 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		880A4E65240EA80E000E638B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		880A4E672410FCD5000E638B /* Babilonia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Babilonia.entitlements; sourceTree = "<group>"; };
-		880A4E6A2412923E000E638B /* QA-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "QA-Debug.xcconfig"; sourceTree = "<group>"; };
-		880A4E6B2412923E000E638B /* QA-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "QA-Release.xcconfig"; sourceTree = "<group>"; };
-		880A4E762412AC33000E638B /* QA.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 		880A4E8724179142000E638B /* ScrollableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableView.swift; sourceTree = "<group>"; };
 		880A4E89241792E5000E638B /* SegmentControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentControlView.swift; sourceTree = "<group>"; };
 		880A4E8B24179DA5000E638B /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -699,16 +696,13 @@
 		920CD14722BA597500400FAA /* Environment.production.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.production.plist; sourceTree = "<group>"; };
 		920CD14822BA597500400FAA /* Environment.development.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.development.plist; sourceTree = "<group>"; };
 		920CD14B22BA5A2200400FAA /* Production-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Production-Debug.xcconfig"; sourceTree = "<group>"; };
-		920CD14C22BA5A2200400FAA /* Staging-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Staging-Debug.xcconfig"; sourceTree = "<group>"; };
 		920CD14D22BA5A2200400FAA /* Production-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Production-Release.xcconfig"; sourceTree = "<group>"; };
 		920CD14F22BA5A2200400FAA /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		920CD15022BA5A2200400FAA /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		920CD15122BA5A2200400FAA /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
-		920CD15222BA5A2200400FAA /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		920CD15322BA5A2200400FAA /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		920CD15422BA5A2200400FAA /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		920CD15522BA5A2200400FAA /* Development-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Development-Debug.xcconfig"; sourceTree = "<group>"; };
-		920CD15622BA5A2200400FAA /* Staging-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Staging-Release.xcconfig"; sourceTree = "<group>"; };
 		920CD15722BA5A2200400FAA /* Development-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Development-Release.xcconfig"; sourceTree = "<group>"; };
 		920CD16B22BA5E5200400FAA /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		9219CDE822A9379500BCD7CC /* FadeInPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeInPopupView.swift; sourceTree = "<group>"; };
@@ -883,7 +877,6 @@
 		FE077979255DA7AC009A055B /* PhotoGalleryExtendedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryExtendedModel.swift; sourceTree = "<group>"; };
 		FE07797A255DA7AC009A055B /* PhotoGalleryExtendedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryExtendedViewModel.swift; sourceTree = "<group>"; };
 		FE077985255DA7CD009A055B /* PhotoGalleryExtendedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryExtendedView.swift; sourceTree = "<group>"; };
-		FE0B1CC02590B4C4004E64BF /* BabiloniaQA-Release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BabiloniaQA-Release.entitlements"; sourceTree = "<group>"; };
 		FE14A909251B205A00C4B6D9 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		FE14A90B251B60A600C4B6D9 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		FE184C23257E1A1100D35C2B /* DeeplinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
@@ -1334,7 +1327,6 @@
 			isa = PBXGroup;
 			children = (
 				FEED9C3A2590C4AC00347A11 /* BabiloniaDebug.entitlements */,
-				FE0B1CC02590B4C4004E64BF /* BabiloniaQA-Release.entitlements */,
 				880A4E672410FCD5000E638B /* Babilonia.entitlements */,
 				70BF67552045A6AD00803C08 /* AppDelegate.swift */,
 				70BF67562045A6AD00803C08 /* Common */,
@@ -1667,10 +1659,6 @@
 				920CD14E22BA5A2200400FAA /* Shared */,
 				920CD15522BA5A2200400FAA /* Development-Debug.xcconfig */,
 				920CD15722BA5A2200400FAA /* Development-Release.xcconfig */,
-				880A4E6A2412923E000E638B /* QA-Debug.xcconfig */,
-				880A4E6B2412923E000E638B /* QA-Release.xcconfig */,
-				920CD14C22BA5A2200400FAA /* Staging-Debug.xcconfig */,
-				920CD15622BA5A2200400FAA /* Staging-Release.xcconfig */,
 				920CD14B22BA5A2200400FAA /* Production-Debug.xcconfig */,
 				920CD14D22BA5A2200400FAA /* Production-Release.xcconfig */,
 			);
@@ -1682,8 +1670,6 @@
 			children = (
 				920CD15422BA5A2200400FAA /* Base.xcconfig */,
 				920CD15122BA5A2200400FAA /* Development.xcconfig */,
-				880A4E762412AC33000E638B /* QA.xcconfig */,
-				920CD15222BA5A2200400FAA /* Staging.xcconfig */,
 				920CD15322BA5A2200400FAA /* Production.xcconfig */,
 				920CD14F22BA5A2200400FAA /* Debug.xcconfig */,
 				920CD15022BA5A2200400FAA /* Release.xcconfig */,
