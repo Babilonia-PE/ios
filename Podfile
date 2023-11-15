@@ -3,7 +3,6 @@ platform :ios, '13.0'
 # Specify which schemes refer to the debug configuration
 project 'Babilonia', {
     'Debug' => :debug,
-    'Staging-Debug' => :debug,
     'Production-Debug' => :debug
 }
 
