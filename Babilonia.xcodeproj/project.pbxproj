@@ -642,7 +642,6 @@
 		70BF67B32045A6AD00803C08 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		880A4E65240EA80E000E638B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		880A4E672410FCD5000E638B /* Babilonia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Babilonia.entitlements; sourceTree = "<group>"; };
-		880A4E6824128F79000E638B /* Environment.qa.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Environment.qa.plist; sourceTree = "<group>"; };
 		880A4E6A2412923E000E638B /* QA-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "QA-Debug.xcconfig"; sourceTree = "<group>"; };
 		880A4E6B2412923E000E638B /* QA-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "QA-Release.xcconfig"; sourceTree = "<group>"; };
 		880A4E762412AC33000E638B /* QA.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
@@ -699,7 +698,6 @@
 		920CD14422B93B2300400FAA /* ConfirmationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationButton.swift; sourceTree = "<group>"; };
 		920CD14722BA597500400FAA /* Environment.production.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.production.plist; sourceTree = "<group>"; };
 		920CD14822BA597500400FAA /* Environment.development.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.development.plist; sourceTree = "<group>"; };
-		920CD14922BA597500400FAA /* Environment.staging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.staging.plist; sourceTree = "<group>"; };
 		920CD14B22BA5A2200400FAA /* Production-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Production-Debug.xcconfig"; sourceTree = "<group>"; };
 		920CD14C22BA5A2200400FAA /* Staging-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Staging-Debug.xcconfig"; sourceTree = "<group>"; };
 		920CD14D22BA5A2200400FAA /* Production-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Production-Release.xcconfig"; sourceTree = "<group>"; };
@@ -1658,8 +1656,6 @@
 			isa = PBXGroup;
 			children = (
 				920CD14822BA597500400FAA /* Environment.development.plist */,
-				880A4E6824128F79000E638B /* Environment.qa.plist */,
-				920CD14922BA597500400FAA /* Environment.staging.plist */,
 				920CD14722BA597500400FAA /* Environment.production.plist */,
 			);
 			path = Environment;
