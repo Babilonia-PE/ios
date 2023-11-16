@@ -76,7 +76,8 @@ struct UpdateListingRequest: APIRequest, DecoratableRequest {
 struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    let path = "public/listings"
+    let path = "public/listing/listings"
+    //let path = "public/listings"
     let authRequired = true
     private(set) var parameters: [String: Any]?
     
@@ -122,7 +123,8 @@ struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
 struct FetchAllListingsAddressRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    let path = "public/listings"
+    let path = "public/listing/listings"
+    //let path = "public/listings"
     let authRequired = true
     private(set) var parameters: [String: Any]?
     
