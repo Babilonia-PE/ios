@@ -331,6 +331,7 @@
 		92F63EED22C11B5D00A65EEE /* ListingImage+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F63EEC22C11B5D00A65EEE /* ListingImage+CoreData.swift */; };
 		92F63EEF22C11EDA00A65EEE /* Location+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F63EEE22C11EDA00A65EEE /* Location+CoreData.swift */; };
 		92F63EF122C122DE00A65EEE /* Listing+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F63EF022C122DE00A65EEE /* Listing+CoreData.swift */; };
+		B42A85B72B059248005DC0B8 /* UrlListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42A85B62B059248005DC0B8 /* UrlListing.swift */; };
 		E858DD4C20247D4600A7867A /* Resolver+Autoresolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879B2562022368C009FEC51 /* Resolver+Autoresolve.swift */; };
 		E858DD4D20247D4600A7867A /* Container+Autoregistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879B258202245B9009FEC51 /* Container+Autoregistration.swift */; };
 		E8CBE404202228FD00186010 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CBE3FB202228FD00186010 /* Core.framework */; };
@@ -851,6 +852,7 @@
 		A1DED3C65A3D99829AFBD67D /* Pods-Shared-Babilonia.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-debug.xcconfig"; sourceTree = "<group>"; };
 		AA85376651F92CE314D5F39F /* Pods-Shared-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		B33554AA643FEABA3459D432 /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
+		B42A85B62B059248005DC0B8 /* UrlListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlListing.swift; sourceTree = "<group>"; };
 		B43EF3821A6D5F1FA4737E6A /* Pods-Shared-Babilonia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.debug.xcconfig"; sourceTree = "<group>"; };
 		B8306527201889E900FF574C /* DecoratableRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratableRequest.swift; sourceTree = "<group>"; };
 		BF9AAC3CBBA8CC25E63C9FFC /* Pods-Shared-Babilonia.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-release.xcconfig"; sourceTree = "<group>"; };
@@ -2012,6 +2014,7 @@
 				886340012725C71500659B7A /* GeneralRespose.swift */,
 				887864A0273B7D9C00FC064B /* Contact.swift */,
 				530B06A929BAB3B0003072CF /* CurrencyRate.swift */,
+				B42A85B62B059248005DC0B8 /* UrlListing.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -3671,6 +3674,7 @@
 				920CD13622B3C79600400FAA /* DecodableParser.swift in Sources */,
 				18BE02E022D8BF840058C56E /* JSONDecoder.swift in Sources */,
 				53BF4F2329276EE00023A571 /* UserSignUp.swift in Sources */,
+				B42A85B72B059248005DC0B8 /* UrlListing.swift in Sources */,
 				924EA091229D8588000AD5FA /* User.swift in Sources */,
 				923BE35D22D68F4B006A28A2 /* Executor.swift in Sources */,
 				924EA0A5229EB2B3000AD5FA /* ServerError.swift in Sources */,
