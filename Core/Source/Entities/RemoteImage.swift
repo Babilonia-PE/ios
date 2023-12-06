@@ -8,13 +8,18 @@
 
 public struct RemoteImage: Codable {
     
-    public let originalURLString: String
+    public let originalURLString: String?
     public let smallURLString: String?
     public let mediumURLString: String?
     public let largeURLString: String?
     
     // 55547 TODO: - Remote this init
-    public init(originalURLString: String, smallURLString: String?, mediumURLString: String?, largeURLString: String?) {
+    public init(
+        originalURLString: String?,
+        smallURLString: String?,
+        mediumURLString: String?,
+        largeURLString: String?
+    ) {
         self.originalURLString = originalURLString
         self.smallURLString = smallURLString
         self.mediumURLString = mediumURLString

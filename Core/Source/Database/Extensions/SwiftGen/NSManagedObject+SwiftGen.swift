@@ -500,7 +500,7 @@ internal class ManagedRemoteImage: NSManagedObject {
   // swiftlint:disable discouraged_optional_boolean discouraged_optional_collection
   @NSManaged internal var largeURLString: String?
   @NSManaged internal var mediumURLString: String?
-  @NSManaged internal var originalURLString: String
+  @NSManaged internal var originalURLString: String?
   @NSManaged internal var smallURLString: String?
   @NSManaged internal var facility: ManagedFacility?
   @NSManaged internal var listingImage: ManagedListingImage?

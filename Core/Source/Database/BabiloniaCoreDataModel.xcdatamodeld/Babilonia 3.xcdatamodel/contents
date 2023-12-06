@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F66" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AppConfig" representedClassName=".ManagedAppConfig" syncable="YES">
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="privacyURLString" attributeType="String"/>
@@ -85,7 +85,7 @@
     <entity name="RemoteImage" representedClassName=".ManagedRemoteImage" syncable="YES">
         <attribute name="largeURLString" optional="YES" attributeType="String"/>
         <attribute name="mediumURLString" optional="YES" attributeType="String"/>
-        <attribute name="originalURLString" attributeType="String"/>
+        <attribute name="originalURLString" optional="YES" attributeType="String"/>
         <attribute name="smallURLString" optional="YES" attributeType="String"/>
         <relationship name="facility" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Facility" inverseName="icon" inverseEntity="Facility"/>
         <relationship name="listingImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ListingImage" inverseName="photo" inverseEntity="ListingImage"/>
@@ -99,15 +99,4 @@
         <relationship name="avatar" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RemoteImage" inverseName="user" inverseEntity="RemoteImage"/>
         <relationship name="listings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Listing" inverseName="user" inverseEntity="Listing"/>
     </entity>
-    <elements>
-        <element name="AppConfig" positionX="394.45703125" positionY="348.25" width="128" height="105"/>
-        <element name="Contact" positionX="-258.602783203125" positionY="573.8001708984375" width="127.6222229003906" height="88"/>
-        <element name="Currency" positionX="339.6484375" positionY="184.515625" width="128" height="105"/>
-        <element name="Facility" positionX="-199.4921875" positionY="115.32421875" width="128" height="149"/>
-        <element name="Listing" positionX="-0.5859375" positionY="238.36328125" width="128" height="553"/>
-        <element name="ListingImage" positionX="181.03125" positionY="242.52734375" width="128" height="103"/>
-        <element name="Location" positionX="216.57421875" positionY="411.765625" width="128" height="208"/>
-        <element name="RemoteImage" positionX="31.1171875" positionY="24.29296875" width="128" height="134"/>
-        <element name="User" positionX="-269.56640625" positionY="310.96875" width="128" height="119"/>
-    </elements>
 </model>

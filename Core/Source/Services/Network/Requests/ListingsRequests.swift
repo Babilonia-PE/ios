@@ -13,7 +13,7 @@ import Alamofire
 struct FetchMyListingsRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    var path = "me/listings"
+    var path = "me/listing/listings"
     let authRequired: Bool = true
     private(set) var parameters: [String: Any]?
     
