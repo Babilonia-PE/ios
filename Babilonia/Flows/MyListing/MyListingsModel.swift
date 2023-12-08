@@ -202,6 +202,12 @@ final class MyListingsModel: EventNode {
 //            editListing(listing)
 //        }
     }
+    
+    func getShareURL(for listingID: Int) -> String? {
+        guard let listing = allListings.value.first(where: { $0.id == listingID }) else { return nil }
+        
+        return listing.url?.share
+    }
 
     private func editListing(_ listing: Listing) {
         guard let primaryImageId = listing.primaryImageId else { return }

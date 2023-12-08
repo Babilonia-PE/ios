@@ -40,6 +40,8 @@ final class ListingViewModel {
 
     var address: String? { return listing.location?.address }
     
+    var url: String? { return listing.url?.share }
+    
     var fullAddress: String? {
         let addressArray = (listing.location?.address ?? "").split(separator: ",")
         var address = addressArray.isEmpty ? "" : String(addressArray[0])

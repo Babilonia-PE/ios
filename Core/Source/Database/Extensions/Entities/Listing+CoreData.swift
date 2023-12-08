@@ -99,6 +99,9 @@ extension Listing: CoreDataModelConvertible {
         object.advancedDetails = (advancedDetails.flatMap { upsertFacilities($0, in: context) }).flatMap(Set.init)
         
         object.contact = contact?.upsertManagedObject(in: context, existedInstance: object.contact) as? ManagedContact
+        let url = url?.upsertManagedObject(in: context, existedInstance: object.url)
+        print(url)
+        object.url = url  as? ManagedListingUrl
 //        guard let contact = managedContact as? ManagedContact else {
 //            fatalError("Cannot cast \(String(describing: managedContact)) to \(String(describing: managedContact.self))")
 //        }
@@ -126,6 +129,7 @@ extension Listing: CoreDataModelConvertible {
     private static func instantiate(_ object: ManagedListing) -> Listing {
         guard let user = User.from(object.user) as? User else { fatalError() }
         let contact: Contact? = (object.contact != nil) ? Contact.from(object.contact!) as? Contact : nil
+        let url: UrlListing? = (object.url != nil) ? UrlListing.from(object.url!) as? UrlListing : nil
         let location = object.location.flatMap(Location.from) as? Location
         let images = object.images?.map { (image: ManagedListingImage) -> ListingImage in
             guard let result = ListingImage.from(image) as? ListingImage else { fatalError() }
@@ -176,7 +180,8 @@ extension Listing: CoreDataModelConvertible {
             images: images,
             facilities: facilities,
             advancedDetails: advancedDetails,
-            contact: contact
+            contact: contact,
+            url: url
         )
     }
 }

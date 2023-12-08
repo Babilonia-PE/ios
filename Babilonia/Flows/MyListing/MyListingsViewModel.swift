@@ -79,6 +79,10 @@ final class MyListingsViewModel {
         model.editListing(with: id)
     }
     
+    func isListingShared(with id: ListingId) -> String {
+        model.getShareURL(for: id) ?? ""
+    }
+    
     func publishListing(with id: ListingId) {
         model.publishListing(with: id)
     }

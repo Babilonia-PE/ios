@@ -61,6 +61,7 @@
         <relationship name="facilities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Facility" inverseName="listings" inverseEntity="Facility"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListingImage" inverseName="listing" inverseEntity="ListingImage"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="listing" inverseEntity="Location"/>
+        <relationship name="url" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UrlListing" inverseName="listings" inverseEntity="UrlListing"/>
         <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="listings" inverseEntity="User"/>
     </entity>
     <entity name="ListingImage" representedClassName=".ManagedListingImage" syncable="YES">
@@ -90,6 +91,11 @@
         <relationship name="facility" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Facility" inverseName="icon" inverseEntity="Facility"/>
         <relationship name="listingImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ListingImage" inverseName="photo" inverseEntity="ListingImage"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="avatar" inverseEntity="User"/>
+    </entity>
+    <entity name="UrlListing" representedClassName=".ManagedListingUrl" syncable="YES">
+        <attribute name="main" optional="YES" attributeType="String"/>
+        <attribute name="share" optional="YES" attributeType="String"/>
+        <relationship name="listings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Listing" inverseName="url" inverseEntity="Listing"/>
     </entity>
     <entity name="User" representedClassName=".ManagedUser" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String"/>

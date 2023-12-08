@@ -318,15 +318,13 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
                 }
             case .unpublish: self.presentPublishActionAlert(for: listingId, isPublish: false)
             case .delete: self.presentDeleteAlert(for: listingId)
-            case .share: self.showShare(for: listingId)
-            }
+            case .share: self.showShare(for: viewModel.isListingShared(with: listingId))            }
         }
     }
     
-    private func showShare(for listingId: ListingId) {
-        let text = L10n.Common.share
-        let url = URL(string: "\(Environment.default.webSiteURL ?? "")listings/\(listingId)")!
-        let items: [Any] = [text, url]
+    private func showShare(for listingId: String) {
+        let text = L10n.Common.share + " \(Environment.default.webSiteURL ?? "")\(listingId)"
+        let items: [Any] = [text]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
             UIActivity.ActivityType.airDrop

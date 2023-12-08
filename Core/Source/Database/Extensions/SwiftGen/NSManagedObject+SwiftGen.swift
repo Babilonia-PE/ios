@@ -362,6 +362,7 @@ internal class ManagedListing: NSManagedObject {
   @NSManaged internal var images: Set<ManagedListingImage>?
   @NSManaged internal var location: ManagedLocation?
   @NSManaged internal var user: ManagedUser
+  @NSManaged internal var url: ManagedListingUrl?
   @NSManaged internal var contact: ManagedContact?
   // swiftlint:enable discouraged_optional_boolean discouraged_optional_collection
 }
@@ -539,9 +540,48 @@ internal class ManagedUser: NSManagedObject {
   // swiftlint:enable discouraged_optional_boolean discouraged_optional_collection
 }
 
+internal class ManagedListingUrl: NSManagedObject {
+  internal class var entityName: String {
+    return "UrlListing"
+  }
+
+  internal class func entity(in managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    return NSEntityDescription.entity(forEntityName: entityName, in: managedObjectContext)
+  }
+
+  @available(*, deprecated, renamed: "makeFetchRequest", message: "To avoid collisions with the less concrete method in `NSManagedObject`, please use `makeFetchRequest()` instead.")
+  @nonobjc internal class func fetchRequest() -> NSFetchRequest<ManagedListingUrl> {
+    return NSFetchRequest<ManagedListingUrl>(entityName: entityName)
+  }
+
+  @nonobjc internal class func makeFetchRequest() -> NSFetchRequest<ManagedListingUrl> {
+    return NSFetchRequest<ManagedListingUrl>(entityName: entityName)
+  }
+
+  // swiftlint:disable discouraged_optional_boolean discouraged_optional_collection
+  @NSManaged internal var main: String?
+  @NSManaged internal var share: String?
+  @NSManaged internal var listings: Set<ManagedListing>?
+  // swiftlint:enable discouraged_optional_boolean discouraged_optional_collection
+}
+
 // MARK: Relationship Listings
 
 extension ManagedUser {
+  @objc(addListingsObject:)
+  @NSManaged public func addToListings(_ value: ManagedListing)
+
+  @objc(removeListingsObject:)
+  @NSManaged public func removeFromListings(_ value: ManagedListing)
+
+  @objc(addListings:)
+  @NSManaged public func addToListings(_ values: Set<ManagedListing>)
+
+  @objc(removeListings:)
+  @NSManaged public func removeFromListings(_ values: Set<ManagedListing>)
+}
+
+extension ManagedListingUrl {
   @objc(addListingsObject:)
   @NSManaged public func addToListings(_ value: ManagedListing)
 

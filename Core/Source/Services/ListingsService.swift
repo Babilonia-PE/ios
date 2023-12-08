@@ -468,7 +468,8 @@ private extension Listing {
             location: nil,
             images: nil,
             facilities: nil,
-            advancedDetails: nil
+            advancedDetails: nil,
+            url: nil
         )
     }
     
