@@ -54,6 +54,11 @@
 "popups.sign_out.sign_out.title" = "Cerrar sesión";
 "popups.unpublish_listing.title" = "¿Desea despublicar el aviso?";
 "popups.unpublish_listing.text" = "Podrá volver a publicarlo más tarde en cualquier momento";
+"popups.unpublish_listing_babilonia.text" = "Lo vendí con Babilonia";
+"popups.unpublish_listing_portal.text" = "Lo vendí con otro portal";
+"popups.unpublish_listing_social.text" = "Lo vendí por redes sociales";
+"popups.unpublish_listing_referrals.text" = "Lo vendí por referidos";
+"popups.unpublish_listing_sell.text" = "No lo llegue a vender";
 "popups.publish_listing.text" = "¿Está seguro de que desea publicar el aviso?";
 "popups.delete_draft_listing.title" = "¿Desea eliminar el borrador?";
 "popups.delete_draft_listing.text" = "¿Está seguro que desea borrar esta información? La acción no se puede deshacer.";

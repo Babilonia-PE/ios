@@ -1185,6 +1185,13 @@ internal enum L10n {
       /// ¿Desea despublicar el aviso?
       internal static let title = L10n.tr("Localizable", "popups.unpublish_listing.title")
     }
+      internal enum UnpublishListingItems {
+          internal static let babilonia = L10n.tr("Localizable", "popups.unpublish_listing_babilonia.text")
+          internal static let portal = L10n.tr("Localizable", "popups.unpublish_listing_portal.text")
+          internal static let social = L10n.tr("Localizable", "popups.unpublish_listing_social.text")
+          internal static let referrals = L10n.tr("Localizable", "popups.unpublish_listing_referrals.text")
+          internal static let sell = L10n.tr("Localizable", "popups.unpublish_listing_sell.text")
+      }
   }
 
   internal enum Profile {

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Core
 
-final class MyListingsViewController: UIViewController, AlertApplicable, SpinnerApplicable {
+final class MyListingsViewController: UIViewController, AlertApplicable, SpinnerApplicable, CustomAlertDelegete {
     
     enum SegmentType: Int {
         case published, notPublished
@@ -339,19 +339,41 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
         let title = isPublish ? nil : L10n.Popups.UnpublishListing.title
         let message = isPublish ? L10n.Popups.PublishListing.text : L10n.Popups.UnpublishListing.text
         let actionTitle = isPublish ? L10n.MyListings.Options.Publish.title : L10n.MyListings.Options.Unpublish.title
-        
-        SystemAlert.present(on: self,
-                            title: title,
-                            message: message,
-                            confirmTitle: actionTitle,
-                            confirm: { [weak self] in
-                                if isPublish {
-                                    self?.viewModel.publishListing(with: listingId)
-                                } else {
-                                    self?.viewModel.unpublishListing(with: listingId)
-                                }
-                              })
+        if isPublish {
+            SystemAlert.present(on: self,
+                                title: title,
+                                message: message,
+                                confirmTitle: actionTitle,
+                                confirm: { [weak self] in
+                if isPublish {
+                    self?.viewModel.publishListing(with: listingId)
+                } else {
+                    self?.viewModel.unpublishListing(with: listingId)
+                }
+            })
+        } else {
+            let storyboard = UIStoryboard(name: "CustomAlert", bundle: nil)
+            guard let destinationController = storyboard.instantiateViewController(
+                withIdentifier: "CustomAlertViewController"
+            ) as? CustomAlertViewController
+            else { return }
+            destinationController.infoTitle = L10n.Popups.UnpublishListing.title
+            destinationController.infoDescription = L10n.Popups.UnpublishListing.text
+            destinationController.buttomAceptLabel = L10n.MyListings.Options.Unpublish.title
+            destinationController.buttonDissmisLabel = L10n.Buttons.Cancel.title
+            destinationController.listingId = listingId
+            self.present(destinationController, animated: true)
+        }
     }
+    
+    // MARK: - CustomAlertDelegate
+   
+   func aceptButton(reasonTextField: String, valueReason: String, infoListingId: ListingId?) {
+       print(reasonTextField)
+       print(valueReason)
+       self.viewModel.unpublishListing(with: infoListingId!)
+       dismiss(animated: true, completion: nil)
+   }
 
     private func presentDeleteAlert(for listingId: ListingId) {
         SystemAlert.presentDestructive(on: self,

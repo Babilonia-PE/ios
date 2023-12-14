@@ -332,6 +332,10 @@
 		92F63EEF22C11EDA00A65EEE /* Location+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F63EEE22C11EDA00A65EEE /* Location+CoreData.swift */; };
 		92F63EF122C122DE00A65EEE /* Listing+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F63EF022C122DE00A65EEE /* Listing+CoreData.swift */; };
 		B42A85B72B059248005DC0B8 /* UrlListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42A85B62B059248005DC0B8 /* UrlListing.swift */; };
+		B4927F812B2AA65300F1764A /* ItemReasonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4927F7F2B2AA65300F1764A /* ItemReasonTableViewCell.swift */; };
+		B4927F822B2AA65300F1764A /* ItemReasonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4927F802B2AA65300F1764A /* ItemReasonTableViewCell.xib */; };
+		B49553C42B29854F00FEB138 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49553C32B29854F00FEB138 /* CustomAlertController.swift */; };
+		B49553C72B2A123500FEB138 /* CustomAlert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B49553C62B2A123500FEB138 /* CustomAlert.storyboard */; };
 		B4DBCEAD2B22AC8E00674E00 /* UrlListing+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBCEAC2B22AC8E00674E00 /* UrlListing+CoreData.swift */; };
 		E858DD4C20247D4600A7867A /* Resolver+Autoresolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879B2562022368C009FEC51 /* Resolver+Autoresolve.swift */; };
 		E858DD4D20247D4600A7867A /* Container+Autoregistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879B258202245B9009FEC51 /* Container+Autoregistration.swift */; };
@@ -855,6 +859,10 @@
 		B33554AA643FEABA3459D432 /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		B42A85B62B059248005DC0B8 /* UrlListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlListing.swift; sourceTree = "<group>"; };
 		B43EF3821A6D5F1FA4737E6A /* Pods-Shared-Babilonia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.debug.xcconfig"; sourceTree = "<group>"; };
+		B4927F7F2B2AA65300F1764A /* ItemReasonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemReasonTableViewCell.swift; sourceTree = "<group>"; };
+		B4927F802B2AA65300F1764A /* ItemReasonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemReasonTableViewCell.xib; sourceTree = "<group>"; };
+		B49553C32B29854F00FEB138 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
+		B49553C62B2A123500FEB138 /* CustomAlert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlert.storyboard; sourceTree = "<group>"; };
 		B4DBCEAC2B22AC8E00674E00 /* UrlListing+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UrlListing+CoreData.swift"; sourceTree = "<group>"; };
 		B8306527201889E900FF574C /* DecoratableRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratableRequest.swift; sourceTree = "<group>"; };
 		BF9AAC3CBBA8CC25E63C9FFC /* Pods-Shared-Babilonia.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-release.xcconfig"; sourceTree = "<group>"; };
@@ -2305,6 +2313,7 @@
 		92EDA91422CECD3300675693 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B49553C52B2A119B00FEB138 /* CustomAlert */,
 				88D7466226AE50D8006C0747 /* RecentLocation.swift */,
 				92EDA91522CECD4700675693 /* ImagePicker.swift */,
 				FEDC58592518CCA100C04BD2 /* UIConstants.swift */,
@@ -2323,6 +2332,33 @@
 				92F63EE422BD1EDA00A65EEE /* ErrorsLocalization.swift */,
 			);
 			path = ErrorsLocalization;
+			sourceTree = "<group>";
+		};
+		B4927F7E2B2A940C00F1764A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B4927F7F2B2AA65300F1764A /* ItemReasonTableViewCell.swift */,
+				B4927F802B2AA65300F1764A /* ItemReasonTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B4927F832B2AC31B00F1764A /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				B49553C62B2A123500FEB138 /* CustomAlert.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		B49553C52B2A119B00FEB138 /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				B4927F832B2AC31B00F1764A /* StoryBoard */,
+				B4927F7E2B2A940C00F1764A /* Cell */,
+				B49553C32B29854F00FEB138 /* CustomAlertController.swift */,
+			);
+			path = CustomAlert;
 			sourceTree = "<group>";
 		};
 		C52110211DAB85BC006CEBCE = {
@@ -3014,10 +3050,12 @@
 				923A3EEA22A56680008D6A42 /* AvenirLTStd-Medium.otf in Resources */,
 				70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */,
 				923A3EEF22A56680008D6A42 /* AvenirLTStd-Heavy.otf in Resources */,
+				B49553C72B2A123500FEB138 /* CustomAlert.storyboard in Resources */,
 				923A3EE922A56680008D6A42 /* AvenirLTStd-BookOblique.otf in Resources */,
 				70BF67F22045A6AE00803C08 /* LaunchScreen.storyboard in Resources */,
 				923A3ED722A56673008D6A42 /* samsungsharpsans-medium.otf in Resources */,
 				923A3EE822A56680008D6A42 /* AvenirLTStd-Oblique.otf in Resources */,
+				B4927F822B2AA65300F1764A /* ItemReasonTableViewCell.xib in Resources */,
 				923A3EE622A56680008D6A42 /* AvenirLTStd-Black.otf in Resources */,
 				923A3EF122A56680008D6A42 /* AvenirLTStd-BlackOblique.otf in Resources */,
 				923A3EED22A56680008D6A42 /* AvenirLTStd-HeavyOblique.otf in Resources */,
@@ -3513,6 +3551,7 @@
 				9219CDEB22A9390A00BCD7CC /* PickerPopupView.swift in Sources */,
 				FED7893C25233E5D007E41C7 /* ListingsFiltersModel.swift in Sources */,
 				18BE02EE22D8DD500058C56E /* ProfileFlowCoordinator.swift in Sources */,
+				B49553C42B29854F00FEB138 /* CustomAlertController.swift in Sources */,
 				70BF67B72045A6AD00803C08 /* Alert.swift in Sources */,
 				92D4861622E9DA39003A0CF0 /* SearchMapModel.swift in Sources */,
 				18E79BA822C3929300934420 /* MyListingsViewController.swift in Sources */,
@@ -3531,6 +3570,7 @@
 				FE3FBFE8252CCF6900AFA79F /* String+Extensions.swift in Sources */,
 				70BF67C82045A6AD00803C08 /* UITableView+Rx.swift in Sources */,
 				70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */,
+				B4927F812B2AA65300F1764A /* ItemReasonTableViewCell.swift in Sources */,
 				18A1A36022E84B46001DCFC8 /* FilterInfo.swift in Sources */,
 				FE76EE36255130FF007C011F /* PaymentPlanFlowLayout.swift in Sources */,
 				FEAD86DF256EB47700A276B7 /* DateFormatter.swift in Sources */,
