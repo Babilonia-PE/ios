@@ -362,6 +362,7 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
             destinationController.buttomAceptLabel = L10n.MyListings.Options.Unpublish.title
             destinationController.buttonDissmisLabel = L10n.Buttons.Cancel.title
             destinationController.listingId = listingId
+            destinationController.delegate = self
             self.present(destinationController, animated: true)
         }
     }

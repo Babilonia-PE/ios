@@ -34,6 +34,7 @@ class ItemReasonTableViewCell: UITableViewCell {
         } else {
             radioButton.setImage(UIImage(named: "rbOffO"), for: .normal)
         }
+        
     }
     
 }

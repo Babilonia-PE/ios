@@ -45,14 +45,8 @@ class CustomAlertViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = infoTitle
-        descriptionLabel.text = infoDescription
-        dismissButton.setTitle(buttonDissmisLabel, for: .normal)
-        aceptButton.setTitle(buttomAceptLabel, for: .normal)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(ItemReasonTableViewCell.nib(), forCellReuseIdentifier: ItemReasonTableViewCell.identifier)
-        
+        configureCell()
+        configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +58,23 @@ class CustomAlertViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         view.layoutIfNeeded()
+    }
+    
+    func configureCell() {
+        titleLabel.text = infoTitle
+        descriptionLabel.text = infoDescription
+        descriptionLabel.numberOfLines = 0
+        dismissButton.setTitle(buttonDissmisLabel, for: .normal)
+        aceptButton.setTitle(buttomAceptLabel, for: .normal)
+    }
+    
+    func configureTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        let firstIndexPath = IndexPath(row: 0, section: 0)
+        tableView.selectRow(at: firstIndexPath, animated: true, scrollPosition: .none)
+        tableView(tableView, didSelectRowAt: firstIndexPath)
+        tableView.register(ItemReasonTableViewCell.nib(), forCellReuseIdentifier: ItemReasonTableViewCell.identifier)
     }
     
     func setupView() {
