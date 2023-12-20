@@ -124,7 +124,11 @@ final class SearchListModel: EventNode {
         guard canFetchMore, listingsCount >= defaultPerPage,
               (listingsCount / defaultPerPage) == page, remainder == 0 else { return }
         page += 1
-        fetchListings()
+        if let location = RecentLocation.shared.currentLocation {
+            fetchListings(searchLocation: location)
+        } else {
+           fetchListings()
+        }
     }
 
     private func calculateIndexPathsToReload(from newListings: [Listing]) -> [IndexPath] {
