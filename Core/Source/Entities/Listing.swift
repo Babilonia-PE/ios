@@ -89,6 +89,9 @@ public struct Listing: Codable {
     public var advancedDetails: [Facility]?
     public var url: UrlListing?
     
+    public var reason: String?
+    public var priceFinal: Int? = nil
+    
     public var isEdit: Bool = false
 
     //55547 TODO: - Remove it.

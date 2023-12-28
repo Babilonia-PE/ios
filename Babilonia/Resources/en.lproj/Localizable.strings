@@ -59,6 +59,7 @@
 "popups.unpublish_listing_social.text" = "I sold it on social networks";
 "popups.unpublish_listing_referrals.text" = "I sold it through referrals";
 "popups.unpublish_listing_sell.text" = "I didnt get to sell it";
+"popups.unpublish_listing_description.text" = "I sold it at:";
 "popups.publish_listing.text" = "Are you sure you want to publish the listing?";
 "popups.delete_draft_listing.title" = "Delete listing?";
 "popups.delete_draft_listing.text" = "Are you sure you want to delete this information? The action can not be undone.";

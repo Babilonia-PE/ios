@@ -361,6 +361,7 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
             destinationController.infoDescription = L10n.Popups.UnpublishListing.text
             destinationController.buttomAceptLabel = L10n.MyListings.Options.Unpublish.title
             destinationController.buttonDissmisLabel = L10n.Buttons.Cancel.title
+            destinationController.infoDescriptionReason = L10n.Popups.UnpublishListingItems.description + " $\(viewModel.getListingPrice(with: listingId))"
             destinationController.listingId = listingId
             destinationController.delegate = self
             self.present(destinationController, animated: true)
@@ -370,10 +371,13 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
     // MARK: - CustomAlertDelegate
    
    func aceptButton(reasonTextField: String, valueReason: String, infoListingId: ListingId?) {
-       print(reasonTextField)
-       print(valueReason)
-       self.viewModel.unpublishListing(with: infoListingId!)
-       dismiss(animated: true, completion: nil)
+       if let extractedNumber = extractNumbers(from: reasonTextField) {
+           self.viewModel.unpublishListing(with: infoListingId!, reason: valueReason, priceFinal: extractedNumber)
+           dismiss(animated: true, completion: nil)
+       } else {
+           self.viewModel.unpublishListing(with: infoListingId!, reason: valueReason, priceFinal: 0)
+           dismiss(animated: true, completion: nil)
+       }
    }
 
     private func presentDeleteAlert(for listingId: ListingId) {
@@ -390,6 +394,25 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
         let message = L10n.Errors.actionMustBeDoneFromWeb
         SystemAlert.present(on: self,
                             message: message)
+    }
+    
+    func extractNumbers(from input: String) -> Int? {
+        do {
+            let regex = try NSRegularExpression(pattern: "\\d+", options: .caseInsensitive)
+            let matches = regex.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+            let numbers = matches.map { match in
+                (input as NSString).substring(with: match.range)
+            }
+
+            if let firstNumberString = numbers.first, let number = Int(firstNumberString) {
+                return number
+            }
+        } catch {
+            print("Error al procesar la expresión regular: \(error)")
+        }
+
+        return nil
     }
 
 }

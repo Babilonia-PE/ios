@@ -1191,6 +1191,7 @@ internal enum L10n {
           internal static let social = L10n.tr("Localizable", "popups.unpublish_listing_social.text")
           internal static let referrals = L10n.tr("Localizable", "popups.unpublish_listing_referrals.text")
           internal static let sell = L10n.tr("Localizable", "popups.unpublish_listing_sell.text")
+          internal static let description = L10n.tr("Localizable", "popups.unpublish_listing_description.text")
       }
   }
 

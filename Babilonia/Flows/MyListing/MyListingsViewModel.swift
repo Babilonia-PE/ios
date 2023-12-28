@@ -87,8 +87,16 @@ final class MyListingsViewModel {
         model.publishListing(with: id)
     }
     
+    func getListingPrice(with id: ListingId) -> Int {
+        model.getListingPrice(with: id) ?? 0
+    }
+    
     func unpublishListing(with id: ListingId) {
         model.unpublishListing(with: id)
+    }
+    
+    func unpublishListing(with id: ListingId, reason: String, priceFinal: Int) {
+        model.unpublishListing(with: id, reason: reason, priceFinal: priceFinal)
     }
     
     func deleteListing(with id: ListingId) {

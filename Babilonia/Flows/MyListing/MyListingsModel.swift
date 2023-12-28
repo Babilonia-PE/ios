@@ -190,6 +190,11 @@ final class MyListingsModel: EventNode {
         }
     }
     
+    func getListingPrice(with id: ListingId) -> Int? {
+        guard let listing = allListings.value.first(where: { $0.id == id }) else { return nil }
+        return listing.price
+    }
+    
     func unpublishListing(with id: ListingId) {
         guard var listing = (allListings.value.first { $0.id == id }) else { return }
         listing.status = .hidden
@@ -201,6 +206,16 @@ final class MyListingsModel: EventNode {
 //            listing.status = .hidden
 //            editListing(listing)
 //        }
+    }
+    
+    func unpublishListing(with id: ListingId, reason: String, priceFinal: Int) {
+        guard var listing = (allListings.value.first { $0.id == id }) else { return }
+        listing.reason = reason
+        if priceFinal != 0 {
+           listing.priceFinal = priceFinal
+        }
+        listing.status = .hidden
+        editListing(listing)
     }
     
     func getShareURL(for listingID: Int) -> String? {

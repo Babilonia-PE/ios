@@ -32,6 +32,7 @@ class CustomAlertViewController: UIViewController {
     var delegate: CustomAlertDelegete? = nil
     var infoTitle: String?
     var infoDescription: String?
+    var infoDescriptionReason: String?
     var buttonDissmisLabel: String?
     var buttomAceptLabel: String?
     var valueReason: String?
@@ -64,6 +65,7 @@ class CustomAlertViewController: UIViewController {
         titleLabel.text = infoTitle
         descriptionLabel.text = infoDescription
         descriptionLabel.numberOfLines = 0
+        reasonTextField.text = infoDescriptionReason
         dismissButton.setTitle(buttonDissmisLabel, for: .normal)
         aceptButton.setTitle(buttomAceptLabel, for: .normal)
     }

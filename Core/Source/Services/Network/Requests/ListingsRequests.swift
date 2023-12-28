@@ -250,7 +250,11 @@ private extension Listing {
             dataJSON["status"] = status == .visible ? status.rawValue : ListingStatus.hidden.rawValue
         }
         dataJSON["source"] = "ios"
+        dataJSON["type"] = "listing"
         dataJSON["id"] = id
+        dataJSON["ids"] = [id]
+        dataJSON["reason"] = reason
+        dataJSON["price_final"] = priceFinal
         dataJSON["listing_type"] = (listingType ?? .sale).rawValue
         dataJSON["property_type"] = (propertyType ?? .apartment).rawValue
 
