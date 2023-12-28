@@ -398,7 +398,7 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
     
     func extractNumbers(from input: String) -> Int? {
         do {
-            let regex = try NSRegularExpression(pattern: "\\d+", options: .caseInsensitive)
+            let regex = try NSRegularExpression(pattern: "\\b\\d+\\b", options: .caseInsensitive)
             let matches = regex.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
 
             let numbers = matches.map { match in
