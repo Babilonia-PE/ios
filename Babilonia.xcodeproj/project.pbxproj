@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08405E1E0B8FAD9EB48A772B /* Pods_Shared_Babilonia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0854348D0FF4F7ADF5E778CF /* Pods_Shared_Babilonia.framework */; };
 		1803A18A22E1EC760040ABF5 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803A18722E1EC760040ABF5 /* CurrencyViewController.swift */; };
 		1803A18B22E1EC760040ABF5 /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803A18822E1EC760040ABF5 /* CurrencyModel.swift */; };
 		1803A18C22E1EC760040ABF5 /* CurrencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803A18922E1EC760040ABF5 /* CurrencyViewModel.swift */; };
@@ -59,6 +58,8 @@
 		18F4503722EAE21A0039B9B3 /* ListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503622EAE21A0039B9B3 /* ListingTableViewCell.swift */; };
 		18F4503D22EB27E50039B9B3 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503C22EB27E50039B9B3 /* EmptySearchView.swift */; };
 		18F4503F22EB2D440039B9B3 /* SearchListingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F4503E22EB2D440039B9B3 /* SearchListingEmptyView.swift */; };
+		35F9B0252A96C2A700A7BDC3 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F9B0242A96C2A700A7BDC3 /* Bundle+Extensions.swift */; };
+		35F9B0272A96C5FA00A7BDC3 /* NewVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F9B0262A96C5FA00A7BDC3 /* NewVersion.swift */; };
 		505FCBEC2052E68E006CF982 /* Notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505FCBEB2052E68E006CF982 /* Notes.txt */; };
 		530B06AA29BAB3B0003072CF /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530B06A929BAB3B0003072CF /* CurrencyRate.swift */; };
 		532C9B782938782400F00206 /* AuthLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9B772938782400F00206 /* AuthLogInViewController.swift */; };
@@ -107,6 +108,7 @@
 		59EEF0FE22DDB3C600D556E2 /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF0FD22DDB3C600D556E2 /* UIView+Fading.swift */; };
 		59EEF10022DDB3E300D556E2 /* UIView+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF0FF22DDB3E300D556E2 /* UIView+CornerRadius.swift */; };
 		59EEF10322DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF10222DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift */; };
+		65B16AC9DA77C8C42653651B /* Pods_Shared_Babilonia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33FEA67B6CAA61541ADD286C /* Pods_Shared_Babilonia.framework */; };
 		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
 		70BF67B52045A6AD00803C08 /* ApplicationFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67582045A6AD00803C08 /* ApplicationFlowAssembly.swift */; };
 		70BF67B62045A6AD00803C08 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67592045A6AD00803C08 /* MainFlowAssembly.swift */; };
@@ -138,7 +140,6 @@
 		70BF67E42045A6AE00803C08 /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF679B2045A6AD00803C08 /* MainMenuViewModel.swift */; };
 		70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67AF2045A6AD00803C08 /* Assets.xcassets */; };
 		70BF67F22045A6AE00803C08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67B32045A6AD00803C08 /* LaunchScreen.storyboard */; };
-		7795DE00BB8CEDFE6E6D42C0 /* Pods_Shared_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4017F9B16F1F0D7EB45EE5 /* Pods_Shared_Core.framework */; };
 		880A4E66240EA80E000E638B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 880A4E65240EA80E000E638B /* GoogleService-Info.plist */; };
 		880A4E8824179142000E638B /* ScrollableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A4E8724179142000E638B /* ScrollableView.swift */; };
 		880A4E8A241792E5000E638B /* SegmentControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A4E89241792E5000E638B /* SegmentControlView.swift */; };
@@ -337,6 +338,7 @@
 		B49553C42B29854F00FEB138 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49553C32B29854F00FEB138 /* CustomAlertController.swift */; };
 		B49553C72B2A123500FEB138 /* CustomAlert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B49553C62B2A123500FEB138 /* CustomAlert.storyboard */; };
 		B4DBCEAD2B22AC8E00674E00 /* UrlListing+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBCEAC2B22AC8E00674E00 /* UrlListing+CoreData.swift */; };
+		BBD8BB8F3B94FB555E76D647 /* Pods_Shared_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 397650A061B187177422525B /* Pods_Shared_Core.framework */; };
 		E858DD4C20247D4600A7867A /* Resolver+Autoresolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879B2562022368C009FEC51 /* Resolver+Autoresolve.swift */; };
 		E858DD4D20247D4600A7867A /* Container+Autoregistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879B258202245B9009FEC51 /* Container+Autoregistration.swift */; };
 		E8CBE404202228FD00186010 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CBE3FB202228FD00186010 /* Core.framework */; };
@@ -504,9 +506,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0854348D0FF4F7ADF5E778CF /* Pods_Shared_Babilonia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Babilonia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A5A1E00DC5AEF45C4381C3C /* Pods-Shared-Babilonia.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-release.xcconfig"; sourceTree = "<group>"; };
-		0E8FFBBBFE4B8517232C0B9D /* Pods-Shared-Babilonia.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-release.xcconfig"; sourceTree = "<group>"; };
+		061EB763D486DFA574C9FB8D /* Pods-Shared-Core.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-release.xcconfig"; sourceTree = "<group>"; };
 		1803A18722E1EC760040ABF5 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		1803A18822E1EC760040ABF5 /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		1803A18922E1EC760040ABF5 /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
@@ -558,11 +558,13 @@
 		18F4503622EAE21A0039B9B3 /* ListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingTableViewCell.swift; sourceTree = "<group>"; };
 		18F4503C22EB27E50039B9B3 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
 		18F4503E22EB2D440039B9B3 /* SearchListingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListingEmptyView.swift; sourceTree = "<group>"; };
-		2C44F329A951CB11A5D6F0B2 /* Pods-Shared-Core.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-release.xcconfig"; sourceTree = "<group>"; };
-		3DF0A4AE143BE8DB106C82A3 /* Pods-Shared-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
+		33FEA67B6CAA61541ADD286C /* Pods_Shared_Babilonia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Babilonia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		35590DE52A96E1EE0059BAC0 /* SanIsidro.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SanIsidro.gpx; sourceTree = "<group>"; };
+		35F9B0242A96C2A700A7BDC3 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		35F9B0262A96C5FA00A7BDC3 /* NewVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVersion.swift; sourceTree = "<group>"; };
+		397650A061B187177422525B /* Pods_Shared_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		505FCBEB2052E68E006CF982 /* Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5305E2FF27731AD3009B40FB /* SanIsidro.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = SanIsidro.gpx; path = "/Users/owson/Projects/evolbit/git/babilonia-ios/Babilonia/Resources/SanIsidro.gpx"; sourceTree = "<absolute>"; };
 		530B06A929BAB3B0003072CF /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		532C9B772938782400F00206 /* AuthLogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLogInViewController.swift; sourceTree = "<group>"; };
 		532C9B792938787100F00206 /* AuthLogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLogInViewModel.swift; sourceTree = "<group>"; };
@@ -613,8 +615,8 @@
 		59EEF0FD22DDB3C600D556E2 /* UIView+Fading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		59EEF0FF22DDB3E300D556E2 /* UIView+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+CornerRadius.swift"; sourceTree = "<group>"; };
 		59EEF10222DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableType+HandyFunctions.swift"; sourceTree = "<group>"; };
+		616AEC9A26F6638FEBE04730 /* Pods-Shared-Babilonia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.debug.xcconfig"; sourceTree = "<group>"; };
 		6AE7250A1DBF47A600F874E1 /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
-		6DC100931F6370831F3051D4 /* Pods-Shared-Babilonia.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.qa-debug.xcconfig"; sourceTree = "<group>"; };
 		70BF67552045A6AD00803C08 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70BF67582045A6AD00803C08 /* ApplicationFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowAssembly.swift; sourceTree = "<group>"; };
 		70BF67592045A6AD00803C08 /* MainFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowAssembly.swift; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 		70BF679B2045A6AD00803C08 /* MainMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		70BF67AF2045A6AD00803C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70BF67B32045A6AD00803C08 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		790A4D5C6F5E423068C88555 /* Pods-Shared-Babilonia.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-debug.xcconfig"; sourceTree = "<group>"; };
 		880A4E65240EA80E000E638B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		880A4E672410FCD5000E638B /* Babilonia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Babilonia.entitlements; sourceTree = "<group>"; };
 		880A4E8724179142000E638B /* ScrollableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableView.swift; sourceTree = "<group>"; };
@@ -665,9 +668,6 @@
 		88D7466226AE50D8006C0747 /* RecentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentLocation.swift; sourceTree = "<group>"; };
 		88E2CDA026EE6B60005A83CA /* GuestPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestPopupView.swift; sourceTree = "<group>"; };
 		88E2CEC826F187E8005A83CA /* GeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoService.swift; sourceTree = "<group>"; };
-		8A8EBD7FCF7623E1C078E27C /* Pods-Shared-Babilonia.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		8C4017F9B16F1F0D7EB45EE5 /* Pods_Shared_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8CBC16C8D2EAA9BDE82FF516 /* Pods-Shared-Core.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-release.xcconfig"; sourceTree = "<group>"; };
 		92028B4A22C25C3D00005F39 /* CreateListingModelUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingModelUpdatable.swift; sourceTree = "<group>"; };
 		92028B4C22C25D9000005F39 /* ListingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsService.swift; sourceTree = "<group>"; };
 		92028B4F22C3DF2500005F39 /* MainTabBarItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarItemContentView.swift; sourceTree = "<group>"; };
@@ -853,19 +853,18 @@
 		92F63EEC22C11B5D00A65EEE /* ListingImage+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListingImage+CoreData.swift"; sourceTree = "<group>"; };
 		92F63EEE22C11EDA00A65EEE /* Location+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreData.swift"; sourceTree = "<group>"; };
 		92F63EF022C122DE00A65EEE /* Listing+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Listing+CoreData.swift"; sourceTree = "<group>"; };
-		98AB2C06E607916D0292D560 /* Pods-Shared-Babilonia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.release.xcconfig"; sourceTree = "<group>"; };
-		A1DED3C65A3D99829AFBD67D /* Pods-Shared-Babilonia.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-debug.xcconfig"; sourceTree = "<group>"; };
-		AA85376651F92CE314D5F39F /* Pods-Shared-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		B33554AA643FEABA3459D432 /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
+		A4498A09BDE3E46C5531F207 /* Pods-Shared-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.release.xcconfig"; sourceTree = "<group>"; };
+		AD8D7218AB354F657EB19615 /* Pods-Shared-Babilonia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.release.xcconfig"; sourceTree = "<group>"; };
 		B42A85B62B059248005DC0B8 /* UrlListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlListing.swift; sourceTree = "<group>"; };
-		B43EF3821A6D5F1FA4737E6A /* Pods-Shared-Babilonia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.debug.xcconfig"; sourceTree = "<group>"; };
 		B4927F7F2B2AA65300F1764A /* ItemReasonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemReasonTableViewCell.swift; sourceTree = "<group>"; };
 		B4927F802B2AA65300F1764A /* ItemReasonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemReasonTableViewCell.xib; sourceTree = "<group>"; };
 		B49553C32B29854F00FEB138 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		B49553C62B2A123500FEB138 /* CustomAlert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlert.storyboard; sourceTree = "<group>"; };
 		B4DBCEAC2B22AC8E00674E00 /* UrlListing+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UrlListing+CoreData.swift"; sourceTree = "<group>"; };
 		B8306527201889E900FF574C /* DecoratableRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratableRequest.swift; sourceTree = "<group>"; };
-		BF9AAC3CBBA8CC25E63C9FFC /* Pods-Shared-Babilonia.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.staging-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.staging-release.xcconfig"; sourceTree = "<group>"; };
+		BC76DE393A2D514258D1B695 /* Pods-Shared-Babilonia.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Babilonia.production-release.xcconfig"; path = "Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia.production-release.xcconfig"; sourceTree = "<group>"; };
+		BE8452DDEABE3BC21459F8DF /* Pods-Shared-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
+		C1E4744B73B14383EE8C909B /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		C521102A1DAB85BC006CEBCE /* Babilonia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Babilonia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E879B2562022368C009FEC51 /* Resolver+Autoresolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Resolver+Autoresolve.swift"; sourceTree = "<group>"; };
 		E879B258202245B9009FEC51 /* Container+Autoregistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Autoregistration.swift"; sourceTree = "<group>"; };
@@ -875,8 +874,6 @@
 		E8CBE403202228FD00186010 /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8CBE40A202228FD00186010 /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		E8CBE40C202228FD00186010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F384567B77469A0665CFCB3E /* Pods-Shared-Core.qa-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-debug.xcconfig"; sourceTree = "<group>"; };
-		FA0A9761CE709159AADB137D /* Pods-Shared-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.release.xcconfig"; sourceTree = "<group>"; };
 		FE02E006251B6DB800D55DD6 /* UserActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActions.swift; sourceTree = "<group>"; };
 		FE039E3F253D851C00CD3F86 /* ListingFilterModel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListingFilterModel+Helpers.swift"; sourceTree = "<group>"; };
 		FE077942255D27F4009A055B /* PagesDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesDotsView.swift; sourceTree = "<group>"; };
@@ -988,7 +985,6 @@
 		FEEE6820253436F700273E1C /* ListingStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingStatisticsView.swift; sourceTree = "<group>"; };
 		FEFE2D9F25147C0F00C4D3DA /* LocationSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
 		FEFE2DA32514B79900C4D3DA /* PlaceSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchManager.swift; sourceTree = "<group>"; };
-		FFFD8ED7EB17A33E8AC1BD0A /* Pods-Shared-Core.qa-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.qa-release.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.qa-release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1005,7 +1001,7 @@
 			files = (
 				E8CBE410202228FD00186010 /* Core.framework in Frameworks */,
 				59169C8522DF1FA000178A1D /* ARKitLocation.framework in Frameworks */,
-				08405E1E0B8FAD9EB48A772B /* Pods_Shared_Babilonia.framework in Frameworks */,
+				65B16AC9DA77C8C42653651B /* Pods_Shared_Babilonia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1013,7 +1009,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7795DE00BB8CEDFE6E6D42C0 /* Pods_Shared_Core.framework in Frameworks */,
+				BBD8BB8F3B94FB555E76D647 /* Pods_Shared_Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1183,6 +1179,15 @@
 				18F4503622EAE21A0039B9B3 /* ListingTableViewCell.swift */,
 			);
 			path = ListingTableViewCell;
+			sourceTree = "<group>";
+		};
+		3DE48C4DCCF9C166B3134DD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33FEA67B6CAA61541ADD286C /* Pods_Shared_Babilonia.framework */,
+				397650A061B187177422525B /* Pods_Shared_Core.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		505FCBEA2052E68E006CF982 /* SupportingFiles */ = {
@@ -1499,7 +1504,7 @@
 		70BF67AE2045A6AD00803C08 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5305E2FF27731AD3009B40FB /* SanIsidro.gpx */,
+				35590DE52A96E1EE0059BAC0 /* SanIsidro.gpx */,
 				53B6604F2846A4F700604068 /* Magdalena.gpx */,
 				70BF67AF2045A6AD00803C08 /* Assets.xcassets */,
 				FE1DC3DC25ADD23200BD7E1F /* Localizable.strings */,
@@ -1515,15 +1520,6 @@
 				70BF67B32045A6AD00803C08 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		7BD8BB958151AAAAE24F30BD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0854348D0FF4F7ADF5E778CF /* Pods_Shared_Babilonia.framework */,
-				8C4017F9B16F1F0D7EB45EE5 /* Pods_Shared_Core.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		880A4E8624178CBE000E638B /* Flow */ = {
@@ -1885,6 +1881,7 @@
 				185D1E3D22CB4D1F00D1FEAB /* NumberFormatter+Common.swift */,
 				FE3FBFE7252CCF6900AFA79F /* String+Extensions.swift */,
 				FEAD86DE256EB47700A276B7 /* DateFormatter.swift */,
+				35F9B0242A96C2A700A7BDC3 /* Bundle+Extensions.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -2026,6 +2023,7 @@
 				887864A0273B7D9C00FC064B /* Contact.swift */,
 				530B06A929BAB3B0003072CF /* CurrencyRate.swift */,
 				B42A85B62B059248005DC0B8 /* UrlListing.swift */,
+				35F9B0262A96C5FA00A7BDC3 /* NewVersion.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -2372,7 +2370,7 @@
 				59169C7F22DF1FA000178A1D /* ARKitLocation */,
 				C521102B1DAB85BC006CEBCE /* Products */,
 				E467860E0C2AABEF560E271D /* Pods */,
-				7BD8BB958151AAAAE24F30BD /* Frameworks */,
+				3DE48C4DCCF9C166B3134DD1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2439,22 +2437,14 @@
 		E467860E0C2AABEF560E271D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B43EF3821A6D5F1FA4737E6A /* Pods-Shared-Babilonia.debug.xcconfig */,
-				6DC100931F6370831F3051D4 /* Pods-Shared-Babilonia.qa-debug.xcconfig */,
-				A1DED3C65A3D99829AFBD67D /* Pods-Shared-Babilonia.production-debug.xcconfig */,
-				8A8EBD7FCF7623E1C078E27C /* Pods-Shared-Babilonia.staging-debug.xcconfig */,
-				98AB2C06E607916D0292D560 /* Pods-Shared-Babilonia.release.xcconfig */,
-				0E8FFBBBFE4B8517232C0B9D /* Pods-Shared-Babilonia.qa-release.xcconfig */,
-				0A5A1E00DC5AEF45C4381C3C /* Pods-Shared-Babilonia.production-release.xcconfig */,
-				BF9AAC3CBBA8CC25E63C9FFC /* Pods-Shared-Babilonia.staging-release.xcconfig */,
-				B33554AA643FEABA3459D432 /* Pods-Shared-Core.debug.xcconfig */,
-				F384567B77469A0665CFCB3E /* Pods-Shared-Core.qa-debug.xcconfig */,
-				3DF0A4AE143BE8DB106C82A3 /* Pods-Shared-Core.production-debug.xcconfig */,
-				AA85376651F92CE314D5F39F /* Pods-Shared-Core.staging-debug.xcconfig */,
-				FA0A9761CE709159AADB137D /* Pods-Shared-Core.release.xcconfig */,
-				FFFD8ED7EB17A33E8AC1BD0A /* Pods-Shared-Core.qa-release.xcconfig */,
-				2C44F329A951CB11A5D6F0B2 /* Pods-Shared-Core.production-release.xcconfig */,
-				8CBC16C8D2EAA9BDE82FF516 /* Pods-Shared-Core.staging-release.xcconfig */,
+				616AEC9A26F6638FEBE04730 /* Pods-Shared-Babilonia.debug.xcconfig */,
+				790A4D5C6F5E423068C88555 /* Pods-Shared-Babilonia.production-debug.xcconfig */,
+				AD8D7218AB354F657EB19615 /* Pods-Shared-Babilonia.release.xcconfig */,
+				BC76DE393A2D514258D1B695 /* Pods-Shared-Babilonia.production-release.xcconfig */,
+				C1E4744B73B14383EE8C909B /* Pods-Shared-Core.debug.xcconfig */,
+				BE8452DDEABE3BC21459F8DF /* Pods-Shared-Core.production-debug.xcconfig */,
+				A4498A09BDE3E46C5531F207 /* Pods-Shared-Core.release.xcconfig */,
+				061EB763D486DFA574C9FB8D /* Pods-Shared-Core.production-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2912,7 +2902,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C521103C1DAB85BC006CEBCE /* Build configuration list for PBXNativeTarget "Babilonia" */;
 			buildPhases = (
-				957CA4F895C65727DD598886 /* [CP] Check Pods Manifest.lock */,
+				1EB73EA30BB8335048D95E44 /* [CP] Check Pods Manifest.lock */,
 				C52110261DAB85BC006CEBCE /* Sources */,
 				C52110271DAB85BC006CEBCE /* Frameworks */,
 				C52110281DAB85BC006CEBCE /* Resources */,
@@ -2920,8 +2910,8 @@
 				E8CBE417202228FD00186010 /* Embed Frameworks */,
 				920CD16822BA5CAB00400FAA /* Copy Config */,
 				920CD16D22BA61B600400FAA /* Fabric */,
-				A186ADCC038496950B27DF76 /* [CP] Embed Pods Frameworks */,
-				0BD34F906205BFB106A2D625 /* [CP] Copy Pods Resources */,
+				26751749FC0A86178B2AD2F1 /* [CP] Embed Pods Frameworks */,
+				01251F846B47B599BE8822A5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2938,7 +2928,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8CBE416202228FD00186010 /* Build configuration list for PBXNativeTarget "Core" */;
 			buildPhases = (
-				73AD395BC797210C7D70901D /* [CP] Check Pods Manifest.lock */,
+				1C9FBBAA85ED0D6F6C68334B /* [CP] Check Pods Manifest.lock */,
 				E8CBE3F6202228FD00186010 /* Sources */,
 				E8CBE3F7202228FD00186010 /* Frameworks */,
 				E8CBE3F8202228FD00186010 /* Headers */,
@@ -3082,7 +3072,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BD34F906205BFB106A2D625 /* [CP] Copy Pods Resources */ = {
+		01251F846B47B599BE8822A5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3102,7 +3092,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		73AD395BC797210C7D70901D /* [CP] Check Pods Manifest.lock */ = {
+		1C9FBBAA85ED0D6F6C68334B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3122,6 +3112,132 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1EB73EA30BB8335048D95E44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Shared-Babilonia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		26751749FC0A86178B2AD2F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/SwinjectAutoregistration/SwinjectAutoregistration.framework",
+				"${BUILT_PRODUCTS_DIR}/YALAPIClient/YALAPIClient.framework",
+				"${BUILT_PRODUCTS_DIR}/YALResult/YALResult.framework",
+				"${BUILT_PRODUCTS_DIR}/AvailableHapticFeedback/AvailableHapticFeedback.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
+				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
+				"${BUILT_PRODUCTS_DIR}/FBAEMKit/FBAEMKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseAppCheckInterop/FirebaseAppCheckInterop.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseAuth/FirebaseAuth.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseAuthUI/FirebaseAuthUI.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreExtension/FirebaseCoreExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseDynamicLinks/FirebaseDynamicLinks.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebasePhoneAuthUI/FirebasePhoneAuthUI.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseSessions/FirebaseSessions.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MultiSlider/MultiSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
+				"${BUILT_PRODUCTS_DIR}/RecaptchaInterop/RecaptchaInterop.framework",
+				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SweeterSwift/SweeterSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/DBClient/DBClient.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectAutoregistration.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YALAPIClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YALResult.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AvailableHapticFeedback.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBAEMKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit_Basics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseAppCheckInterop.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseAuth.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseAuthUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseDynamicLinks.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebasePhoneAuthUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseSessions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RecaptchaInterop.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SweeterSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DBClient.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		920CD16822BA5CAB00400FAA /* Copy Config */ = {
@@ -3161,122 +3277,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		957CA4F895C65727DD598886 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Shared-Babilonia-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A186ADCC038496950B27DF76 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
-				"${BUILT_PRODUCTS_DIR}/SwinjectAutoregistration/SwinjectAutoregistration.framework",
-				"${BUILT_PRODUCTS_DIR}/YALAPIClient/YALAPIClient.framework",
-				"${BUILT_PRODUCTS_DIR}/YALResult/YALResult.framework",
-				"${BUILT_PRODUCTS_DIR}/AvailableHapticFeedback/AvailableHapticFeedback.framework",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
-				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/FBAEMKit/FBAEMKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseAuth/FirebaseAuth.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseAuthUI/FirebaseAuthUI.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseDynamicLinks/FirebaseDynamicLinks.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebasePhoneAuthUI/FirebasePhoneAuthUI.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/MultiSlider/MultiSlider.framework",
-				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SweeterSwift/SweeterSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${BUILT_PRODUCTS_DIR}/DBClient/DBClient.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectAutoregistration.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YALAPIClient.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YALResult.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AvailableHapticFeedback.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBAEMKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit_Basics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseAuth.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseAuthUI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseDynamicLinks.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebasePhoneAuthUI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSlider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SweeterSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DBClient.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shared-Babilonia/Pods-Shared-Babilonia-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		C5525E231DABB24D0016156E /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3497,6 +3497,7 @@
 				532C9B782938782400F00206 /* AuthLogInViewController.swift in Sources */,
 				924EA078229C1E35000AD5FA /* HUD.swift in Sources */,
 				88D7466326AE50D8006C0747 /* RecentLocation.swift in Sources */,
+				35F9B0252A96C2A700A7BDC3 /* Bundle+Extensions.swift in Sources */,
 				1896A7CE22DF112500FB95EE /* EditProfileModel.swift in Sources */,
 				9219CE1522B14F4E00BCD7CC /* SwitchFieldViewModel.swift in Sources */,
 				FEED064F2548226500CD1F86 /* PaymentsPlanModel.swift in Sources */,
@@ -3692,6 +3693,7 @@
 				92EFF4EA22CB663F007DBCEE /* Constants.swift in Sources */,
 				920CD12F22B3C3F000400FAA /* Facility+CoreData.swift in Sources */,
 				886340022725C71500659B7A /* GeneralRespose.swift in Sources */,
+				35F9B0272A96C5FA00A7BDC3 /* NewVersion.swift in Sources */,
 				FE14A90A251B205A00C4B6D9 /* UserDefaults+Extensions.swift in Sources */,
 				530B06AA29BAB3B0003072CF /* CurrencyRate.swift in Sources */,
 				FEE24295255A7A1300CEB318 /* MapDirectionsService.swift in Sources */,
@@ -3978,14 +3980,14 @@
 		};
 		920CD15D22BA5B3500400FAA /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1DED3C65A3D99829AFBD67D /* Pods-Shared-Babilonia.production-debug.xcconfig */;
+			baseConfigurationReference = 790A4D5C6F5E423068C88555 /* Pods-Shared-Babilonia.production-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4002,7 +4004,7 @@
 		};
 		920CD15E22BA5B3500400FAA /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3DF0A4AE143BE8DB106C82A3 /* Pods-Shared-Core.production-debug.xcconfig */;
+			baseConfigurationReference = BE8452DDEABE3BC21459F8DF /* Pods-Shared-Core.production-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4110,14 +4112,14 @@
 		};
 		920CD16522BA5B4500400FAA /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A5A1E00DC5AEF45C4381C3C /* Pods-Shared-Babilonia.production-release.xcconfig */;
+			baseConfigurationReference = BC76DE393A2D514258D1B695 /* Pods-Shared-Babilonia.production-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4134,7 +4136,7 @@
 		};
 		920CD16622BA5B4500400FAA /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C44F329A951CB11A5D6F0B2 /* Pods-Shared-Core.production-release.xcconfig */;
+			baseConfigurationReference = 061EB763D486DFA574C9FB8D /* Pods-Shared-Core.production-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4304,7 +4306,7 @@
 		};
 		C521103D1DAB85BC006CEBCE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B43EF3821A6D5F1FA4737E6A /* Pods-Shared-Babilonia.debug.xcconfig */;
+			baseConfigurationReference = 616AEC9A26F6638FEBE04730 /* Pods-Shared-Babilonia.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4312,7 +4314,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
@@ -4330,14 +4332,14 @@
 		};
 		C521103E1DAB85BC006CEBCE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98AB2C06E607916D0292D560 /* Pods-Shared-Babilonia.release.xcconfig */;
+			baseConfigurationReference = AD8D7218AB354F657EB19615 /* Pods-Shared-Babilonia.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4354,7 +4356,7 @@
 		};
 		E8CBE412202228FD00186010 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B33554AA643FEABA3459D432 /* Pods-Shared-Core.debug.xcconfig */;
+			baseConfigurationReference = C1E4744B73B14383EE8C909B /* Pods-Shared-Core.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4385,7 +4387,7 @@
 		};
 		E8CBE413202228FD00186010 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA0A9761CE709159AADB137D /* Pods-Shared-Core.release.xcconfig */;
+			baseConfigurationReference = A4498A09BDE3E46C5531F207 /* Pods-Shared-Core.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

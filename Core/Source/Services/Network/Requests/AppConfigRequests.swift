@@ -13,5 +13,12 @@ struct AppConfigRequest: APIRequest, DecoratableRequest {
     let method: APIRequestMethod = .get
     let path = "public/app_config"
     let authRequired: Bool = false
-    
+    private(set) var parameters: [String: Any]?
+
+    init(version: Int) {
+        parameters = [
+            "platform": "ios",
+            "version": version
+        ]
+    }
 }

@@ -22,6 +22,20 @@ class SystemAlert {
 
         controller.present(alert, animated: true)
     }
+    
+    static func present(on controller: UIViewController,
+                        title: String? = nil,
+                        message: String = "",
+                        confirmTitle: String = L10n.Buttons.OkButton.title,
+                        confirm: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: confirmTitle, style: .default, handler: { _ in
+            confirm?()
+        }))
+
+        controller.present(alert, animated: true, completion: nil)
+    }
 
     static func present(on controller: UIViewController,
                         title: String? = nil,

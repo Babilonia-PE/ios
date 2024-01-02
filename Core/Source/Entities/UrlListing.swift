@@ -10,10 +10,10 @@ import Foundation
 
 public struct UrlListing: Codable{
     
-    public let main: String
-    public let share: String
+    public let main: String?
+    public let share: String?
     
-    public init(main: String, share: String) {
+    public init(main: String?, share: String?) {
         self.main = main
         self.share = share
     }
