@@ -114,6 +114,7 @@ struct FetchAllListingsRequest: APIRequest, DecoratableRequest {
         }
         params["per_page"] = perPage
         params["page"] = page
+        params["platform"] = "ios"
         
         parameters = params
     }
@@ -338,10 +339,10 @@ private extension Listing {
         dataJSON["image_ids"] = photosInfo.imageIDs
         
         // Contact
-        if let contact = contact {
-            dataJSON["contact_name"] = contact.contactName
-            dataJSON["contact_email"] = contact.contactEmail
-            dataJSON["contact_phone"] = contact.contactPhone
+        if let contacts = contacts {
+            dataJSON["contact_name"] = contacts.first?.contactName
+            dataJSON["contact_email"] = contacts.first?.contactEmail
+            dataJSON["contact_phone"] = contacts.first?.contactPhone
         }
         
 #if DEBUG

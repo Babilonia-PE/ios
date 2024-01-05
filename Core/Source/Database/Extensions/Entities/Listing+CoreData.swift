@@ -98,7 +98,7 @@ extension Listing: CoreDataModelConvertible {
         object.facilities = (facilities.flatMap { upsertFacilities($0, in: context) }).flatMap(Set.init)
         object.advancedDetails = (advancedDetails.flatMap { upsertFacilities($0, in: context) }).flatMap(Set.init)
         
-        object.contact = contact?.upsertManagedObject(in: context, existedInstance: object.contact) as? ManagedContact
+        object.contact = contacts?.first?.upsertManagedObject(in: context, existedInstance: object.contact) as? ManagedContact
         let url = url?.upsertManagedObject(in: context, existedInstance: object.url)
         print(url)
         object.url = url  as? ManagedListingUrl
@@ -129,6 +129,10 @@ extension Listing: CoreDataModelConvertible {
     private static func instantiate(_ object: ManagedListing) -> Listing {
         guard let user = User.from(object.user) as? User else { fatalError() }
         let contact: Contact? = (object.contact != nil) ? Contact.from(object.contact!) as? Contact : nil
+        var contacts: [Contact] = []
+        if let contact = contact {
+            contacts = [contact]
+        }
         let url: UrlListing? = (object.url != nil) ? UrlListing.from(object.url!) as? UrlListing : nil
         let location = object.location.flatMap(Location.from) as? Location
         let images = object.images?.map { (image: ManagedListingImage) -> ListingImage in
@@ -155,6 +159,7 @@ extension Listing: CoreDataModelConvertible {
             favouritesCount: Int(object.favouritesCount),
             favourited: object.favourited,
             id: ListingId(object.id),
+            ids: [ListingId(object.id)],
             listingDescription: object.listingDescription,
             listingType: object.listingType.flatMap(ListingType.init),
             parkingSlotsCount: object.parkingSlotsCount.flatMap(Int.init),
@@ -180,7 +185,7 @@ extension Listing: CoreDataModelConvertible {
             images: images,
             facilities: facilities,
             advancedDetails: advancedDetails,
-            contact: contact,
+            contacts: contacts,
             url: url
         )
     }

@@ -71,7 +71,7 @@ private extension ListingDetailsCommonInfo {
         }
         let priceString = currencyCode + (NumberFormatter.integerFormatter.string(from: NSNumber(value: price)) ?? "0")
         var userName = ""
-        if let contactName = listing?.contact?.contactName {
+        if let contactName = listing?.contacts?.first?.contactName {
             userName = contactName
         } else {
             //userName = "\(listing?.user.firstName ?? "") \((listing?.user.lastName ?? "").prefix(1))."

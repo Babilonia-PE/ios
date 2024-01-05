@@ -60,6 +60,7 @@ public struct Listing: Codable {
     public var favouritesCount: Int
     public var favourited: Bool?
     public var id: ListingId
+    public var ids: [ListingId]?
     public var listingDescription: String?
     public var listingType: ListingType?
     public var parkingSlotsCount: Int?
@@ -82,7 +83,7 @@ public struct Listing: Codable {
     public var floorNumber: Int?
 
     public var user: User
-    public var contact: Contact?
+    public var contacts: [Contact]?
     public var location: Location?
     public var images: [ListingImage]?
     public var facilities: [Facility]?
@@ -101,7 +102,9 @@ public struct Listing: Codable {
                 bedroomsCount: Int?,
                 contactViewsCount: Int?,
                 favouritesCount: Int,
-                favourited: Bool = false, id: ListingId,
+                favourited: Bool = false,
+                id: ListingId,
+                ids: [ListingId]?,
                 listingDescription: String?,
                 listingType: ListingType?,
                 parkingSlotsCount: Int?,
@@ -126,7 +129,7 @@ public struct Listing: Codable {
                 images: [ListingImage]?,
                 facilities: [Facility]?,
                 advancedDetails: [Facility]?,
-                contact: Contact? = nil,
+                contacts: [Contact]?,                
                 url: UrlListing? = nil
         ) {
         self.area = area
@@ -136,6 +139,7 @@ public struct Listing: Codable {
         self.favouritesCount = favouritesCount
         self.favourited = favourited
         self.id = id
+        self.ids = ids
         self.listingDescription = listingDescription
         self.listingType = listingType
         self.parkingSlotsCount = parkingSlotsCount
@@ -161,7 +165,7 @@ public struct Listing: Codable {
         self.facilities = facilities
         self.advancedDetails = advancedDetails
         self.price = price
-        self.contact = contact
+        self.contacts = contacts
         self.url = url
     }
     
@@ -173,6 +177,7 @@ public struct Listing: Codable {
         case favouritesCount
         case favourited
         case id
+        case ids
         case listingDescription = "description"
         case listingType
         case parkingSlotsCount
@@ -184,14 +189,14 @@ public struct Listing: Codable {
         case viewsCount
         case yearOfConstruction
         case user
-        case contact
+        case contacts
         case location
         case images
         case facilities
         case createdAt
         case adPurchasedAt
         case adExpiresAt
-        case adPlan
+        case adPlan = "ad_plan"
         case state
         case role = "publisherRole"
         case coveredArea = "builtArea"

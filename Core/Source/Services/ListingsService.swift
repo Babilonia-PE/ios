@@ -202,7 +202,7 @@ final public class ListingsService {
 
         newClient.execute(
             request: request,
-            parser: DecodableParser<[Listing]>(keyPath: "data.records", decoder: decoder),
+            parser: DecodableParser<[Listing]>(keyPath: "data.records.listings", decoder: decoder),
             completion: completion
         )
     }
@@ -444,6 +444,7 @@ private extension Listing {
             contactViewsCount: 0,
             favouritesCount: 0,
             id: -UUID().hashValue,
+            ids: [-UUID().hashValue],
             listingDescription: "",
             listingType: nil,
             parkingSlotsCount: nil,
@@ -469,6 +470,7 @@ private extension Listing {
             images: nil,
             facilities: nil,
             advancedDetails: nil,
+            contacts: nil,
             url: nil
         )
     }

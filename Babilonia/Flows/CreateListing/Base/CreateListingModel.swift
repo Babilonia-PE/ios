@@ -118,15 +118,15 @@ final class CreateListingModel: EventNode {
     
     func enableDraftUpdates() {
         draftUpdatesAvailable = true
-        let contact = draftListing?.contact
+        let contact = draftListing?.contacts?.first
         if contact == nil || contact?.contactName == nil ||
             contact?.contactPhone == nil || contact?.contactEmail == nil {
 //            draftListing?.contact = Contact(contactEmail: userSession.user.email,
 //                                            contactName: "\(userSession.user.firstName ?? "") \(userSession.user.lastName ?? "")",
 //                                            contactPhone: userSession.user.phoneNumber)
-            draftListing?.contact = Contact(contactEmail: userSession.user.email,
-                                            contactName: userSession.user.fullName ?? "",
-                                            contactPhone: userSession.user.phoneNumber)
+            draftListing?.contacts = [Contact(contactEmail: userSession.user.email,
+                                             contactName: userSession.user.fullName ?? "",
+                                             contactPhone: userSession.user.phoneNumber)]
         }
     }
     

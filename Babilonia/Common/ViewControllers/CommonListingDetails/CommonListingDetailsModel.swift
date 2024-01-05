@@ -33,7 +33,7 @@ final class CommonListingDetailsModel: EventNode {
         String(listing.id)
     }
     var phoneNumber: String {
-        if let phoneNumber = listing.contact?.contactPhone {
+        if let phoneNumber = listing.contacts?.first?.contactPhone {
             return phoneNumber
         } else {
             return listing.user.phoneNumber ?? ""
