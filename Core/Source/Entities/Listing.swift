@@ -93,6 +93,8 @@ public struct Listing: Codable {
     public var reason: String?
     public var priceFinal: Int? = nil
     
+    public var userId: Int? = nil
+    
     public var isEdit: Bool = false
 
     //55547 TODO: - Remove it.
