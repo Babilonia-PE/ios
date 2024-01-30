@@ -7,7 +7,7 @@
 	<key>hostURL</key>
 	<dict>
 		<key>relative</key>
-		<string>https://api.babilonia.io/api/</string>
+		<string>https://services.babilonia.io</string>
 	</dict>
 	<key>stripePublishableKey</key>
 	<string>pk_live_3qaZOjQfqLzIA3rfAiJ9Ttbz00HjSRVd5d</string>

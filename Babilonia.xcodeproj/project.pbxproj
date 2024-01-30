@@ -3987,7 +3987,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 116;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4119,7 +4119,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 116;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -4314,7 +4314,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 116;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
@@ -4339,7 +4339,7 @@
 				CODE_SIGN_ENTITLEMENTS = Babilonia/Babilonia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 116;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = 2W9JUBBNWV;
 				INFOPLIST_FILE = Babilonia/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
