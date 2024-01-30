@@ -348,7 +348,7 @@ final class SearchMapViewController: UIViewController, AlertApplicable, SlidingC
     }
     
     private func buildListingPreviewContentView(with listing: Listing) -> ListingPreviewContentView {
-        let userID = listing.user.id
+        let userID = listing.user?.id ?? 0
         let listingTypeViewModel = ListingTypeViewModel(labelsAlignment: .vertical)
         let listingViewModel = ListingViewModel(listing: listing,
                                                 configsService: viewModel.configsService,

@@ -165,7 +165,7 @@ final class SearchListModel: EventNode {
     func isUserOwnedListing(at index: Int, isTopListing: Bool) -> Bool {
         if userService.userIsLoggedIn {
             let listing = isTopListing ? topListings.value[index] : listings.value[index]
-            return listing.user.id == userService.userID
+            return listing.user?.id == userService.userID
         } else {
             return false
         }

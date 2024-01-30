@@ -7,7 +7,11 @@
 // MARK: - Common
 
 "common.for.text" = "en %@";
-"common.share" = "Te comparto esta propiedad publicada en Babilonia.";
+"common.share" = "¡Hola! Te comparto esta increíble propiedad que encontré en Babilonia:";
+"common.share.description" = "Ingresa al enlace para descubrir todos los detalles.";
+"common.share.description_detail" = "dor";
+"common.share.description_detail_des" = "bñ";
+
 "common.all" = "Todos";
 
 // MARK: - HUDs

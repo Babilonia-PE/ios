@@ -340,7 +340,7 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
         by listing: Listing,
         for selectedAnnotation: ARAnnotation
     ) -> ListingPreviewContentView {
-        let userID = listing.user.id
+        let userID = listing.user?.id ?? 0
         let listingTypeViewModel = ListingTypeViewModel(labelsAlignment: .vertical)
         let listingViewModel = ListingViewModel(listing: listing,
                                                 configsService: viewModel.configsService,
@@ -400,7 +400,7 @@ final class ARContainerViewController: UIViewController, SlidingContainerPresent
         listingPreviewView.didToggleContact = { [weak self] _ in
             guard let self = self else { return }
 
-            let phone = listing.user.phoneNumber ?? ""
+            let phone = listing.user?.phoneNumber ?? ""
             self.composerManager.proceedPhone(phone)
         }
 
@@ -646,7 +646,7 @@ extension ARContainerViewController: ARDataSource {
             return annotationView
         }
 
-        let userID = listing.user.id
+        let userID = listing.user?.id ?? 0
         let annotationView = AnnotationContainerView()
         let listingViewModel = ListingViewModel(listing: listing,
                                                 configsService: viewModel.configsService,

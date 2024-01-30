@@ -82,7 +82,7 @@ public struct Listing: Codable {
     public var totalFloorsCount: Int?
     public var floorNumber: Int?
 
-    public var user: User
+    public var user: User?
     public var contacts: [Contact]?
     public var location: Location?
     public var images: [ListingImage]?
@@ -93,7 +93,7 @@ public struct Listing: Codable {
     public var reason: String?
     public var priceFinal: Int? = nil
     
-    public var userId: Int? = nil
+    //public var userId: Int? = nil
     
     public var isEdit: Bool = false
 
@@ -126,7 +126,7 @@ public struct Listing: Codable {
                 parkingForVisits: Bool?,
                 totalFloorsCount: Int?,
                 floorNumber: Int?,
-                user: User,
+                user: User?,
                 location: Location?,
                 images: [ListingImage]?,
                 facilities: [Facility]?,
@@ -190,7 +190,7 @@ public struct Listing: Codable {
         case status
         case viewsCount
         case yearOfConstruction
-        case user
+        case user = "user"
         case contacts
         case location
         case images

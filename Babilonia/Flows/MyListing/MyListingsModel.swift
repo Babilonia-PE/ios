@@ -218,10 +218,26 @@ final class MyListingsModel: EventNode {
         editListing(listing)
     }
     
+    func primeraMayuscula(cadena: String) -> String {
+        let palabras = cadena.components(separatedBy: " ")
+        let palabrasMayuscula = palabras.map { $0.capitalized }
+        return palabrasMayuscula.joined(separator: " ")
+    }
+    
     func getShareURL(for listingID: Int) -> String? {
         guard let listing = allListings.value.first(where: { $0.id == listingID }) else { return nil }
         
         return listing.url?.share
+    }
+    
+    func dataShare(for listingID: Int) -> String {
+        guard let listing = allListings.value.first(where: { $0.id == listingID }) else { return "" }
+        let property = primeraMayuscula(cadena: listing.propertyType?.rawValue ?? "")
+        let address = listing.location?.address ?? ""
+        let bed = listing.bedroomsCount ?? 0
+        let bath = listing.bathroomsCount ?? 0
+        let area = listing.area ?? 0
+        return "\(property) | \(address) | \(bed) \(L10n.Common.shareDescriptionDetail) - \(bath) \(L10n.Common.shareDescriptionDetailDes) - \(area)m2."
     }
 
     private func editListing(_ listing: Listing) {

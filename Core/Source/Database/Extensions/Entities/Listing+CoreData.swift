@@ -74,16 +74,17 @@ extension Listing: CoreDataModelConvertible {
         
         guard let context = object.managedObjectContext else { return }
         
-        let managedUser = user.upsertManagedObject(in: context, existedInstance: object.user)
-        guard let user = managedUser as? ManagedUser else {
-            fatalError("Cannot cast \(managedUser) to \(managedUser.self)")
+        let managedUser = user?.upsertManagedObject(in: context, existedInstance: object.user)
+        if let user = managedUser as? ManagedUser {
+            object.user = user
+        } else {
+            print("Error al castear: No se puede convertir \(managedUser) a ManagedUser")
         }
         object.createdAt = createdAt
         object.adPurchasedAt = adPurchasedAt
         object.adPlan = adPlan?.rawValue
         object.role = role?.rawValue
         object.adExpiresAt = adExpiresAt
-        object.user = user
         
         object.location = location?.upsertManagedObject(
             in: context,

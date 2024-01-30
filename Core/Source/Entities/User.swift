@@ -19,7 +19,7 @@ public struct User: Codable {
     public var fullName: String?
     //public var lastName: String?
     public var phoneNumber: String?
-    public let avatar: RemoteImage?
+    public var avatar: RemoteImage?
     public var company: Сompany?
     
     //55547 TODO: - Remove it.

@@ -9,7 +9,7 @@
 public struct RemoteImage: Codable {
     
     public let originalURLString: String?
-    public let smallURLString: String?
+    public var smallURLString: String?
     public let mediumURLString: String?
     public let largeURLString: String?
     
@@ -28,9 +28,12 @@ public struct RemoteImage: Codable {
 
     enum CodingKeys: String, CodingKey {
         case originalURLString = "url"
-        case smallURLString = "urlMin"
-        case mediumURLString = "urlMiddle"
-        case largeURLString = "urlLarge"
+//        case smallURLString = "urlMin"
+//        case mediumURLString = "urlMiddle"
+//        case largeURLString = "urlLarge"
+        case smallURLString = "url_min"
+        case mediumURLString = "url_middle"
+        case largeURLString = "url_large"
     }
     
     public var renderURLString: String? {

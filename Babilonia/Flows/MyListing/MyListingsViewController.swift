@@ -19,7 +19,7 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
     
     let alert = ApplicationAlert()
     let spinner = AppSpinner()
-    
+
     private let viewModel: MyListingsViewModel
     
     private var titleLabel: UILabel!
@@ -318,12 +318,15 @@ final class MyListingsViewController: UIViewController, AlertApplicable, Spinner
                 }
             case .unpublish: self.presentPublishActionAlert(for: listingId, isPublish: false)
             case .delete: self.presentDeleteAlert(for: listingId)
-            case .share: self.showShare(for: viewModel.isListingShared(with: listingId))            }
+            case .share: self.showShare(for: viewModel.isListingShared(with: listingId), listing: listingId)            }
         }
     }
     
-    private func showShare(for listingId: String) {
-        let text = L10n.Common.share + " \(Environment.default.webSiteURL ?? "")\(listingId)"
+    private func showShare(for listingId: String, listing: ListingId) {
+        let share = L10n.Common.share
+        let info = viewModel.isDataShared(with: listing)
+        let description = L10n.Common.shareDescription
+        let text = "\(share)\n\(info)\n\(description)\n\(Environment.default.webSiteURL ?? "")\(listingId)"
         let items: [Any] = [text]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [

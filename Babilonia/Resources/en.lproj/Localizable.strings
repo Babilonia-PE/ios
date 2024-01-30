@@ -7,7 +7,10 @@
 // MARK: - Common
 
 "common.for.text" = "for %@";
-"common.share" = "I share with you this property published in Babylon.";
+"common.share" = "Hello! I share with you this incredible property that I found in Babilonia:";
+"common.share.description" = "Enter the link to discover all the details.";
+"common.share.description_detail" = "bed";
+"common.share.description_detail_des" = "bath";
 "common.all" = "All";
 
 // MARK: - HUDs

@@ -72,8 +72,11 @@ internal enum L10n {
         return L10n.tr("Localizable", "common.for.text", String(describing: p1))
       }
     }
-    internal static let share = L10n.tr("Localizable", "common.share")
-    internal static let all = L10n.tr("Localizable", "common.all")
+      internal static let share = L10n.tr("Localizable", "common.share")
+      internal static let shareDescription = L10n.tr("Localizable", "common.share.description")
+      internal static let shareDescriptionDetail = L10n.tr("Localizable", "common.share.description_detail")
+      internal static let shareDescriptionDetailDes = L10n.tr("Localizable", "common.share.description_detail_des")
+      internal static let all = L10n.tr("Localizable", "common.all")
   }
 
   internal enum CreateListing {

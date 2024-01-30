@@ -420,10 +420,18 @@ final class CommonListingDetailsViewController: NiblessViewController, AlertAppl
         }
     }
     
+    private func primeraMayuscula(cadena: String) -> String {
+        let palabras = cadena.components(separatedBy: " ")
+        let palabrasMayuscula = palabras.map { $0.capitalized }
+        return palabrasMayuscula.joined(separator: " ")
+    }
+    
     private func shareListingDetail() {
-        let text = L10n.Common.share
-        let url = URL(string: "\(Environment.default.webSiteURL ?? "")\(viewModel.listingURL)")!
-        let items: [Any] = [text, url]
+        let share = L10n.Common.share
+        let info = "\(primeraMayuscula(cadena: viewModel.listingType)) | \(viewModel.listingAddress) | \(viewModel.listingBed) \(L10n.Common.shareDescriptionDetail) - \(viewModel.listingBath) \(L10n.Common.shareDescriptionDetailDes) - \(viewModel.listingArea)m2."
+        let description = L10n.Common.shareDescription
+        let text = "\(share)\n\(info)\n\(description)\n\(Environment.default.webSiteURL ?? "")\(viewModel.listingURL)"
+        let items: [Any] = [text]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
             UIActivity.ActivityType.airDrop

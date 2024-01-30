@@ -75,13 +75,13 @@ private extension ListingDetailsCommonInfo {
             userName = contactName
         } else {
             //userName = "\(listing?.user.firstName ?? "") \((listing?.user.lastName ?? "").prefix(1))."
-            userName = listing?.user.fullName ?? ""
+            userName = listing?.user?.fullName ?? ""
         }
         
         self = ListingDetailsCommonInfo(
             price: priceString,
             pricePerSquareMeter: perSquareMeterString,
-            userImageURLString: listing?.user.avatar?.smallURLString,
+            userImageURLString: listing?.user?.avatar?.smallURLString,
             userName: userName,
             propertyType: listing?.propertyType,
             listingType: listing?.listingType,

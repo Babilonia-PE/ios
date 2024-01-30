@@ -36,12 +36,33 @@ final class CommonListingDetailsModel: EventNode {
         if let phoneNumber = listing.contacts?.first?.contactPhone {
             return phoneNumber
         } else {
-            return listing.user.phoneNumber ?? ""
+            return listing.user?.phoneNumber ?? ""
         }
     }
     var listingURL: String {
-        listing.url?.main ?? ""
+        listing.url?.share ?? ""
     }
+    
+    var listingType: String {
+        listing.propertyType?.rawValue ?? ""
+    }
+    
+    var listingAddress: String {
+        listing.location?.address ?? ""
+    }
+    
+    var listingBed: Int {
+        listing.bedroomsCount ?? 0
+    }
+    
+    var listingBath: Int {
+        listing.bathroomsCount ?? 0
+    }
+    
+    var listingArea: Int {
+        listing.area ?? 0
+    }
+    
     var listingState: ListingState {
         listing.state
     }
@@ -68,10 +89,10 @@ final class CommonListingDetailsModel: EventNode {
         self.listingsService = listingsService
         self.configsService = configsService
         self.userService = userService
-        self.viewState = listing.user.id == userService.userID ? .owned : viewState
+        self.viewState = listing.user?.id == userService.userID ? .owned : viewState
         self.isModalPresentation = isModalPresentation
         self.stateOnAppear = stateOnAppear
-        self.shouldHideEditAction = viewState == .default && listing.user.id == userService.userID
+        self.shouldHideEditAction = viewState == .default && listing.user?.id == userService.userID
 
         super.init(parent: parent)
     }
@@ -302,7 +323,7 @@ extension CommonListingDetailsModel {
             config = ListingDetailsModelConfig.local(listing: listing, photos: listing.createListingPhotos)
         }
 
-        let userID = listing.user.id
+        let userID = listing.user?.id
         listingDetailsModel = ListingDetailsModel(parent: self,
                                                   config: config,
                                                   listingsService: listingsService,

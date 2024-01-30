@@ -43,6 +43,26 @@ final class CommonListingDetailsViewModel {
         model.listingURL
     }
     
+    var listingType: String {
+        model.listingType
+    }
+    
+    var listingAddress: String {
+        model.listingAddress
+    }
+    
+    var listingBed: Int {
+        model.listingBed
+    }
+    
+    var listingBath: Int {
+        model.listingBath
+    }
+      
+    var listingArea: Int {
+        model.listingArea
+    }
+    
     var phoneNumber: String {
         model.phoneNumber
     }

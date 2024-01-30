@@ -75,6 +75,7 @@ final public class ListingsService {
         completion: @escaping (Result<Bool>) -> Void
         ) {
         let request = UpdateListingRequest(listing: listing, photosInfo: photosInfo)
+            print("request = \(request)")
         let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
         newClient.execute(
             request: request,
@@ -85,6 +86,7 @@ final public class ListingsService {
                 print("updateListing = \(listing)")
                 self.processListings([listing], completion: completion)
             case .failure(let error):
+                print("errorListing = \(error)")
                 completion(.failure(error))
             }
         }
