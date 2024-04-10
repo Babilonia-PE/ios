@@ -7,18 +7,18 @@
 	<key>hostURL</key>
 	<dict>
 		<key>relative</key>
-		<string>https://services-testing.babilonia.io/</string>
+		<string>https://services-testing.babilonia.pe/</string>
 	</dict>
 	<key>stripePublishableKey</key>
 	<string>pk_test_51HrMuRDyWNiuGg9AxZc3aKekn3QHv1ceijFPXt3gpge5DdnC239sVKF4WwZTUNy7BxFWtjmLP9sa9oYB0P0NFjhH00xDJBM2Ky</string>
 	<key>deeplinkHost</key>
-	<string>dev.babilonia.io</string>
+	<string>dev.babilonia.pe</string>
 	<key>webSiteURL</key>
-	<string>https://www-testing.babilonia.io</string>
+	<string>https://www-testing.babilonia.pe</string>
 	<key>paymentURL</key>
 	<dict>
 		<key>relative</key>
-		<string>https://services-testing.babilonia.io</string>
+		<string>https://services-testing.babilonia.pe</string>
 	</dict>
 </dict>
 </plist>

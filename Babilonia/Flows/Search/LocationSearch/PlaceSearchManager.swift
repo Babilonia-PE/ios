@@ -95,7 +95,10 @@ class PlaceSearchManager {
         var dataTask: URLSessionDataTask?
         
         var urlComponents = URLComponents(string: "https://maps.googleapis.com/maps/api/geocode/json")
-        let key = "AIzaSyCpGfIjj1B1wxgOkjdog6Da_1xetzn9OnI"
+        //testing
+        let key = "AIzaSyDLAYwmDwRtktHg_tc71yYHEK7auabLDP8"
+        //prod
+        //let key = "AIzaSyDIjFGC9agH6MASWS7ibYQfxlFbbw4du00"
         urlComponents?.query = "latlng=\(coordinate.latitude),\(coordinate.longitude)&key=\(key)"
         guard let url = urlComponents?.url else {
           return

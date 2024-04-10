@@ -7,18 +7,18 @@
 	<key>hostURL</key>
 	<dict>
 		<key>relative</key>
-		<string>https://services.babilonia.io</string>
+		<string>https://services.babilonia.pe</string>
 	</dict>
 	<key>stripePublishableKey</key>
 	<string>pk_live_3qaZOjQfqLzIA3rfAiJ9Ttbz00HjSRVd5d</string>
 	<key>deeplinkHost</key>
-	<string>babilonia.io</string>
+	<string>babilonia.pe</string>
 	<key>webSiteURL</key>
-	<string>https://babilonia.io/</string>
+	<string>https://babilonia.pe/</string>
 	<key>paymentURL</key>
 	<dict>
 		<key>relative</key>
-		<string>https://services.babilonia.io</string>
+		<string>https://services.babilonia.pe</string>
 	</dict>
 </dict>
 </plist>

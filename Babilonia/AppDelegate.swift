@@ -31,8 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         AppStyle.default.applyAppearance()
-        GMSServices.provideAPIKey("AIzaSyCpGfIjj1B1wxgOkjdog6Da_1xetzn9OnI")
-        GMSPlacesClient.provideAPIKey("AIzaSyCpGfIjj1B1wxgOkjdog6Da_1xetzn9OnI")
+        //testing
+        GMSServices.provideAPIKey("AIzaSyDLAYwmDwRtktHg_tc71yYHEK7auabLDP8")
+        GMSPlacesClient.provideAPIKey("AIzaSyDLAYwmDwRtktHg_tc71yYHEK7auabLDP8")
+        
+        //prod
+        //GMSServices.provideAPIKey("AIzaSyDIjFGC9agH6MASWS7ibYQfxlFbbw4du00")
+        //GMSPlacesClient.provideAPIKey("AIzaSyDIjFGC9agH6MASWS7ibYQfxlFbbw4du00")
         
         FirebaseApp.configure()
 
