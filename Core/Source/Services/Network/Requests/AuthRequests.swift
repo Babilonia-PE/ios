@@ -122,6 +122,13 @@ struct ValidateTokeRequest: APIRequest, DecoratableRequest {
     }
 }
 
+struct PhonePrefixesRequest: APIRequest, DecoratableRequest {
+    let method: APIRequestMethod = .get
+    let path = "public/phones_prefix"
+    let authRequired: Bool = false
+    private(set) var parameters: [String: Any]?
+}
+
 struct LogoutRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .delete

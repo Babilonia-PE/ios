@@ -144,6 +144,18 @@ public final class UserSessionController {
             })
     }
     
+    public func getPhonePrefixes(completion: @escaping ([PhonePrefix]) -> Void) {
+        let defaultPrefixes: [PhonePrefix] = []
+        authService.getPhonePrefixes { [weak self] result in
+            switch result {
+            case .success(let response):
+                completion(response.records ?? defaultPrefixes)
+            case .failure(let error):
+                completion(defaultPrefixes)
+            }
+        }
+    }
+    
     public func verifyToken(
         userSession: UserSession,
         completion: @escaping (Bool) -> Void

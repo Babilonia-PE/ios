@@ -28,10 +28,11 @@ final class AuthFlowAssembly: Assembly {
             .autoregister(AuthSignUpModel.self, argument: EventNode.self, initializer: AuthSignUpModel.init)
             .inObjectScope(.transient)
         container
-            .register(AuthSignUpViewController.self) { (resolver, eventNode: EventNode) in
+            .register(AuthSignUpViewController.self) { (resolver, eventNode: EventNode, phonePrefixes: [PhonePrefix]) in
                 let model = AuthSignUpModel(
                     parent: eventNode,
-                    userSessionController: resolver.autoresolve()
+                    userSessionController: resolver.autoresolve(),
+                    phonePrefixes: phonePrefixes
                 )
                 return AuthSignUpViewController(
                     viewModel: AuthSignUpViewModel(model: model)

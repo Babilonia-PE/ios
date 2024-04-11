@@ -26,9 +26,9 @@ final class AuthViewModel {
         model.validateVersion()
     }
     
-//    func login(with token: String) {
-//        model.login(with: token)
-//    }
+    //    func login(with token: String) {
+    //        model.login(with: token)
+    //    }
     
     func login() {
         model.login()
@@ -38,7 +38,7 @@ final class AuthViewModel {
         model.loginGuest()
     }
     
-    func signUp() {
-        model.signUp()
+    func requestPrefixes() {
+        model.requestPrefixes()
     }
 }

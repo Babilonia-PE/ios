@@ -93,6 +93,13 @@ final class UserSessionAuthService {
         )
     }
     
+    func getPhonePrefixes(
+        completion: @escaping (Result<PhonePrefixResponse>) -> Void
+    ) {
+        let request = PhonePrefixesRequest()
+        newClient.execute(request: request, parser: DecodableParser<PhonePrefixResponse>(keyPath: "data"), completion: completion)
+    }
+    
     func signIn(_ authorizationToken: String, completion: @escaping (Result<UserSessionInfo>) -> Void) {
         let request = SignInRequest(authorizationToken: authorizationToken)
         networkClient.execute(

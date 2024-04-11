@@ -41,8 +41,8 @@ final class AuthFlowCoordinator: EventNode, FlowCoordinator {
         return authViewController
     }
     
-    private func showSignUpFlow() {
-        let controller: AuthSignUpViewController = container.autoresolve(argument: self)
+    private func showSignUpFlow(phonePrefixes: [PhonePrefix]) {
+        let controller: AuthSignUpViewController = container.autoresolve(arguments: self, phonePrefixes)
         
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationStyle = .fullScreen
@@ -73,8 +73,8 @@ final class AuthFlowCoordinator: EventNode, FlowCoordinator {
         switch event {
         case .signIn(let userSession):
             raise(event: AuthFlowEvent.signIn(userSession))
-        case .signUp:
-            showSignUpFlow()
+        case .signUp(let phonePrefixes):
+            showSignUpFlow(phonePrefixes: phonePrefixes)
         case .logIn:
             showLogInFlow()
         case .cancelSignUp:

@@ -24,10 +24,12 @@ final class AuthSignUpModel: EventNode {
     let emailCustomError = PublishRelay<String?>()
     
     private let userSessionController: UserSessionController
+    private let phonePrefixes: [PhonePrefix]
     
     // MARK: - lifecycle
-    init(parent: EventNode, userSessionController: UserSessionController) {
+    init(parent: EventNode, userSessionController: UserSessionController, phonePrefixes: [PhonePrefix]) {
         self.userSessionController = userSessionController
+        self.phonePrefixes = phonePrefixes
         
         fullName = BehaviorRelay(value: "")
         //lastName = BehaviorRelay(value: "")

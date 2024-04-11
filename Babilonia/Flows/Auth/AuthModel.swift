@@ -13,7 +13,7 @@ import RxSwift
 enum AuthEvent: Event {
     case signIn(UserSession)
     case logIn(String)
-    case signUp(String)
+    case signUp([PhonePrefix])
     case cancelLogIn(String)
     case cancelSignUp(String)
 }
@@ -66,8 +66,13 @@ final class AuthModel: EventNode {
         raise(event: AuthEvent.signIn(session))
     }
     
-    func signUp() {
-        raise(event: AuthEvent.signUp(""))
+    func requestPrefixes() {
+        requestState.onNext(.started)
+        userSessionController.getPhonePrefixes { [weak self] phonePrefixes in
+            guard let self else { return }
+            self.requestState.onNext(.finished)
+            raise(event: AuthEvent.signUp(phonePrefixes))
+        }
     }
     
     func validateVersion() {
