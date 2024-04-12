@@ -229,9 +229,12 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
                             title: L10n.Popups.ForceUpdate.title,
                             message: L10n.Popups.ForceUpdate.text,
                             confirmTitle: L10n.Popups.ForceUpdate.ForceUpdate.title,
+                            declineTitle: "Cancel",
                             confirm: { [weak self] in
-                                self?.openAppStore()
-                            })
+            self?.openAppStore()
+        }, decline: { [weak self] in
+            
+        })
     }
     
     private func openAppStore() {
