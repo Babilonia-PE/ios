@@ -9,6 +9,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import Core
 
 enum EditProfileType {
     case editProfile, editEmail, editPhoneNumber, signUp
@@ -56,6 +57,7 @@ final class EditProfileViewModel {
     private let model: EditProfileModel
     private let disposeBag = DisposeBag()
     private(set) var inputFieldViewModels = [InputFieldViewModel]()
+    var prefixes: [PhonePrefix] { model.phonePrefixes }
     
     private lazy var fullNameViewModel: InputFieldViewModel = {
         let fullName = BehaviorRelay(value: model.initialFullName())

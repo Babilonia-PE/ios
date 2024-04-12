@@ -175,7 +175,6 @@ class AuthSignUpViewController: UIViewController, AlertApplicable, SpinnerApplic
             $0.leading == prefixView.trailingAnchor + 8
         }
         prefixView.translatesAutoresizingMaskIntoConstraints = false
-        //prefixView.widthAnchor.constraint(equalTo: containerPhoneTextField.widthAnchor, multiplier: 0.2).isActive = true
         lastBottomView = containerPhoneTextField
         
 //        if let viewModel = phoneViewModel {

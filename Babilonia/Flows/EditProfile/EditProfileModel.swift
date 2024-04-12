@@ -65,6 +65,9 @@ final class EditProfileModel: EventNode {
     
     private var cancellationsMap = [Int: YALAPIClient.Cancelable]()
     
+    // Corregir
+    let phonePrefixes: [PhonePrefix] = []
+    
     // MARK: - lifecycle
     
     init(parent: EventNode,
