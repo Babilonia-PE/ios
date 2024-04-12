@@ -169,7 +169,7 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
         
         viewModel.newVersionUpdated
             .drive(onNext: { [weak self] value in
-                if true {
+                if value.update ?? false {
                     self?.presentSignOut()
                 }
                 print("//==//")
