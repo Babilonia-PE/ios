@@ -169,7 +169,7 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
         
         viewModel.newVersionUpdated
             .drive(onNext: { [weak self] value in
-                if value.update ?? false {
+                if true {
                     self?.presentSignOut()
                 }
                 print("//==//")
@@ -228,9 +228,9 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
         SystemAlert.present(on: self,
                             title: L10n.Popups.ForceUpdate.title,
                             message: L10n.Popups.ForceUpdate.text,
-                            confirmTitle: L10n.Popups.ForceUpdate.ForceUpdate.title,
-                            declineTitle: L10n.Buttons.Cancel.title,
-                            confirm: { [weak self] in
+                            confirmTitle: L10n.Buttons.Cancel.title,
+                            declineTitle: L10n.Popups.ForceUpdate.ForceUpdate.title,
+                            decline: { [weak self] in
             self?.openAppStore()
         })
     }
