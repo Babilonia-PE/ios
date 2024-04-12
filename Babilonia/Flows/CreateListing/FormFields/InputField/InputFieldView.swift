@@ -12,7 +12,7 @@ import RxSwift
 
 final class InputFieldView: UIView {
     
-    private var backgroundView: UIView!
+    var backgroundView: UIView!
     private var titleLabel: UILabel!
     private var textLabel: UILabel!
     private var placeholderLabel: UILabel!

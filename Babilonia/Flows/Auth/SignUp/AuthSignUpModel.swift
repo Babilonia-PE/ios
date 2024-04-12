@@ -24,7 +24,8 @@ final class AuthSignUpModel: EventNode {
     let emailCustomError = PublishRelay<String?>()
     
     private let userSessionController: UserSessionController
-    private let phonePrefixes: [PhonePrefix]
+    let phonePrefixes: [PhonePrefix]
+    var currentSelectedPrefix = 0
     
     // MARK: - lifecycle
     init(parent: EventNode, userSessionController: UserSessionController, phonePrefixes: [PhonePrefix]) {
@@ -36,7 +37,6 @@ final class AuthSignUpModel: EventNode {
         email = BehaviorRelay(value: "")
         password = BehaviorRelay(value: "")
         phone = BehaviorRelay(value: "")
-        
         super.init(parent: parent)
     }
     
@@ -83,12 +83,16 @@ final class AuthSignUpModel: EventNode {
     
     func createProfile() {
         requestState.onNext(.started)
+        var phonePrefix = ""
+        if let currentPhonePrefix = phonePrefixes[currentSelectedPrefix].prefix {
+            phonePrefix = "\(currentPhonePrefix)"
+        }
         userSessionController.createAccount(
             fullName: fullName.value.trimmingCharacters(in: .whitespacesAndNewlines),
             //lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
             email: email.value.trimmingCharacters(in: .whitespacesAndNewlines),
             password: password.value.trimmingCharacters(in: .whitespacesAndNewlines),
-            //phonePrefix: countryDialCode.trimmingCharacters(in: .whitespacesAndNewlines),
+            phonePrefix: phonePrefix,
             phoneNumber: phone.value.trimmingCharacters(in: .whitespacesAndNewlines),
             ipAddress: NetworkUtil.getWiFiAddress() ?? "",
             userAgent: "ios",

@@ -54,13 +54,13 @@ public final class UserSessionController {
     }
     
     // MARK: Session managment
-    
+    //swiftlint:disable function_parameter_count
     public func createAccount(
         fullName: String,
         //lastName: String,
         email: String,
         password: String,
-        //phonePrefix: String,
+        phonePrefix: String,
         phoneNumber: String,
         ipAddress: String,
         userAgent: String,
@@ -72,7 +72,7 @@ public final class UserSessionController {
             //lastName: lastName,
             email: email,
             password: password,
-            //phonePrefix: phonePrefix,
+            phonePrefix: phonePrefix,
             phoneNumber: phoneNumber,
             ipAddress: ipAddress,
             userAgent: userAgent,

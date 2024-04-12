@@ -10,12 +10,6 @@ public struct PhonePrefix: Codable {
     public var name: String?
     public var prefix: Int?
     public var mask: String?
+    // swiftlint:disable identifier_name
     public var isoCode: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case name
-        case prefix
-        case mask
-        case isoCode = "iso_code"
-    }
 }

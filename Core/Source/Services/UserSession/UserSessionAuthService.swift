@@ -16,13 +16,13 @@ final class UserSessionAuthService {
     }
     
     // MARK: -
-    
+    //swiftlint:disable function_parameter_count
     func signUp(
         fullName: String,
         //lastName: String,
         email: String,
         password: String,
-        //phonePrefix: String,
+        phonePrefix: String,
         phoneNumber: String,
         ipAddress: String,
         userAgent: String,
@@ -42,7 +42,7 @@ final class UserSessionAuthService {
                                              //lastName: lastName,
                                              email: email,
                                              password: password,
-                                             //phonePrefix: phonePrefix,
+                                             phonePrefix: phonePrefix,
                                              phoneNumber: phoneNumber,
                                              ipAddress: ipAddress,
                                              userAgent: userAgent,
@@ -97,7 +97,12 @@ final class UserSessionAuthService {
         completion: @escaping (Result<PhonePrefixResponse>) -> Void
     ) {
         let request = PhonePrefixesRequest()
-        newClient.execute(request: request, parser: DecodableParser<PhonePrefixResponse>(keyPath: "data"), completion: completion)
+        let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
+        newClient.execute(
+            request: request,
+            parser: DecodableParser<PhonePrefixResponse>(keyPath: "data", decoder: decoder),
+            completion: completion
+        )
     }
     
     func signIn(_ authorizationToken: String, completion: @escaping (Result<UserSessionInfo>) -> Void) {

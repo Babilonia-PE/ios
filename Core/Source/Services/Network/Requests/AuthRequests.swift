@@ -52,7 +52,7 @@ struct SignUpWithPhoneRequest: APIRequest, DecoratableRequest {
         //lastName: String,
         email: String,
         password: String,
-        //phonePrefix: String,
+        phonePrefix: String,
         phoneNumber: String,
         ipAddress: String,
         userAgent: String,
@@ -63,7 +63,7 @@ struct SignUpWithPhoneRequest: APIRequest, DecoratableRequest {
         params["full_name"] = fullName
         //params["data[last_name]"] = lastName
         params["email"] = email
-        //params["data[prefix]"] = phonePrefix
+        params["prefix"] = phonePrefix
         params["phone_number"] = phoneNumber
         params["password"] = password
         params["ipa"] = ipAddress
