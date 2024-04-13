@@ -25,6 +25,8 @@ final class ProfileViewController: UIViewController {
     private var loginView: ProfileFieldView!
     private var shadowApplied: Bool = false
     
+    private let spinner = AppSpinner()
+    
     private let viewModel: ProfileViewModel
     
     // MARK: - lifecycle
@@ -251,6 +253,11 @@ final class ProfileViewController: UIViewController {
                     self.phoneView.setup(with: self.viewModel.phoneViewModel)
                 })
                 .disposed(by: disposeBag)
+            viewModel.requestState.isLoading
+                .bind { [weak self] value in
+                    self?.updateLoadingState(value)
+                }
+                .disposed(by: disposeBag)
         }
         
         termsView.selectButtonTap
@@ -287,5 +294,13 @@ final class ProfileViewController: UIViewController {
         }
         
         return separator
+    }
+    
+    private func updateLoadingState(_ isLoading: Bool) {
+        if isLoading {
+            spinner.show(on: view, text: nil, blockUI: true)
+        } else {
+            spinner.hide(from: view)
+        }
     }
 }

@@ -44,8 +44,8 @@ final class ProfileFlowCoordinator: EventNode, FlowCoordinator {
     
     // MARK: - Modules presentation
     
-    private func createEditProfileFlow(screenType: EditProfileType) {
-        let coordinator: EditProfileFlowCoordinator = container.autoresolve(arguments: self, container, screenType)
+    private func createEditProfileFlow(screenType: EditProfileType, _ phonePrefixes: [PhonePrefix] = []) {
+        let coordinator: EditProfileFlowCoordinator = container.autoresolve(arguments: self, container, EditProfileFlowCoordinatorFlowData(screenType: screenType, phonePrefixes: phonePrefixes))
         // TODO: uncomment after resolving Tabbar hiding
         //navigationController?.pushViewController(coordinator.createFlow(), animated: true)
         let flow = UINavigationController(rootViewController: coordinator.createFlow())
@@ -76,8 +76,8 @@ final class ProfileFlowCoordinator: EventNode, FlowCoordinator {
         case .editEmail:
             createEditProfileFlow(screenType: .editEmail)
             
-        case .editPhoneNumber:
-            createEditProfileFlow(screenType: .editPhoneNumber)
+        case .editPhoneNumber(let phonePrefixes):
+            createEditProfileFlow(screenType: .editPhoneNumber, phonePrefixes)
             
         case .open(let link, let title):
             showTermsAndPrivacy(link, with: title)

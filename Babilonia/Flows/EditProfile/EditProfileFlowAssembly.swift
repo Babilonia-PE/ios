@@ -16,12 +16,14 @@ final class EditProfileFlowAssembly: Assembly {
         assembleServices(container)
         
         container
-            .register(EditProfileViewController.self) { (resolver, eventNode: EventNode, screenType: EditProfileType) in
+            .register(EditProfileViewController.self) { (resolver, eventNode: EventNode, screenType: EditProfileType, phonePrefixes: [PhonePrefix]) in
                 let model = EditProfileModel(parent: eventNode,
                                              userSession: resolver.autoresolve(),
                                              userService: resolver.autoresolve(),
                                              imagesService: resolver.autoresolve(),
-                                             screenType: screenType)
+                                             screenType: screenType,
+                                             phonePrefixes: phonePrefixes
+                )
                 return EditProfileViewController(
                     viewModel: EditProfileViewModel(model: model)
                 )

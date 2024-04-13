@@ -29,7 +29,7 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
     
     weak var delegate: PrefixViewDelegate?
     
-    private var selectedIndex = 0
+    private var selectedIndex: Int
     
     let pickerView = UIPickerView()
     
@@ -52,8 +52,9 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
     
     let dataSet: [PhonePrefix]
     
-    init(dataSet: [PhonePrefix]) {
+    init(dataSet: [PhonePrefix], selectedIndex: Int = 0) {
         self.dataSet = dataSet
+        self.selectedIndex = selectedIndex
         super.init(frame: .zero)
         setup()
     }

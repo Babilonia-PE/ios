@@ -66,7 +66,7 @@ final class EditProfileModel: EventNode {
     private var cancellationsMap = [Int: YALAPIClient.Cancelable]()
     
     // Corregir
-    let phonePrefixes: [PhonePrefix] = []
+    let phonePrefixes: [PhonePrefix]
     
     // MARK: - lifecycle
     
@@ -74,11 +74,14 @@ final class EditProfileModel: EventNode {
          userSession: UserSession,
          userService: UserService,
          imagesService: ImagesService,
-         screenType: EditProfileType) {
+         screenType: EditProfileType,
+         phonePrefixes: [PhonePrefix]
+    ) {
         self.imagesService = imagesService
         self.userService = userService
         self.userSession = userSession
         self.screenType = screenType
+        self.phonePrefixes = phonePrefixes
         
         fullName = BehaviorRelay(value: userSession.user.fullName ?? "")
         //lastName = BehaviorRelay(value: userSession.user.lastName ?? "")

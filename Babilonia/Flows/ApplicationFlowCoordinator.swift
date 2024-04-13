@@ -90,7 +90,7 @@ final class ApplicationFlowCoordinator: EventNode {
     
     private func presentCreateProfileFlow(userSession: UserSession) {
         let coordinator: EditProfileFlowCoordinator = container.autoresolve(
-            arguments: self, userSession, EditProfileType.signUp
+            arguments: self, userSession, EditProfileFlowCoordinatorFlowData(screenType: EditProfileType.signUp)  
         )
         let editNavigationController = UINavigationController(rootViewController: coordinator.createFlow())
         coordinator.containerViewController = editNavigationController

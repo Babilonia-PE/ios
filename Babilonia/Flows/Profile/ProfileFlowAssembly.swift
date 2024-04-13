@@ -34,15 +34,12 @@ final class ProfileFlowAssembly: Assembly {
                 )
             }
             .inObjectScope(.transient)
-        
-        container
-            .autoregister(
-                EditProfileFlowCoordinator.self,
-                arguments: EventNode.self, Container.self, EditProfileType.self,
-                initializer: EditProfileFlowCoordinator.init
-            )
-            .inObjectScope(.transient)
-        
+        container.autoregister(
+            EditProfileFlowCoordinator.self,
+            arguments: EventNode.self, Container.self, EditProfileFlowCoordinatorFlowData.self,
+            initializer: EditProfileFlowCoordinator.init
+        )
+        .inObjectScope(.transient)
         container
             .autoregister(
                 WebLinkModel.self,

@@ -108,4 +108,16 @@ final public class UserService {
         )
     }
     
+    public func getPhonePrefixes(
+        completion: @escaping (Result<PhonePrefixResponse>) -> Void
+    ) {
+        let request = PhonePrefixesRequest()
+        let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
+        newClient.execute(
+            request: request,
+            parser: DecodableParser<PhonePrefixResponse>(keyPath: "data", decoder: decoder),
+            completion: completion
+        )
+    }
+    
 }

@@ -15,6 +15,7 @@ final class ProfileViewModel {
     var canRefreshUser: Bool = true
     var isUserGuest: Bool = false
     var userUpdated: Driver<Void> { return model.userUpdated.map { _ in } }
+    var requestState: Observable<RequestState> { return model.requestState.asObservable() }
     
     private(set) var avatarURLString: String?
     private(set) var avatarImage: UIImage?
