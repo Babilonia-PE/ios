@@ -27,6 +27,25 @@ final class EditProfileViewModel {
             .map { $0.allSatisfy({ $0 }) }
     }
     
+    var prefix: String {
+        get {
+            model.prefix ?? ""
+        }
+        set {
+            model.prefix = newValue
+        }
+    }
+    
+    var currentPrefixIndex: Int {
+        var currentIndex = 0
+        prefixes.enumerated().forEach { (index, prefix) in
+            if self.prefix == "\(prefix.prefix ?? 0)" {
+                currentIndex = index
+            }
+        }
+        return currentIndex
+    }
+    
     var navigationTitle: String {
         switch screenType {
         case .editProfile:
@@ -181,6 +200,14 @@ final class EditProfileViewModel {
         case .signUp:
             model.cancelCreating()
         }
+    }
+    
+    func updateCurrentPrefix(at index: Int) {
+        var currentPrefixPhone = ""
+        if let currentPrefix = prefixes[index].prefix {
+            currentPrefixPhone = String(currentPrefix)
+        }
+        prefix = currentPrefixPhone
     }
     
     // MARK: - private

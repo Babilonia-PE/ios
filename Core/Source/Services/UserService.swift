@@ -51,6 +51,7 @@ final public class UserService {
         //image: UIImage? = nil,
         //progressHandler: ProgressHandler? = nil,
         photoId: Int? = nil,
+        prefix: String? = nil,
         phoneNumber: String? = nil,
         completion: @escaping (Result<Bool>) -> Void
     ) {
@@ -68,6 +69,7 @@ final public class UserService {
                                            //lastName: lastName,
                                            email: email,
                                            photoId: photoId,
+                                           prefix: prefix,
                                            phoneNumber: phoneNumber)
         newClient.execute(
             request: request,

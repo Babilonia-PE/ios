@@ -33,12 +33,14 @@ struct UpdateProfileRequest: APIRequest, DecoratableRequest {
          email: String? = nil,
          password: String? = nil,
          photoId: Int? = nil,
+         prefix: String? = nil,
          phoneNumber: String? = nil) {
         
         var params = [String: Any]()
         
         params["full_name"] = fullName
         params["email"] = email
+        params["prefix"] = prefix
         params["phone_number"] = phoneNumber
         if password != nil {
             params["change_password"] = true

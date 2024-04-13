@@ -146,7 +146,7 @@ final class EditProfileViewController: UIViewController, AlertApplicable {
                 $0.trailing == scrollView.trailingAnchor - 24.0
             }
             let phoneInputView = InputFieldView(viewModel: viewModel.inputFieldViewModels.last!)
-            let prefixView = PrefixView(dataSet: viewModel.prefixes)
+            let prefixView = PrefixView(dataSet: viewModel.prefixes, selectedIndex: viewModel.currentPrefixIndex)
             prefixView.delegate = self
             containerPhoneTextField.addSubview(phoneInputView)
             containerPhoneTextField.addSubview(prefixView)
@@ -486,7 +486,7 @@ extension EditProfileViewController {
 extension EditProfileViewController: PrefixViewDelegate {
     
     func didSelectRow(at index: Int) {
-        
+        viewModel.updateCurrentPrefix(at: index)
     }
     
 }

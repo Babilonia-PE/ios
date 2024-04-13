@@ -87,7 +87,7 @@ public final class UserSessionController {
                         userId = UserId.init(id)
                     }
                     //let user = User.init(id: userId, email: email, firstName: fullName, lastName: "", phoneNumber: nil, avatar: nil)
-                    let user = User.init(id: userId, email: email, fullName: fullName, phoneNumber: nil, avatar: nil)
+                    let user = User.init(id: userId, email: email, fullName: fullName, prefix: phonePrefix, phoneNumber: nil, avatar: nil)
                     let authToken = UserAuthTokens.init(
                         authenticationToken: result.value?.authorization ?? "",
                         exchangeToken: ""
@@ -128,6 +128,7 @@ public final class UserSessionController {
                         email: email,
                         fullName: "",
                         //lastName: "",
+                        prefix: "",
                         phoneNumber: "",
                         avatar: nil
                     )

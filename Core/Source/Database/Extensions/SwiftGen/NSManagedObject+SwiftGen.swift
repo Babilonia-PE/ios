@@ -534,6 +534,7 @@ internal class ManagedUser: NSManagedObject {
   @NSManaged internal var fullName: String?
   @NSManaged internal var id: Int64
   //@NSManaged internal var lastName: String?
+    @NSManaged internal var prefix: String?
   @NSManaged internal var phoneNumber: String
   @NSManaged internal var avatar: ManagedRemoteImage?
   @NSManaged internal var listings: Set<ManagedListing>?

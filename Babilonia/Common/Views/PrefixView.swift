@@ -71,7 +71,7 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
         layer.cornerRadius = 6.0
         layer.borderWidth = 1.0
         layer.borderColor = Asset.Colors.pumice.color.cgColor
-        prefixTextField.text = dataSet.first?.isoCode?.uppercased()
+        prefixTextField.text = dataSet[selectedIndex].isoCode?.uppercased()
         prefixTextField.inputView = pickerView
         prefixTextField.textColor = Asset.Colors.vulcan.color
         prefixTextField.font = FontFamily.AvenirLTStd._65Medium.font(size: 16.0)
@@ -91,6 +91,7 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
         ])
         pickerView.delegate = self
         pickerView.dataSource = self
+        pickerView.selectRow(selectedIndex, inComponent: 0, animated: false)
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
