@@ -11,22 +11,6 @@ protocol PrefixViewDelegate: AnyObject {
 
 final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        dataSet.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return dataSet[row].name // For example
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedIndex = row
-    }
-    
     weak var delegate: PrefixViewDelegate?
     
     private var selectedIndex: Int
@@ -63,7 +47,7 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    private func setup() {
         self.isUserInteractionEnabled = true
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
         addGestureRecognizer(gesture)
@@ -87,7 +71,7 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
             icon.centerYAnchor.constraint(equalTo: centerYAnchor),
             icon.widthAnchor.constraint(equalToConstant: 12),
             icon.topAnchor.constraint(equalTo: topAnchor),
-            icon.bottomAnchor.constraint(equalTo: bottomAnchor),
+            icon.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -95,21 +79,36 @@ final class PrefixView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
-        //toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneTapped))
+        let doneButton = UIBarButtonItem(title: L10n.Buttons.Done.title, style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneTapped))
         toolBar.setItems([doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         prefixTextField.inputAccessoryView = toolBar
     }
 
-    @objc func tapped() {
+    @objc private func tapped() {
         prefixTextField.becomeFirstResponder()
     }
     
-    @objc func doneTapped() {
-        prefixTextField.text = dataSet[selectedIndex].isoCode?.uppercased()
+    @objc private func doneTapped() {
         prefixTextField.resignFirstResponder()
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        dataSet.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return dataSet[row].name // For example
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedIndex = row
+        prefixTextField.text = dataSet[selectedIndex].isoCode?.uppercased()
         delegate?.didSelectRow(at: selectedIndex)
     }
     
