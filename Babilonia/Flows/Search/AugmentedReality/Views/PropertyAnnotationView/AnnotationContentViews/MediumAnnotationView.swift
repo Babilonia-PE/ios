@@ -89,7 +89,7 @@ final class MediumAnnotationView: UIView, AnnotationView {
     
     private func setupViews() {
         coverImageView.addCornerRadius(4.0)
-        if let imageUrl = URL(string: viewModel.coverImage?.photo.smallURLString ?? "") {
+        if let imageUrl = URL(string: viewModel.coverImage?.photo.originalURLString ?? "") {
             coverImageView.setImage(with: imageUrl)
         } else {
             coverImageView.image = Asset.MyListings.myListingsDraft.image
