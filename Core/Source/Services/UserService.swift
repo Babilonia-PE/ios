@@ -51,6 +51,7 @@ final public class UserService {
         //image: UIImage? = nil,
         //progressHandler: ProgressHandler? = nil,
         photoId: Int? = nil,
+        prefix: String? = nil,
         phoneNumber: String? = nil,
         completion: @escaping (Result<Bool>) -> Void
     ) {
@@ -68,6 +69,7 @@ final public class UserService {
                                            //lastName: lastName,
                                            email: email,
                                            photoId: photoId,
+                                           prefix: prefix,
                                            phoneNumber: phoneNumber)
         newClient.execute(
             request: request,
@@ -104,6 +106,18 @@ final public class UserService {
         newClient.execute(
             request: request,
             parser: DecodableParser<[RecentSearch]>(keyPath: "data.records", decoder: decoder),
+            completion: completion
+        )
+    }
+    
+    public func getPhonePrefixes(
+        completion: @escaping (Result<PhonePrefixResponse>) -> Void
+    ) {
+        let request = PhonePrefixesRequest()
+        let decoder = JSONDecoder(dateFormatter: DateFormatters.timestamp)
+        newClient.execute(
+            request: request,
+            parser: DecodableParser<PhonePrefixResponse>(keyPath: "data", decoder: decoder),
             completion: completion
         )
     }

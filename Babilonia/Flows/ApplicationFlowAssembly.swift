@@ -45,8 +45,8 @@ final class ApplicationFlowAssembly: Assembly {
         
         //swiftlint:disable line_length
         container
-            .register(EditProfileFlowCoordinator.self) { (_, parent: EventNode, session: UserSession, type: EditProfileType) in
-                return EditProfileFlowCoordinator(container: session.container, parent: parent, screenType: type)
+            .register(EditProfileFlowCoordinator.self) { (_, parent: EventNode, session: UserSession, flowData: EditProfileFlowCoordinatorFlowData) in
+                return EditProfileFlowCoordinator(container: session.container, parent: parent, flowData: flowData)
             }
             .inObjectScope(.transient)
     }

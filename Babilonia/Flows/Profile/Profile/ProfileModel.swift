@@ -13,7 +13,7 @@ import Core
 enum ProfileEvent: Event {
     case editProfile
     case editEmail
-    case editPhoneNumber
+    case editPhoneNumber(phonePrefixes: [PhonePrefix])
     case open(link: String, title: String)
     case openCurrencies
     case openAccount
@@ -24,6 +24,7 @@ final class ProfileModel: EventNode {
     var userUpdated: Driver<User> { return user.asDriver() }
     
     var currentCurrencyUpdated: Driver<Currency> { return currentCurrency.asDriver() }
+    let requestState = PublishSubject<RequestState>()
     
     private let currentCurrency: BehaviorRelay<Currency>
     private let user: BehaviorRelay<User>
@@ -60,7 +61,9 @@ final class ProfileModel: EventNode {
     }
     
     func editPhoneNumber() {
-        raise(event: ProfileEvent.editPhoneNumber)
+        getPhonePrefixes { [weak self] phonePrefixes in
+            self?.raise(event: ProfileEvent.editPhoneNumber(phonePrefixes: phonePrefixes))
+        }
     }
     
     func openAccount() {
@@ -100,6 +103,20 @@ final class ProfileModel: EventNode {
                 if self.isUnauthenticated(error) {
                     self.raise(event: MainFlowEvent.logout)
                 }
+            }
+        }
+    }
+    
+    func getPhonePrefixes( completion: @escaping (([PhonePrefix]) -> Void)) {
+        requestState.onNext(.started)
+        var defaultPhonePrefixes = [PhonePrefix]()
+        userService.getPhonePrefixes { [weak self] result in
+            self?.requestState.onNext(.finished)
+            switch result {
+            case .success(let response):
+                completion(response.records ?? defaultPhonePrefixes)
+            case .failure:
+                completion(defaultPhonePrefixes)
             }
         }
     }

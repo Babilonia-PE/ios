@@ -66,6 +66,7 @@ extension User: CoreDataModelConvertible {
             email: object.email,
             fullName: object.fullName,
             //lastName: object.lastName,
+            prefix: object.prefix,
             phoneNumber: object.phoneNumber,
             avatar: object.avatar.flatMap(RemoteImage.instantiate)
         )

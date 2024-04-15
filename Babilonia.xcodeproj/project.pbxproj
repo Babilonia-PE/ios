@@ -109,6 +109,8 @@
 		59EEF0FE22DDB3C600D556E2 /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF0FD22DDB3C600D556E2 /* UIView+Fading.swift */; };
 		59EEF10022DDB3E300D556E2 /* UIView+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF0FF22DDB3E300D556E2 /* UIView+CornerRadius.swift */; };
 		59EEF10322DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEF10222DDBDFF00D556E2 /* ObservableType+HandyFunctions.swift */; };
+		6B161D852BC98FF8005C6E99 /* PrefixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B161D842BC98FF8005C6E99 /* PrefixView.swift */; };
+		6BB1BAF02BC8AA06009C7C01 /* PhonePrefixResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB1BAEF2BC8AA06009C7C01 /* PhonePrefixResponse.swift */; };
 		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
 		70BF67B52045A6AD00803C08 /* ApplicationFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67582045A6AD00803C08 /* ApplicationFlowAssembly.swift */; };
 		70BF67B62045A6AD00803C08 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67592045A6AD00803C08 /* MainFlowAssembly.swift */; };
@@ -618,6 +620,8 @@
 		5BD1CED404ABEC5A959B1152 /* Pods-Shared-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared-Core.debug.xcconfig"; path = "Target Support Files/Pods-Shared-Core/Pods-Shared-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		6AB17F6E9029B25ADA584730 /* Pods_Shared_Babilonia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_Babilonia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE7250A1DBF47A600F874E1 /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
+		6B161D842BC98FF8005C6E99 /* PrefixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixView.swift; sourceTree = "<group>"; };
+		6BB1BAEF2BC8AA06009C7C01 /* PhonePrefixResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonePrefixResponse.swift; sourceTree = "<group>"; };
 		70BF67552045A6AD00803C08 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70BF67582045A6AD00803C08 /* ApplicationFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowAssembly.swift; sourceTree = "<group>"; };
 		70BF67592045A6AD00803C08 /* MainFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowAssembly.swift; sourceTree = "<group>"; };
@@ -2075,6 +2079,7 @@
 				532C9B7D2938810300F00206 /* UserLogIn.swift */,
 				53B96EA62941DB9F0093D87F /* VerifyToken.swift */,
 				53EF17E929D7D2250027D0A9 /* UserDelete.swift */,
+				6BB1BAEF2BC8AA06009C7C01 /* PhonePrefixResponse.swift */,
 			);
 			path = UserSession;
 			sourceTree = "<group>";
@@ -2157,6 +2162,7 @@
 				18A1A35C22E84A25001DCFC8 /* FiltersView */,
 				880A4E8724179142000E638B /* ScrollableView.swift */,
 				880A4E89241792E5000E638B /* SegmentControlView.swift */,
+				6B161D842BC98FF8005C6E99 /* PrefixView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3444,6 +3450,7 @@
 				92E984B822CCF06400E22662 /* UploadPhotosEmptyStateView.swift in Sources */,
 				1803A18B22E1EC760040ABF5 /* CurrencyModel.swift in Sources */,
 				923A3EBC22A526A8008D6A42 /* CreateListingDetailsViewController.swift in Sources */,
+				6B161D852BC98FF8005C6E99 /* PrefixView.swift in Sources */,
 				92028B8022C4D18100005F39 /* NotificationsFlowCoordinator.swift in Sources */,
 				18A1A35E22E84A54001DCFC8 /* FiltersView.swift in Sources */,
 				590F57C222E2076C00F773EE /* LargeAnnotationView.swift in Sources */,
@@ -3675,6 +3682,7 @@
 				924EA093229D86C3000AD5FA /* User+CoreData.swift in Sources */,
 				924EA0B9229EB2DA000AD5FA /* UserSessionAuthService.swift in Sources */,
 				E8CBE41F20222A9500186010 /* KeyValueStorage.swift in Sources */,
+				6BB1BAF02BC8AA06009C7C01 /* PhonePrefixResponse.swift in Sources */,
 				920CD16C22BA5E5200400FAA /* Environment.swift in Sources */,
 				92EDA91822CF7DDE00675693 /* ImagesService.swift in Sources */,
 				920CD13422B3C75300400FAA /* KeyPathParser.swift in Sources */,

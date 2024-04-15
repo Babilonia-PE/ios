@@ -34,6 +34,12 @@ final class EditProfileViewController: UIViewController, AlertApplicable {
     private var fakeProgressValue: CGFloat = 0
     private var timer: Timer?
     
+    private lazy var containerPhoneTextField: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     // MARK: - lifecycle
     
     init(viewModel: EditProfileViewModel) {
@@ -121,16 +127,42 @@ final class EditProfileViewController: UIViewController, AlertApplicable {
         } else {
             lastBottomView = widthView
         }
-        
-        viewModel.inputFieldViewModels.forEach {
-            let inputFieldView = InputFieldView(viewModel: $0)
-            scrollView.addSubview(inputFieldView)
-            inputFieldView.layout {
-                $0.top == lastBottomView.bottomAnchor + (lastBottomView is InputFieldView ? 16.0 : 32.0)
-                $0.leading == scrollView.leadingAnchor + 16.0
-                $0.trailing == scrollView.trailingAnchor - 16.0
+        if viewModel.screenType != .editPhoneNumber {
+            viewModel.inputFieldViewModels.forEach {
+                let inputFieldView = InputFieldView(viewModel: $0)
+                scrollView.addSubview(inputFieldView)
+                inputFieldView.layout {
+                    $0.top == lastBottomView.bottomAnchor + (lastBottomView is InputFieldView ? 16.0 : 32.0)
+                    $0.leading == scrollView.leadingAnchor + 16.0
+                    $0.trailing == scrollView.trailingAnchor - 16.0
+                }
+                lastBottomView = inputFieldView
             }
-            lastBottomView = inputFieldView
+        } else {
+            scrollView.addSubview(containerPhoneTextField)
+            containerPhoneTextField.layout {
+                $0.top == lastBottomView.bottomAnchor + 16
+                $0.leading == scrollView.leadingAnchor + 24.0
+                $0.trailing == scrollView.trailingAnchor - 24.0
+            }
+            let phoneInputView = InputFieldView(viewModel: viewModel.inputFieldViewModels.last!)
+            let prefixView = PrefixView(dataSet: viewModel.prefixes, selectedIndex: viewModel.currentPrefixIndex)
+            prefixView.delegate = self
+            containerPhoneTextField.addSubview(phoneInputView)
+            containerPhoneTextField.addSubview(prefixView)
+            prefixView.layout {
+                $0.top == phoneInputView.topAnchor
+                $0.bottom == phoneInputView.backgroundView.bottomAnchor
+                $0.leading == containerPhoneTextField.leadingAnchor
+            }
+            phoneInputView.layout {
+                $0.top == containerPhoneTextField.topAnchor
+                $0.bottom == containerPhoneTextField.bottomAnchor
+                $0.trailing == containerPhoneTextField.trailingAnchor
+                $0.leading == prefixView.trailingAnchor + 8
+            }
+            prefixView.translatesAutoresizingMaskIntoConstraints = false
+            lastBottomView = containerPhoneTextField
         }
         
         lastBottomView.layout {
@@ -449,4 +481,12 @@ extension EditProfileViewController {
         AppEvents.logEvent(AppEvents.Name("CompleteRegistration"))
     }
 
+}
+
+extension EditProfileViewController: PrefixViewDelegate {
+    
+    func didSelectRow(at index: Int) {
+        viewModel.updateCurrentPrefix(at: index)
+    }
+    
 }

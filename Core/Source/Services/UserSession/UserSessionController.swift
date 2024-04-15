@@ -54,13 +54,13 @@ public final class UserSessionController {
     }
     
     // MARK: Session managment
-    
+    //swiftlint:disable function_parameter_count
     public func createAccount(
         fullName: String,
         //lastName: String,
         email: String,
         password: String,
-        //phonePrefix: String,
+        phonePrefix: String,
         phoneNumber: String,
         ipAddress: String,
         userAgent: String,
@@ -72,7 +72,7 @@ public final class UserSessionController {
             //lastName: lastName,
             email: email,
             password: password,
-            //phonePrefix: phonePrefix,
+            phonePrefix: phonePrefix,
             phoneNumber: phoneNumber,
             ipAddress: ipAddress,
             userAgent: userAgent,
@@ -87,7 +87,7 @@ public final class UserSessionController {
                         userId = UserId.init(id)
                     }
                     //let user = User.init(id: userId, email: email, firstName: fullName, lastName: "", phoneNumber: nil, avatar: nil)
-                    let user = User.init(id: userId, email: email, fullName: fullName, phoneNumber: nil, avatar: nil)
+                    let user = User.init(id: userId, email: email, fullName: fullName, prefix: phonePrefix, phoneNumber: nil, avatar: nil)
                     let authToken = UserAuthTokens.init(
                         authenticationToken: result.value?.authorization ?? "",
                         exchangeToken: ""
@@ -128,6 +128,7 @@ public final class UserSessionController {
                         email: email,
                         fullName: "",
                         //lastName: "",
+                        prefix: "",
                         phoneNumber: "",
                         avatar: nil
                     )
@@ -142,6 +143,18 @@ public final class UserSessionController {
                     completion(Result.failure(error))
                 }
             })
+    }
+    
+    public func getPhonePrefixes(completion: @escaping ([PhonePrefix]) -> Void) {
+        let defaultPrefixes: [PhonePrefix] = []
+        authService.getPhonePrefixes { [weak self] result in
+            switch result {
+            case .success(let response):
+                completion(response.records ?? defaultPrefixes)
+            case .failure(let error):
+                completion(defaultPrefixes)
+            }
+        }
     }
     
     public func verifyToken(

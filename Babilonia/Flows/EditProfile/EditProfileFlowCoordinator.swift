@@ -21,6 +21,13 @@ enum EditProfileFlowEvent: Event {
     case close
 }
 
+struct EditProfileFlowCoordinatorFlowData {
+    
+    let screenType: EditProfileType
+    var phonePrefixes: [PhonePrefix] = []
+    
+}
+
 final class EditProfileFlowCoordinator: EventNode, FlowCoordinator {
     
     weak var containerViewController: UIViewController?
@@ -31,12 +38,14 @@ final class EditProfileFlowCoordinator: EventNode, FlowCoordinator {
     
     private let screenType: EditProfileType
     
-    init(container: Container, parent: EventNode, screenType: EditProfileType) {
+    private let phonePrefixes: [PhonePrefix]
+    
+    init(container: Container, parent: EventNode, flowData: EditProfileFlowCoordinatorFlowData) {
         self.container = Container(parent: container) { (container: Container) in
             EditProfileFlowAssembly().assemble(container: container)
         }
-        self.screenType = screenType
-        
+        self.screenType = flowData.screenType
+        self.phonePrefixes = flowData.phonePrefixes
         super.init(parent: parent)
         
         addHandlers()
@@ -44,7 +53,7 @@ final class EditProfileFlowCoordinator: EventNode, FlowCoordinator {
     
     @discardableResult
     func createFlow() -> UIViewController {
-        editProfileViewController = container.autoresolve(arguments: self, screenType) as EditProfileViewController
+        editProfileViewController = container.autoresolve(arguments: self, screenType, phonePrefixes) as EditProfileViewController
         return editProfileViewController
     }
     

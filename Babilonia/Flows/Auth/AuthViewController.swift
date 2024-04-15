@@ -184,7 +184,7 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
             .disposed(by: disposeBag)
         
         signUpButton.rx.tap
-            .bind(onNext: presentSignUp)
+            .bind(onNext: requestPrefixes)
             .disposed(by: disposeBag)
         
         logInButton.rx.tap
@@ -212,8 +212,8 @@ final class AuthViewController: UIViewController, AlertApplicable, SpinnerApplic
 //        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
 //    }
     
-    private func presentSignUp() {
-        viewModel.signUp()
+    private func requestPrefixes() {
+        viewModel.requestPrefixes()
     }
     
     private func presentLogIn() {

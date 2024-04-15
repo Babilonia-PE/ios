@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 //import CountryPickerView
 
 class AuthSignUpViewController: UIViewController, AlertApplicable, SpinnerApplicable {
@@ -21,10 +22,15 @@ class AuthSignUpViewController: UIViewController, AlertApplicable, SpinnerApplic
     private var cancelButtonShadowLayer: CALayer!
     private var countryButton: Button!
     private var countryButtonShadowLayer: CALayer!
-    
     private let viewModel: AuthSignUpViewModel
     private let keyboardAnimationController = KeyboardAnimationController()
     private var shadowApplied: Bool = false
+    
+    private var containerPhoneTextField: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
     
     //private let countryPickerView = CountryPickerView()
     
@@ -135,13 +141,8 @@ class AuthSignUpViewController: UIViewController, AlertApplicable, SpinnerApplic
         lastBottomView = logoImage
 
         //var phoneViewModel: InputFieldViewModel?
-        
-        viewModel.inputFieldViewModels.forEach {
-//            let title = $0.getTitle()
-//            if title == L10n.SignUp.Phone.title {
-//                phoneViewModel = $0
-//                return
-//            }
+        let inputFields = viewModel.inputFieldViewModels.dropLast()
+        inputFields.forEach {
             let inputFieldView = InputFieldView(viewModel: $0)
             scrollView.addSubview(inputFieldView)
             inputFieldView.layout {
@@ -151,6 +152,30 @@ class AuthSignUpViewController: UIViewController, AlertApplicable, SpinnerApplic
             }
             lastBottomView = inputFieldView
         }
+        scrollView.addSubview(containerPhoneTextField)
+        containerPhoneTextField.layout {
+            $0.top == lastBottomView.bottomAnchor + 16
+            $0.leading == scrollView.leadingAnchor + 24.0
+            $0.trailing == scrollView.trailingAnchor - 24.0
+        }
+        let phoneInputView = InputFieldView(viewModel: viewModel.inputFieldViewModels.last!)
+        let prefixView = PrefixView(dataSet: viewModel.prefixes)
+        prefixView.delegate = self
+        containerPhoneTextField.addSubview(phoneInputView)
+        containerPhoneTextField.addSubview(prefixView)
+        prefixView.layout {
+            $0.top == phoneInputView.topAnchor
+            $0.bottom == phoneInputView.backgroundView.bottomAnchor
+            $0.leading == containerPhoneTextField.leadingAnchor
+        }
+        phoneInputView.layout {
+            $0.top == containerPhoneTextField.topAnchor
+            $0.bottom == containerPhoneTextField.bottomAnchor
+            $0.trailing == containerPhoneTextField.trailingAnchor
+            $0.leading == prefixView.trailingAnchor + 8
+        }
+        prefixView.translatesAutoresizingMaskIntoConstraints = false
+        lastBottomView = containerPhoneTextField
         
 //        if let viewModel = phoneViewModel {
 //            let phoneView = UIView()
@@ -337,3 +362,11 @@ class AuthSignUpViewController: UIViewController, AlertApplicable, SpinnerApplic
 //        return .hidden
 //    }
 //}
+
+extension AuthSignUpViewController: PrefixViewDelegate {
+    
+    func didSelectRow(at index: Int) {
+        viewModel.currentSelectedPrefix = index
+    }
+    
+}

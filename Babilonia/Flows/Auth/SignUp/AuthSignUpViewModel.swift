@@ -9,6 +9,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import Core
 
 final class AuthSignUpViewModel {
     private let disposeBag = DisposeBag()
@@ -27,6 +28,17 @@ final class AuthSignUpViewModel {
         return Driver
             .combineLatest(inputFieldViewModels.map { $0.validationDriver })
             .map { $0.allSatisfy({ $0 }) }
+    }
+    
+    var prefixes: [PhonePrefix] { model.phonePrefixes }
+    
+    var currentSelectedPrefix: Int {
+        get {
+            model.currentSelectedPrefix
+        }
+        set {
+            model.currentSelectedPrefix = newValue
+        }
     }
     
     private lazy var fullNameViewModel: InputFieldViewModel = {

@@ -18,6 +18,7 @@ public struct User: Codable {
     public var email: String?
     public var fullName: String?
     //public var lastName: String?
+    public var prefix: String?
     public var phoneNumber: String?
     public var avatar: RemoteImage?
     public var company: Сompany?
@@ -28,12 +29,14 @@ public struct User: Codable {
         email: String?,
         fullName: String?,
         //lastName: String?,
+        prefix: String?,
         phoneNumber: String?,
         avatar: RemoteImage?) {
         self.id = id
         self.email = email
         self.fullName = fullName
         //self.lastName = lastName
+        self.prefix = prefix
         self.phoneNumber = phoneNumber
         self.avatar = avatar
     }

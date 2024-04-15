@@ -32,6 +32,7 @@ final class EditProfileModel: EventNode {
     let avatarUploadProgress = PublishRelay<CGFloat>()
     let emailCustomError = PublishRelay<String?>()
     let screenType: EditProfileType
+    var prefix: String?
 
     var progressHandler: ((Progress) -> Void)?
     
@@ -65,17 +66,23 @@ final class EditProfileModel: EventNode {
     
     private var cancellationsMap = [Int: YALAPIClient.Cancelable]()
     
+    // Corregir
+    let phonePrefixes: [PhonePrefix]
+    
     // MARK: - lifecycle
     
     init(parent: EventNode,
          userSession: UserSession,
          userService: UserService,
          imagesService: ImagesService,
-         screenType: EditProfileType) {
+         screenType: EditProfileType,
+         phonePrefixes: [PhonePrefix]
+    ) {
         self.imagesService = imagesService
         self.userService = userService
         self.userSession = userSession
         self.screenType = screenType
+        self.phonePrefixes = phonePrefixes
         
         fullName = BehaviorRelay(value: userSession.user.fullName ?? "")
         //lastName = BehaviorRelay(value: userSession.user.lastName ?? "")
@@ -84,7 +91,7 @@ final class EditProfileModel: EventNode {
         email = BehaviorRelay(value: userSession.user.email ?? "")
         photoId = BehaviorRelay(value: nil)
         phoneNumber = BehaviorRelay(value: userSession.user.phoneNumber ?? "")
-        
+        prefix = userSession.user.prefix
         super.init(parent: parent)
     }
 
@@ -191,6 +198,7 @@ final class EditProfileModel: EventNode {
         user.fullName = fullName.value
         //user.lastName = lastName.value
         user.email = email.value
+        user.prefix = prefix
         user.phoneNumber = phoneNumber.value
         
         refresh(user: user)
@@ -200,6 +208,7 @@ final class EditProfileModel: EventNode {
             //lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
             email: email.value,
             photoId: photoId.value,
+            prefix: prefix,
             phoneNumber: phoneNumber.value
         ) { result in
             self.raise(event: EditProfileEvent.updateRefreshMode(isOn: true))

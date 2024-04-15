@@ -12,7 +12,7 @@ import RxSwift
 
 final class InputFieldView: UIView {
     
-    private var backgroundView: UIView!
+    var backgroundView: UIView!
     private var titleLabel: UILabel!
     private var textLabel: UILabel!
     private var placeholderLabel: UILabel!
@@ -25,6 +25,7 @@ final class InputFieldView: UIView {
     private var buttonsTitleLabel: UILabel!
     var topConstraint: NSLayoutConstraint?
     private var actionButton: UIButton!
+    private var showPasswordButton: UIButton!
 
     private let viewModel: InputFieldViewModel
     
@@ -219,6 +220,23 @@ final class InputFieldView: UIView {
         
         isUserInteractionEnabled = viewModel.isFieldEnabled
         alpha = viewModel.isFieldEnabled ? 1.0 : 0.5
+        
+        if viewModel.isSecureText {
+            showPasswordButton = UIButton(type: .custom)
+            showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .selected)
+            showPasswordButton.tintColor = .lightGray
+            showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+            addSubview(showPasswordButton)
+            showPasswordButton.translatesAutoresizingMaskIntoConstraints = false
+            showPasswordButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16).isActive = true
+            showPasswordButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
+        }
+    }
+    
+    @objc private func togglePasswordVisibility() {
+        textField.isSecureTextEntry.toggle()
+        showPasswordButton.isSelected = !textField.isSecureTextEntry
     }
     
     private func setupBindings() {

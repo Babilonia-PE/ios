@@ -57,7 +57,7 @@ public final class UserSession {
     
     public init() {
         //let user = User(id: 0, email: nil, firstName: "guest", lastName: "", phoneNumber: "", avatar: nil)
-        let user = User(id: 0, email: nil, fullName: "guest", phoneNumber: "", avatar: nil)
+        let user = User(id: 0, email: nil, fullName: "guest", prefix: "", phoneNumber: "", avatar: nil)
         let userAuthTokens = UserAuthTokens(authenticationToken: "", exchangeToken: "")
         let initializationData = UserSessionInfo(user: user, authTokens: userAuthTokens)
         self.initializationData = initializationData

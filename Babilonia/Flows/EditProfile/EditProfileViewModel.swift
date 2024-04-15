@@ -9,6 +9,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import Core
 
 enum EditProfileType {
     case editProfile, editEmail, editPhoneNumber, signUp
@@ -24,6 +25,25 @@ final class EditProfileViewModel {
         return Driver
             .combineLatest(inputFieldViewModels.map { $0.validationDriver })
             .map { $0.allSatisfy({ $0 }) }
+    }
+    
+    var prefix: String {
+        get {
+            model.prefix ?? ""
+        }
+        set {
+            model.prefix = newValue
+        }
+    }
+    
+    var currentPrefixIndex: Int {
+        var currentIndex = 0
+        prefixes.enumerated().forEach { (index, prefix) in
+            if self.prefix == "\(prefix.prefix ?? 0)" {
+                currentIndex = index
+            }
+        }
+        return currentIndex
     }
     
     var navigationTitle: String {
@@ -56,6 +76,7 @@ final class EditProfileViewModel {
     private let model: EditProfileModel
     private let disposeBag = DisposeBag()
     private(set) var inputFieldViewModels = [InputFieldViewModel]()
+    var prefixes: [PhonePrefix] { model.phonePrefixes }
     
     private lazy var fullNameViewModel: InputFieldViewModel = {
         let fullName = BehaviorRelay(value: model.initialFullName())
@@ -179,6 +200,14 @@ final class EditProfileViewModel {
         case .signUp:
             model.cancelCreating()
         }
+    }
+    
+    func updateCurrentPrefix(at index: Int) {
+        var currentPrefixPhone = ""
+        if let currentPrefix = prefixes[index].prefix {
+            currentPrefixPhone = String(currentPrefix)
+        }
+        prefix = currentPrefixPhone
     }
     
     // MARK: - private
