@@ -91,7 +91,7 @@ public struct Listing: Codable {
     public var url: UrlListing?
     
     public var reason: String?
-    public var priceFinal: Int? = nil
+    public var priceFinal: Int?
     
     //public var userId: Int? = nil
     
@@ -207,6 +207,49 @@ public struct Listing: Codable {
         case floorNumber
         case advancedDetails
         case url
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.area = try container.decodeIfPresent(Int.self, forKey: .area)
+        self.bathroomsCount = try container.decodeIfPresent(Int.self, forKey: .bathroomsCount)
+        self.bedroomsCount = try container.decodeIfPresent(Int.self, forKey: .bedroomsCount)
+        self.contactViewsCount = try container.decodeIfPresent(Int.self, forKey: .contactViewsCount)
+        self.favouritesCount = try container.decode(Int.self, forKey: .favouritesCount)
+        self.favourited = try container.decodeIfPresent(Bool.self, forKey: .favourited)
+        self.id = try container.decode(ListingId.self, forKey: .id)
+        self.ids = try container.decodeIfPresent([ListingId].self, forKey: .ids)
+        self.listingDescription = try container.decodeIfPresent(String.self, forKey: .listingDescription)
+        if let listingTypeString = try container.decodeIfPresent(String.self, forKey: .listingType) {
+            self.listingType = ListingType(rawValue: listingTypeString)
+        }
+        self.parkingSlotsCount = try container.decodeIfPresent(Int.self, forKey: .parkingSlotsCount)
+        self.petFriendly = try container.decodeIfPresent(Bool.self, forKey: .petFriendly)
+        self.price = try container.decodeIfPresent(Int.self, forKey: .price)
+        self.primaryImageId = try container.decodeIfPresent(Int.self, forKey: .primaryImageId)
+        if let propertyTypeString = try container.decodeIfPresent(String.self, forKey: .propertyType) {
+            self.propertyType = PropertyType(rawValue: propertyTypeString)
+        }
+        self.status = try container.decode(ListingStatus.self, forKey: .status)
+        self.viewsCount = try container.decode(Int.self, forKey: .viewsCount)
+        self.yearOfConstruction = try container.decodeIfPresent(Int.self, forKey: .yearOfConstruction)
+        self.user = try container.decodeIfPresent(User.self, forKey: .user)
+        self.contacts = try container.decodeIfPresent([Contact].self, forKey: .contacts)
+        self.location = try container.decodeIfPresent(Location.self, forKey: .location)
+        self.images = try container.decodeIfPresent([ListingImage].self, forKey: .images)
+        self.facilities = try container.decodeIfPresent([Facility].self, forKey: .facilities)
+        self.createdAt = try container.decode(Date.self, forKey: .createdAt)
+        self.adPurchasedAt = try container.decodeIfPresent(Date.self, forKey: .adPurchasedAt)
+        self.adExpiresAt = try container.decodeIfPresent(Date.self, forKey: .adExpiresAt)
+        self.adPlan = try container.decodeIfPresent(PlanType.self, forKey: .adPlan)
+        self.state = try container.decode(ListingState.self, forKey: .state)
+        self.role = try container.decodeIfPresent(ListingRole.self, forKey: .role)
+        self.coveredArea = try container.decodeIfPresent(Int.self, forKey: .coveredArea)
+        self.parkingForVisits = try container.decodeIfPresent(Bool.self, forKey: .parkingForVisits)
+        self.totalFloorsCount = try container.decodeIfPresent(Int.self, forKey: .totalFloorsCount)
+        self.floorNumber = try container.decodeIfPresent(Int.self, forKey: .floorNumber)
+        self.advancedDetails = try container.decodeIfPresent([Facility].self, forKey: .advancedDetails)
+        self.url = try container.decodeIfPresent(UrlListing.self, forKey: .url)
     }
     
 }
