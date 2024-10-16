@@ -88,7 +88,7 @@ struct ProfileDeleteRequest: APIRequest, DecoratableRequest {
 struct FavotitesListingsRequest: APIRequest, DecoratableRequest {
 
     let method: APIRequestMethod = .get
-    let path = "me/favourite_listings"
+    let path = "me/user/favourites"
     let authRequired = true
     private(set) var parameters: [String: Any]?
 
