@@ -165,7 +165,8 @@ final class EditProfileModel: EventNode {
         userService.updateProfile(
             fullName: fullName.value.trimmingCharacters(in: .whitespacesAndNewlines),
             //lastName: lastName.value.trimmingCharacters(in: .whitespacesAndNewlines),
-            email: email.value
+            email: email.value,
+            ip: NetworkUtil.getWiFiAddress()
             //image: avatar
         ) { [weak self] result in
             guard let self = self else { return }
@@ -209,7 +210,8 @@ final class EditProfileModel: EventNode {
             email: email.value,
             photoId: photoId.value,
             prefix: prefix,
-            phoneNumber: phoneNumber.value
+            phoneNumber: phoneNumber.value,
+            ip: NetworkUtil.getWiFiAddress()
         ) { result in
             self.raise(event: EditProfileEvent.updateRefreshMode(isOn: true))
             

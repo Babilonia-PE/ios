@@ -9,11 +9,12 @@
 import YALAPIClient
 import CoreLocation
 import Alamofire
+import WebKit
 
 struct ProfileInfoRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .get
-    let path = "me/profile"
+    let path = "me/user/profile"
     let authRequired: Bool = true
     
 }
@@ -21,7 +22,7 @@ struct ProfileInfoRequest: APIRequest, DecoratableRequest {
 struct UpdateProfileRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .put
-    let path = "me/profile"
+    let path = "me/user/profile"
     let authRequired: Bool = true
     var encoding: APIRequestEncoding? = JSONEncoding.default
     private(set) var parameters: [String: Any]?
@@ -34,10 +35,13 @@ struct UpdateProfileRequest: APIRequest, DecoratableRequest {
          password: String? = nil,
          photoId: Int? = nil,
          prefix: String? = nil,
-         phoneNumber: String? = nil) {
+         phoneNumber: String? = nil,
+         ip: String? = nil
+    ) {
         
         var params = [String: Any]()
-        
+        params["ipa"] = ip ?? "8.8.8.8"
+        params["ua"] = WKWebView().value(forKey: "userAgent")
         params["full_name"] = fullName
         params["email"] = email
         params["prefix"] = prefix
@@ -81,7 +85,7 @@ struct UpdateProfileRequest: APIRequest, DecoratableRequest {
 struct ProfileDeleteRequest: APIRequest, DecoratableRequest {
     
     let method: APIRequestMethod = .delete
-    let path = "me/profile"
+    let path = "me/user/profile"
     let authRequired: Bool = true
 }
 

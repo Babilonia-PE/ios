@@ -53,6 +53,7 @@ final public class UserService {
         photoId: Int? = nil,
         prefix: String? = nil,
         phoneNumber: String? = nil,
+        ip: String? = nil,
         completion: @escaping (Result<Bool>) -> Void
     ) {
 //        var imageData: Data?
@@ -70,7 +71,9 @@ final public class UserService {
                                            email: email,
                                            photoId: photoId,
                                            prefix: prefix,
-                                           phoneNumber: phoneNumber)
+                                           phoneNumber: phoneNumber,
+                                           ip: ip
+        )
         newClient.execute(
             request: request,
             parser: DecodableParser<User>(keyPath: "data")
