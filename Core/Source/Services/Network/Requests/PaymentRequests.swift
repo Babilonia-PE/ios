@@ -73,7 +73,7 @@ struct PurchaseListingRequest: APIRequest, DecoratableRequest {
 struct PaymentIntentRequest: APIRequest, DecoratableRequest {
 
     var path: String {
-        "me/payment_intent"
+        "me/payment/intent"
     }
     let authRequired: Bool = true
     var method: APIRequestMethod = .post
@@ -137,7 +137,7 @@ struct OrderNewRequest: APIRequest, DecoratableRequest {
 struct PaymentProcessRequest: APIRequest, DecoratableRequest {
 
     var path: String {
-        "me/payment_process"
+        "me/payment/process"
     }
     let authRequired: Bool = true
     var method: APIRequestMethod = .post

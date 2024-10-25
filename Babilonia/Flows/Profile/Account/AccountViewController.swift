@@ -141,6 +141,7 @@ final class AccountViewController: UIViewController {
                             confirmTitle: L10n.Popups.DeleteAccount.DeleteAccount.title,
                             confirm: { [weak self] in
                                 self?.viewModel.deleteAccount()
-                            })
+                            },
+                            decline: nil)
     }
 }

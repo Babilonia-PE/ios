@@ -49,8 +49,10 @@ final public class ListingsService {
             parser: DecodableParser<Listing>(keyPath: "object", decoder: decoder)
         ) { result in
             switch result {
-            case .success(let listing):
-                self.processListings([listing]) { processResult in
+            case .success(let listingFromService):
+                var listingCopy = listingFromService
+                listingCopy.user = listing.user
+                self.processListings([listingCopy]) { processResult in
                     switch processResult {
                     case .success(let isSaved):
                         if isSaved {

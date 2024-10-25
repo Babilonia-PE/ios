@@ -88,7 +88,7 @@ final class ProfileViewModel {
             .drive(onNext: { [weak self] user in
                 guard let self = self else { return }
                 self.isUserGuest = user.id == .guest
-                self.avatarURLString = user.avatar?.smallURLString
+                self.avatarURLString = user.avatar?.originalURLString
                 self.name = user.fullName
                 self.emailViewModel = ProfileUserDataViewModel(
                     title: L10n.Profile.Email.title,
